@@ -144,16 +144,26 @@ export const LoginForm = (props) => {
                         {props.role === "user" ? (
                             <>
                                 <p className={css.forgotPassText}>
-                                    Don't have an account ?
+                                    Are you an Admin?
                                 </p>
                                 <Link
                                     className={css.registerText}
-                                    to="/user/register"
+                                    to="/admin/login"
                                 >
-                                    Register
+                                    Login
                                 </Link>
                             </>
-                        ) : null}
+                        ) : <>
+                                <p className={css.forgotPassText}>
+                                    Are you an User?
+                                </p>
+                                <Link
+                                    className={css.registerText}
+                                    to="/user/login"
+                                >
+                                    Login
+                                </Link>
+                            </>}
                     </div>
                 )}
             </div>

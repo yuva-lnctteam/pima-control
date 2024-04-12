@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { toast } from "react-hot-toast";
 
-
-
 // My css
 import css from "../../css/user/navbar.module.css";
 import { SERVER_ORIGIN} from "../../utilities/constants";
