@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import FileUpload from "../../components/common/FileUpload";
 
 import Loader from "../../components/common/Loader";
 
@@ -10,7 +9,6 @@ import HeaderCard from "../../components/common/HeaderCard";
 // import { refreshScreen } from "../../utilities/helper_functions";
 
 import css from "../../css/admin/users-page.module.css";
-import DownloadExcel from "../../components/common/DownloadExcel";
 
 // localhost:800/users/all?page=1&limit=10&search=abhishek&sortBy=fName&sortType=desc
 
@@ -145,8 +143,6 @@ const AdminUsers = () => {
                     risk.
                 </p>
 
-                <DownloadExcel />
-                <FileUpload />
             </HeaderCard>
             <div className={css.filterBtns}>
                 <button
