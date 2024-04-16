@@ -24,11 +24,11 @@ const UserSingleUnit = () => {
         text: "",
         activities: [],
     });
-    const [isCertBtnDisabled, setIsCertBtnDisabled] = useState(true);
+    // const [isCertBtnDisabled, setIsCertBtnDisabled] = useState(true);
     const [isQuizBtnDisabled, setIsQuizBtnDisabled] = useState(true);
     // const [courseInfo, setCourseInfo] = useState(null);
     // const [userInfo, setUserInfo] = useState(null);
-    const [certId, setCertId] = useState("");
+    // const [certId, setCertId] = useState("");
     const [storedWatchPercentage, setStoredWatchPercentage] = useState(0);
     const [videoWatchTimeCutoffPercentage, setVideoWatchTimeCutoffPercentage] =
         useState(0);
@@ -84,9 +84,9 @@ const UserSingleUnit = () => {
                     // setCourseInfo(result.courseInfo);
                     // setUserInfo(result.userInfo);
 
-                    setCertId(result.certId);
+                    // setCertId(result.certId);
 
-                    setIsCertBtnDisabled(!result.isCertGenerated);
+                    // setIsCertBtnDisabled(!result.isCertGenerated);
 
                     // we also have userDoc here
                 } else {
@@ -113,13 +113,13 @@ const UserSingleUnit = () => {
         );
     }
 
-    function handleGetCertificate() {
-        // const userMongoId = userInfo._id;
-        // const { verticalId, courseId, unitId } = params;
+    // function handleGetCertificate() {
+    //     // const userMongoId = userInfo._id;
+    //     // const { verticalId, courseId, unitId } = params;
 
-        // (certId);
-        navigate(`/user/certificate/${certId}`);
-    }
+    //     // (certId);
+    //     navigate(`/user/certificate/${certId}`);
+    // }
 
     const element = (
         <div className={css.outerDiv}>
@@ -203,7 +203,7 @@ const UserSingleUnit = () => {
                         </SecCard>
                     </div>
 
-                    <div
+                    {/* <div
                         className={`${css.certDiv} ${css.common} col-lg-6 col-md-6`}
                     >
                         <SecCard>
@@ -224,7 +224,7 @@ const UserSingleUnit = () => {
                                     : "Get Certificate"}
                             </button>
                         </SecCard>
-                    </div>
+                    </div> */}
                 </div>
             ) : null}
         </div>
