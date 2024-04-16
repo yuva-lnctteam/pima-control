@@ -223,29 +223,29 @@ const UserQuiz = () => {
         setShowQuiz(true);
     }
 
-    const handleGetCertificate = async () => {
-        ("Get certificate");
-        const userId = process.env.REACT_APP_USER_ID;
-        const userPassword = process.env.REACT_APP_USER_PASSWORD;
-        const basicAuth = btoa(`${userId}:${userPassword}`);
-        const { verticalId, courseId, unitId } = params;
-        const response = await fetch(
-            `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/get-cert-id`,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "auth-token": localStorage.getItem("token"),
-                    Authorization: `Basic ${basicAuth}`,
-                },
-            }
-        );
-        const result = await response.json();
-        const certId = result.certId;
-        if (result.success === true) {
-            navigate(`/user/certificate/${certId}`);
-        }
-    };
+    // const handleGetCertificate = async () => {
+    //     ("Get certificate");
+    //     const userId = process.env.REACT_APP_USER_ID;
+    //     const userPassword = process.env.REACT_APP_USER_PASSWORD;
+    //     const basicAuth = btoa(`${userId}:${userPassword}`);
+    //     const { verticalId, courseId, unitId } = params;
+    //     const response = await fetch(
+    //         `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/get-cert-id`,
+    //         {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "auth-token": localStorage.getItem("token"),
+    //                 Authorization: `Basic ${basicAuth}`,
+    //             },
+    //         }
+    //     );
+    //     const result = await response.json();
+    //     const certId = result.certId;
+    //     if (result.success === true) {
+    //         navigate(`/user/certificate/${certId}`);
+    //     }
+    // };
 
     const instructionsElement = (
         <div className={css.instOuterDiv}>
@@ -302,12 +302,12 @@ const UserQuiz = () => {
                     <button className={css.btn} onClick={refreshScreen}>
                         Retake Quiz
                     </button>
-                    <button
+                    {/* <button
                         className={css.certBtn}
                         onClick={handleGetCertificate}
                     >
                         Get certificate
-                    </button>
+                    </button> */}
                     <button
                         className={css.btn}
                         onClick={() => {

@@ -24,7 +24,6 @@ const UserSingleUnit = () => {
         text: "",
         activities: [],
     });
-    // const [isCertBtnDisabled, setIsCertBtnDisabled] = useState(true);
     const [isQuizBtnDisabled, setIsQuizBtnDisabled] = useState(true);
     // const [courseInfo, setCourseInfo] = useState(null);
     // const [userInfo, setUserInfo] = useState(null);
@@ -202,29 +201,6 @@ const UserSingleUnit = () => {
                             </button>
                         </SecCard>
                     </div>
-
-                    {/* <div
-                        className={`${css.certDiv} ${css.common} col-lg-6 col-md-6`}
-                    >
-                        <SecCard>
-                            <h2 className={css.secHeading}>Certificate</h2>
-
-                            <p className={css.secText}>
-                                {isCertBtnDisabled
-                                    ? `Note: To get the certificate you have to score atleast ${vars.quiz.CUT_OFF_IN_PERCENT}% in the quiz.`
-                                    : "Congratulations! Your certificate has been generated. Click on the button below to download your certificate."}
-                            </p>
-                            <button
-                                className={css.secBtn}
-                                onClick={handleGetCertificate}
-                                disabled={isCertBtnDisabled}
-                            >
-                                {isCertBtnDisabled
-                                    ? "Certificate Locked"
-                                    : "Get Certificate"}
-                            </button>
-                        </SecCard>
-                    </div> */}
                 </div>
             ) : null}
         </div>
