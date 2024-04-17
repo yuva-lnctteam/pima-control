@@ -9,6 +9,8 @@ import { LoginForm } from "../../components/common/LoginForm";
 import loginCss from "../../css/common/login-page.module.css";
 
 import logo from "../../assets/images/yuva_logo.png";
+import loginImg from "../../assets/images/loginImg.jpg";
+
 import { SERVER_ORIGIN } from "../../utilities/constants";
 
 // todo: cred validation on frontend
@@ -76,23 +78,21 @@ const LoginPage = () => {
     };
 
     return (
-        <div>Admin Login Page</div>
-        // <div className={loginCss.outerDiv}>
-        //     <img
-        //         src={logo}
-        //         alt="yuva-big-logo"
-        //         className={loginCss.yuvaImg}
-        //     ></img>
-
-        //     <LoginForm
-        //         role="admin"
-        //         adminId={creds.adminId}
-        //         password={creds.password}
-        //         onChange={updateCreds}
-        //         onClick={handleSubmit}
-        //         isBtnDisabled={isLoading}
-        //     />
-        // </div>
+        <div className={"flex items-center mt-4 w-full justify-between px-14 lg:px-pima-x"}>
+            <LoginForm
+                role="admin"
+                adminId={creds.adminId}
+                password={creds.password}
+                onChange={updateCreds}
+                onClick={handleSubmit}
+                isBtnDisabled={isLoading}
+            />
+            <img
+                src={loginImg}
+                alt="login"
+                className={`${loginCss.loginImg} hidden lg:block xl:w-[56rem] w-[48rem]`}
+            />
+        </div>
     );
 };
 

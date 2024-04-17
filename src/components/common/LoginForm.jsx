@@ -53,8 +53,8 @@ export const LoginForm = (props) => {
     // };
 
     return (
-        <div className="loginWrapper">
-            <div className={css.outerDiv}>
+        <div className="flex-1 justify-center flex">
+            <div className="w-full justify-center flex">
                 {/* {modal && <Modal isOpen={modal} style={modalStyles} />} */}
                 {modal ? (
                     <div className={css.loginModal}>
@@ -89,44 +89,44 @@ export const LoginForm = (props) => {
                         </div>
                     </div>
                 ) : (
-                    <div>
-                        <p className={css.heading}>Login</p>
-                        <input
-                            className={css.input}
-                            type="text"
-                            placeholder={
-                                props.role === "user"
-                                    ? "Username or Email"
-                                    : "Admin Id"
-                            }
-                            name={props.role === "user" ? "userId" : "adminId"}
-                            value={
-                                props.role === "user"
-                                    ? props.userId
-                                    : props.adminId
-                            }
-                            onChange={handleChange}
-                            maxLength={validation.authForm.userId.maxLen}
-                            autoComplete="off"
-                        />
+                    <form className="w-full max-w-[500px]">
+                        <p className={`font-bold text-5xl text-center`}>
+                            Login
+                        </p>
+                        <div className="mt-12 flex flex-col gap-8">
+                            <input
+                                className={"w-full px-5 py-5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"}
+                                type="text"
+                                placeholder={
+                                    props.role === "user"
+                                        ? "UserId / Email"
+                                        : "Admin Id"
+                                }
+                                name={
+                                    props.role === "user" ? "userId" : "adminId"
+                                }
+                                value={
+                                    props.role === "user"
+                                        ? props.userId
+                                        : props.adminId
+                                }
+                                onChange={handleChange}
+                                maxLength={validation.authForm.userId.maxLen}
+                                autoComplete="off"
+                            />
 
-                        <input
-                            className={css.input}
-                            type="password"
-                            placeholder="Password"
-                            name="password"
-                            value={props.password}
-                            onChange={handleChange}
-                            maxLength={validation.authForm.password.maxLen}
-                            autoComplete="off"
-                        />
+                            <input
+                                className={"w-full px-5 py-5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"}
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                value={props.password}
+                                onChange={handleChange}
+                                maxLength={validation.authForm.password.maxLen}
+                                autoComplete="off"
+                            />
+                        </div>
 
-                        <Link
-                            onClick={handleForgotPassClick}
-                            className={css.forgotPassText}
-                        >
-                            Forgot Password
-                        </Link>
                         {loader && (
                             <div className={css.forgotPassLoaderWrapper}>
                                 <div className={css.forgotPassLoader}>
@@ -135,36 +135,38 @@ export const LoginForm = (props) => {
                             </div>
                         )}
                         <button
-                            className={css.btn}
+                            className={`w-full text-center py-4 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded mt-8`}
                             onClick={handleLogInClick}
                             disabled={props.isBtnDisabled}
                         >
                             {props.isBtnDisabled ? "Logging in..." : "Login"}
                         </button>
                         {props.role === "user" ? (
-                            <>
-                                <p className={css.forgotPassText}>
-                                    Are you an Admin?
+                            <div className="flex items-center w-full gap-2 justify-center mt-6">
+                                <p className={"text-center text-sm"}>
+                                    Is Admin?
                                 </p>
                                 <Link
-                                    className={css.registerText}
+                                    className={`underline hover:scale-105`}
                                     to="/admin/login"
                                 >
-                                    Login
+                                    LOGIN
                                 </Link>
-                            </>
-                        ) : <>
-                                <p className={css.forgotPassText}>
-                                    Are you an User?
+                            </div>
+                        ) : (
+                            <div className="flex items-center w-full gap-2 justify-center mt-6">
+                                <p className={"text-sm"}>
+                                    Is User?
                                 </p>
                                 <Link
-                                    className={css.registerText}
+                                    className={`underline hover:scale-105`}
                                     to="/user/login"
                                 >
-                                    Login
+                                    LOGIN
                                 </Link>
-                            </>}
-                    </div>
+                            </div>
+                        )}
+                    </form>
                 )}
             </div>
         </div>

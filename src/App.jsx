@@ -43,6 +43,7 @@ import Footer from "./routes/user/Footer";
 import "./App.css";
 import ScrollToTop from "./components/user/ScrollToTop";
 import AdminUserPage from "./routes/admin/AdminUserPage.jsx";
+import AdminCreateUser from "./routes/admin/AdminCreateUser.jsx";
 
 function App() {
     return (
@@ -238,6 +239,15 @@ function App() {
                         }
                     />
                     <Route
+                        path="/admin/users/register-user"
+                        element={
+                            <>
+                                <AdminNavbar />
+                                <AdminCreateUser />
+                            </>
+                        }
+                    />
+                    <Route
                         path="/admin/users/:userId"
                         element={
                             <>
@@ -299,7 +309,7 @@ function App() {
                 </Routes>
             </div>
 
-            <Footer />
+            {/* <Footer /> */}
 
             <Toaster
                 toastOptions={{

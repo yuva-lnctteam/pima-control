@@ -8,6 +8,10 @@ module.exports = {
             colors: {
                 "pima-red": "#ed3237",
             },
+            spacing: {
+               "pima-x": "5.0625rem",
+                "pima-y": "2rem",
+            },
         },
     },
     plugins: [],

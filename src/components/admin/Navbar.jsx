@@ -1,13 +1,22 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/images/yi_logo.png";
-
+import hamburgerImg from "../../assets/images/hamburger.png";
 // My css
 import css from "../../css/admin/navbar.module.css";
+import { AnimatePresence, motion } from "framer-motion";
+import logo from "../../assets/images/LOGO.png";
+
+const navLinks = [
+    { name: "Admin_Panel", path: "/admin/services" },
+    { name: "Verticals", path: "/user/verticals/all" },
+    { name: "About", path: "/about" },
+];
 
 const Navbar = () => {
     const navigate = useNavigate();
 
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
     const handleLoginClick = (e) => {
         navigate("/admin/login");
     };
@@ -23,50 +32,95 @@ const Navbar = () => {
     const listItemStyle = { fontSize: "0.9rem", fontWeight: "400" };
 
     return (
-        <nav>Admin Navbar</nav>
-        // <nav className={`${css.outerNav} navbar navbar-expand-lg fixed-top`}>
-        //   <img src={img} alt="yi-logo" className={css.yiImg} onClick={handleImgClick} />
-        //   <button
-        //     type="button"
-        //     className="navbar-toggler"
-        //     data-bs-toggle="collapse"
-        //     data-bs-target="#navbarCollapse"
-        //   >
-        //     <span className="navbar-toggler-icon"></span>
-        //   </button>
+        <nav className="flex flex-col md:flex-row justify-between px-10 md:px-pima-x py-pima-y items-center">
+            <div className="flex items-center w-full justify-between">
+                <img
+                    src={logo}
+                    alt="pima-logo"
+                    onClick={handleImgClick}
+                    className="cursor-pointer"
+                />
 
-        //   <div className="collapse navbar-collapse" id="navbarCollapse">
-        //     <ul className="navbar-nav mr-auto text-ff1">
-        //       <li className="nav-item active">
-        //         <Link
-        //           className="nav-link active"
-        //           to="/admin/services"
-        //           style={listItemStyle}
-        //         >
-        //           Services
-        //         </Link>
-        //       </li>
-        //     </ul>
-
-        //     <ul className="navbar-nav ms-auto">
-        //       {localStorage.getItem("token") ? (
-        //         <button
-        //           className={`${css.navBtn} text-ff1 navbar-right`}
-        //           onClick={handleLogoutClick}
-        //         >
-        //           Logout
-        //         </button>
-        //       ) : (
-        //         <button
-        //           className={`${css.navBtn} text-ff1 navbar-right`}
-        //           onClick={handleLoginClick}
-        //         >
-        //           Login
-        //         </button>
-        //       )}
-        //     </ul>
-        //   </div>
-        // </nav>
+                <img
+                    src={hamburgerImg}
+                    alt="hamburger"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="md:hidden w-12 h-12 p-2 cursor-pointer hover:scale-90 transition-all duration-150"
+                />
+            </div>
+            <ul className="hidden md:flex gap-16 items-center flex-1">
+                {navLinks.map((link, index) => (
+                    <li key={index} className="hover:underline">
+                        <Link to={link.path} className="font-inter flex">
+                            {link.name}
+                        </Link>
+                    </li>
+                ))}
+                <li className="flex">
+                    {localStorage.getItem("token") ? (
+                        <>
+                            <button
+                                className="rounded w-32 ml-8 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                onClick={handleLogoutClick}
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button
+                                className="rounded w-40 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                onClick={handleLoginClick}
+                            >
+                                Login
+                            </button>
+                        </>
+                    )}
+                </li>
+            </ul>
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.ul
+                        initial={{ height: 0, overflow: "hidden" }}
+                        animate={{ height: "auto" }}
+                        exit={{ height: 0, overflow: "hidden" }}
+                        transition={{ duration: 0.5 }}
+                        className={`
+                ${isMobileMenuOpen ? "flex" : "hidden"}
+             flex-col md:hidden gap-2 mt-6 items-center`}
+                    >
+                        {navLinks.map((link, index) => (
+                            <li key={index} className="hover:font-semibold">
+                                <Link to={link.path} className="font-inter">
+                                    {link.name}
+                                </Link>
+                            </li>
+                        ))}
+                        <li className="flex mt-2 flex-col gap-4">
+                            {localStorage.getItem("token") ? (
+                                <>
+                                    <button
+                                        className="rounded w-32 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                        onClick={handleLogoutClick}
+                                    >
+                                        Logout
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <button
+                                        className="rounded w-40 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                        onClick={handleLoginClick}
+                                    >
+                                        Login
+                                    </button>
+                                </>
+                            )}
+                        </li>
+                    </motion.ul>
+                )}
+            </AnimatePresence>
+        </nav>
     );
 };
 
