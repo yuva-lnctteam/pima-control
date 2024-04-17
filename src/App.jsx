@@ -9,7 +9,6 @@ import { Toaster } from "react-hot-toast";
 // My components
 import UserNavbar from "./components/user/Navbar";
 import AdminNavbar from "./components/admin/Navbar";
-// import Footer from "./components/common/Footer";
 
 // User Pages
 import UserHome from "./routes/user/HomePage";
@@ -71,7 +70,7 @@ function App() {
                             </>
                         }
                     />
-                    <Route
+                    {/* <Route
                         exact
                         path="/about"
                         element={
@@ -80,7 +79,7 @@ function App() {
                                 <UserAboutPage />
                             </>
                         }
-                    />
+                    /> */}
                     <Route
                         exact
                         path="/privacy-policy"
@@ -161,7 +160,7 @@ function App() {
                             </>
                         }
                     />
-                    
+
                     {/* <Route
                         exact
                         path="/user/register"
@@ -172,7 +171,7 @@ function App() {
                             </>
                         }
                     /> */}
-                    
+
                     <Route
                         exact
                         path="/user/certificate/:certId"

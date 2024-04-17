@@ -63,8 +63,7 @@ const LoginPage = () => {
             } else {
                 // for future
             }
-        } catch (error) {
-        }
+        } catch (error) {}
     };
 
     const updateCreds = (e) => {
@@ -77,22 +76,23 @@ const LoginPage = () => {
     };
 
     return (
-        <div className={loginCss.outerDiv}>
-            <img
-                src={logo}
-                alt="yuva-big-logo"
-                className={loginCss.yuvaImg}
-            ></img>
+        <div>Admin Login Page</div>
+        // <div className={loginCss.outerDiv}>
+        //     <img
+        //         src={logo}
+        //         alt="yuva-big-logo"
+        //         className={loginCss.yuvaImg}
+        //     ></img>
 
-            <LoginForm
-                role="admin"
-                adminId={creds.adminId}
-                password={creds.password}
-                onChange={updateCreds}
-                onClick={handleSubmit}
-                isBtnDisabled={isLoading}
-            />
-        </div>
+        //     <LoginForm
+        //         role="admin"
+        //         adminId={creds.adminId}
+        //         password={creds.password}
+        //         onChange={updateCreds}
+        //         onClick={handleSubmit}
+        //         isBtnDisabled={isLoading}
+        //     />
+        // </div>
     );
 };
 

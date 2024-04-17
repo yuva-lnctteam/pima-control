@@ -58,8 +58,7 @@ const HomePage = () => {
                 } else {
                     // for future
                 }
-            } catch (err) {
-            }
+            } catch (err) {}
 
             setIsLoading(false);
         }
@@ -95,8 +94,7 @@ const HomePage = () => {
             } else {
                 // for future
             }
-        } catch (error) {
-        }
+        } catch (error) {}
     }
 
     const element = (
@@ -104,7 +102,8 @@ const HomePage = () => {
             {/* <HeaderCard>
         <p className={vCss.headerText}>Here's what we have got for you !</p>
       </HeaderCard> */}
-            <div className={`${homeCss.outerDiv} row`}>
+            <div className="min-h-screen bg-red-100">Home Page</div>
+            {/* <div className={`${homeCss.outerDiv} row`}>
                 <div
                     className={`col-lg-8 col-md-8 col-sm-8 ${homeCss.introDiv}`}
                 >
@@ -190,7 +189,7 @@ const HomePage = () => {
                         </div>
                     ))}
                 </CardGrid>
-            </section>
+            </section> */}
 
             {/* {allVerticals.length > 0 ? (
         <section id="verticals">
