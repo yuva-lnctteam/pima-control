@@ -48,7 +48,7 @@ function App() {
     return (
         <Router>
             <ScrollToTop />
-            <div className="app-outer-div">
+            <div className="font-inter">
                 <Routes>
                     <Route
                         exact
