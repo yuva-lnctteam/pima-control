@@ -137,6 +137,7 @@ input[type="file"] {
 .searchInput {
     border-radius: 0.4rem;
     outline: none;
+    /* border-color: 1px solid var(--pima-red); */
     border: 1px solid;
     height: 40px;
     width: 300px;
@@ -199,7 +200,7 @@ input[type="file"] {
     border: none;
     padding: 0.4rem 1.4rem;
     border-radius: 0.4rem;
-    background-color: var(--yuva-blue);
+    background-color: var(--pima-red);
     color: white;
     font-weight: 600;
     height: 40px;
@@ -220,7 +221,7 @@ table {
     border-collapse: collapse;
     background: white;
     border-radius: 1rem;
-    border: 2px solid var(--yuva-blue);
+    border: 2px solid var(--pima-red);
     overflow: hidden;
     width: 100%;
     margin: 0 auto;
@@ -245,7 +246,7 @@ tbody tr:hover {
 
 thead tr {
     height: 60px;
-    background: var(--yuva-blue);
+    background: var(--pima-red);
     font-size: 1.2rem;
     color: #ffff;
 }

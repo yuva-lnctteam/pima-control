@@ -18,7 +18,17 @@ function capitalizeFirstLetter(str) {
 
 const AdminUsers = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [allUsers, setAllUsers] = useState([]);
+    const [allUsers, setAllUsers] = useState([
+        {
+            _id: "24324",
+            fName: "Abhishek",
+            lName: "Kumar",
+            email: "abc@gmail.com",
+            phone: "1234567890",
+            userId: "PULKITJI",
+        },
+    ]);
+    
     const [page, setPage] = useState(1);
     const [sortType, setSortType] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
@@ -142,7 +152,6 @@ const AdminUsers = () => {
                     Note: Deleting a user is irreversible. Do it at your own
                     risk.
                 </p>
-
             </HeaderCard>
             <div className={css.filterBtns}>
                 <button

@@ -27,9 +27,11 @@
     --blue: #0b5ed7;
     --cert-gold: #996515;
 
-    /* styling */
-    --box-shadow-1: 0 0 0.5rem 0 rgb(0, 0, 0, 0.9);
-    --box-shadow-2: 0 0 0.5rem 0 var(--yuva-blue);
+  /* styling */
+  --box-shadow-1: 0 0 0.5rem 0 rgb(0, 0, 0, 0.9);
+  --box-shadow-2: 0 0 0.5rem 0 var(--yuva-blue);
+
+  --pima-red: #ed3237;
 }
 
 body {
