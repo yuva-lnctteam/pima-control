@@ -28,7 +28,7 @@ const AdminUsers = () => {
             userId: "PULKITJI",
         },
     ]);
-    
+
     const [page, setPage] = useState(1);
     const [sortType, setSortType] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
@@ -140,20 +140,18 @@ const AdminUsers = () => {
     }, [page, sortType, searchQuery, rerender, navigate]);
 
     return (
-        <div className={css.outerDiv}>
-            <HeaderCard>
-                <h1 className="headerTitle">Users</h1>
+        <div className="px-pima-x py-pima-y">
+            <h1 className="text-4xl font-extrabold">Manage Users</h1>
 
-                <hr />
-                <p className="headerSubtitle">
-                    You can View/Add/Delete users from here
-                </p>
-                <p className="headerSubtitle">
-                    Note: Deleting a user is irreversible. Do it at your own
-                    risk.
-                </p>
-            </HeaderCard>
-            <div className={css.filterBtns}>
+            <div className="flex justify-between mt-8">
+                <input className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]" type="text" name="" id="" placeholder="Search by Name"/>
+                <button onClick={() => navigate('/admin/users/register-user')}  className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2">
+                            Create User
+                        </button>
+            </div>
+
+            <div className="bg-[#dcdcdc] h-screen mt-8 rounded-[5px]"></div>
+            {/* <div className={css.filterBtns}>
                 <button
                     className={css.sortTypeBtn}
                     onClick={() => setSortType(!sortType)}
@@ -288,7 +286,7 @@ const AdminUsers = () => {
                         </button>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

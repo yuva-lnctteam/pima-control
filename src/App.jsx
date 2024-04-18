@@ -194,11 +194,11 @@ function App() {
                         }
                     />
                     <Route
-                        path="/admin/services"
+                        path="/admin/manage-users"
                         element={
                             <>
                                 <AdminNavbar />
-                                <AdminServices />
+                                <AdminUsers />
                             </>
                         }
                     />
@@ -229,7 +229,7 @@ function App() {
                             </>
                         }
                     />
-                    <Route
+                    {/* <Route
                         path="/admin/users/all"
                         element={
                             <>
@@ -237,7 +237,7 @@ function App() {
                                 <AdminUsers />
                             </>
                         }
-                    />
+                    /> */}
                     <Route
                         path="/admin/users/register-user"
                         element={

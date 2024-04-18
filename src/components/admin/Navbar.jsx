@@ -8,9 +8,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/images/LOGO.png";
 
 const navLinks = [
-    { name: "Admin Panel", path: "/admin/services" },
-    { name: "Verticals", path: "/user/verticals/all" },
-    { name: "About", path: "/about" },
+    { name: "Users", path: "/admin/manage-users" },
+    { name: "Content", path: "/user/manage-content" },
 ];
 
 const Navbar = () => {
