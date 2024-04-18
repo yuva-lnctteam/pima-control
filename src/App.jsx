@@ -56,7 +56,7 @@ function App() {
                         path="/user/login"
                         element={
                             <>
-                                {/* <UserNavbar /> */}
+                                <UserNavbar />
                                 <UserLogin />
                             </>
                         }
@@ -215,7 +215,7 @@ function App() {
                         path="/admin/login"
                         element={
                             <>
-                                {/* <AdminNavbar /> */}
+                                <AdminNavbar />
                                 <AdminLogin />
                             </>
                         }

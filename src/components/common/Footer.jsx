@@ -11,7 +11,7 @@ function Footer() {
         <Link to="/user/verticals/all" className="footer-tab">
           Verticals
         </Link> */}
-        <p className="copyright-tab">YUVA © {new Date().getFullYear()}</p>
+        <p className="copyright-tab">Pima © {new Date().getFullYear()}</p>
       </div>
     </footer>
   );

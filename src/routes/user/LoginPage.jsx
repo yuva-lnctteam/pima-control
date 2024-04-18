@@ -89,7 +89,7 @@ const LoginPage = () => {
             <img
                 src={loginImg}
                 alt="login"
-                className={`${loginCss.loginImg} hidden lg:block xl:w-[56rem] w-[48rem]`}
+                className={`${loginCss.loginImg} hidden lg:block w-1/2`}
             />
         </div>
     );

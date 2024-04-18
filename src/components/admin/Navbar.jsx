@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from "../../assets/images/yi_logo.png";
 import hamburgerImg from "../../assets/images/hamburger.png";
 // My css
@@ -15,6 +15,7 @@ const navLinks = [
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const pathname = useLocation().pathname;
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
     const handleLoginClick = (e) => {
@@ -40,66 +41,30 @@ const Navbar = () => {
                     onClick={handleImgClick}
                     className="cursor-pointer w-24"
                 />
-                <img
-                    src={hamburgerImg}
-                    alt="hamburger"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="md:hidden w-12 h-12 p-2 cursor-pointer hover:scale-90 transition-all duration-150"
-                />
+                {pathname !== "/user/login" && pathname !== "/admin/login" && (
+                    <img
+                        src={hamburgerImg}
+                        alt="hamburger"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        className="md:hidden w-12 h-12 p-2 cursor-pointer hover:scale-90 transition-all duration-150"
+                    />
+                )}
             </div>
-            <ul className="hidden md:flex gap-16 md:items-center ">
-                {navLinks.map((link, index) => (
-                    <li key={index} className="hover:underline">
-                        <Link to={link.path} className="font-inter">
-                            {link.name}
-                        </Link>
-                    </li>
-                ))}
-                <li className="flex">
-                    {localStorage.getItem("token") ? (
-                        <>
-                            <button
-                                className="rounded w-32 ml-8 transition-all duration-150 bg-pima-red py-2 text-center text-white text-base hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
-                                onClick={handleLogoutClick}
-                            >
-                                Logout
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <button
-                                className="rounded w-40 transition-all duration-150 bg-pima-red py-2 text-center text-white py-2 text-base hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
-                                onClick={handleLoginClick}
-                            >
-                                Login
-                            </button>
-                        </>
-                    )}
-                </li>
-            </ul>
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.ul
-                        initial={{ x: 500, overflow: "hidden" }}
-                        animate={{ x: 0 }}
-                        exit={{ x: 500, overflow: "hidden" }}
-                        transition={{ duration: 0.5 }}
-                        className={`
-                        ${isMobileMenuOpen ? "flex" : "hidden"}
-             flex-col md:hidden gap-10 mt-6 items-center fixed right-0 shadow-xl -top-6 bg-white w-[20rem] z-[10000] h-screen text-lg`}
-                    >
+            {pathname !== "/user/login" && pathname !== "/admin/login" && (
+                <>
+                    <ul className="hidden md:flex gap-16 md:items-center ">
                         {navLinks.map((link, index) => (
-                            <li key={index} className="hover:font-semibold">
+                            <li key={index} className="hover:underline">
                                 <Link to={link.path} className="font-inter">
                                     {link.name}
                                 </Link>
                             </li>
                         ))}
-                        <li className="flex mt-2 flex-col gap-4">
+                        <li className="flex">
                             {localStorage.getItem("token") ? (
                                 <>
                                     <button
-                                        className="rounded w-32 transition-all duration-150 bg-pima-red py-2 text-base text-center text-white hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                        className="rounded w-32 ml-8 transition-all duration-150 bg-pima-red py-2 text-center text-white text-base hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
                                         onClick={handleLogoutClick}
                                     >
                                         Logout
@@ -108,7 +73,7 @@ const Navbar = () => {
                             ) : (
                                 <>
                                     <button
-                                        className="rounded w-40 transition-all duration-150 bg-pima-red text-center text-white py-2 text-base hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                        className="rounded w-40 transition-all duration-150 bg-pima-red py-2 text-center text-white py-2 text-base hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
                                         onClick={handleLoginClick}
                                     >
                                         Login
@@ -116,9 +81,70 @@ const Navbar = () => {
                                 </>
                             )}
                         </li>
-                    </motion.ul>
-                )}
-            </AnimatePresence>
+                    </ul>
+                    <AnimatePresence>
+                        {isMobileMenuOpen && (
+                            <motion.ul
+                                initial={{ x: 500, overflow: "hidden" }}
+                                animate={{ x: 0 }}
+                                exit={{ x: 500, overflow: "hidden" }}
+                                transition={{ duration: 0.5 }}
+                                className={`
+                ${isMobileMenuOpen ? "flex" : "hidden"}
+             flex-col md:hidden gap-10 mt-6 items-center fixed right-0 shadow-xl -top-6 bg-white w-[20rem] z-[10000] h-screen text-lg`}
+                            >
+                                <li className="flex justify-end py-4 px-6 w-full mb-2">
+                                    <img
+                                        src={hamburgerImg}
+                                        alt="hamburger"
+                                        onClick={() =>
+                                            setIsMobileMenuOpen(
+                                                !isMobileMenuOpen
+                                            )
+                                        }
+                                        className="md:hidden w-12 h-12 p-2 cursor-pointer hover:scale-90 transition-all duration-150"
+                                    />
+                                </li>
+
+                                {navLinks.map((link, index) => (
+                                    <li
+                                        key={index}
+                                        className="hover:font-semibold"
+                                    >
+                                        <Link
+                                            to={link.path}
+                                            className="font-inter"
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                                <li className="flex mt-2 flex-col gap-4 ml-4">
+                                    {localStorage.getItem("token") ? (
+                                        <>
+                                            <button
+                                                className="rounded w-32 transition-all duration-150 bg-pima-red text-center text-white hover:bg-white hover:text-pima-red hover:border py-2 text-base hover:border-pima-red"
+                                                onClick={handleLogoutClick}
+                                            >
+                                                Logout
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="rounded w-32 transition-all duration-150 bg-pima-red text-center text-white hover:bg-white hover:text-pima-red py-2 text-base hover:border hover:border-pima-red"
+                                                onClick={handleLoginClick}
+                                            >
+                                                Login
+                                            </button>
+                                        </>
+                                    )}
+                                </li>
+                            </motion.ul>
+                        )}
+                    </AnimatePresence>
+                </>
+            )}
         </nav>
     );
 };
