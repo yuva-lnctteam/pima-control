@@ -78,7 +78,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div className={"flex items-center mt-4 w-full justify-between px-14 lg:px-pima-x"}>
+        <div className={"flex items-center w-full justify-between px-14 lg:px-pima-x flex-1"}>
             <LoginForm
                 role="admin"
                 adminId={creds.adminId}

@@ -90,10 +90,10 @@ export const LoginForm = (props) => {
                     </div>
                 ) : (
                     <form className="w-full max-w-[500px]">
-                        <p className={`font-bold text-5xl text-center`}>
+                        <h1 className={`font-inter font-extrabold text-5xl text-center`}>
                             Login
-                        </p>
-                        <div className="mt-12 flex flex-col gap-8">
+                        </h1>
+                        <div className="mt-12 flex flex-col gap-6">
                             <input
                                 className={"w-full px-5 py-5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"}
                                 type="text"
@@ -125,7 +125,6 @@ export const LoginForm = (props) => {
                                 maxLength={validation.authForm.password.maxLen}
                                 autoComplete="off"
                             />
-                        </div>
 
                         {loader && (
                             <div className={css.forgotPassLoaderWrapper}>
@@ -135,19 +134,20 @@ export const LoginForm = (props) => {
                             </div>
                         )}
                         <button
-                            className={`w-full text-center py-4 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded mt-8`}
+                            className={`w-full text-center py-4 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded`}
                             onClick={handleLogInClick}
                             disabled={props.isBtnDisabled}
                         >
-                            {props.isBtnDisabled ? "Logging in..." : "Login"}
+                            {props.isBtnDisabled ? "Logging in..." : "LOGIN"}
                         </button>
+                        </div>
                         {props.role === "user" ? (
                             <div className="flex items-center w-full gap-2 justify-center mt-6">
-                                <p className={"text-center text-sm"}>
+                                <p className={"text-center"}>
                                     Is Admin?
                                 </p>
                                 <Link
-                                    className={`underline hover:scale-105`}
+                                    className={`font-bold`}
                                     to="/admin/login"
                                 >
                                     LOGIN
@@ -159,7 +159,7 @@ export const LoginForm = (props) => {
                                     Is User?
                                 </p>
                                 <Link
-                                    className={`underline hover:scale-105`}
+                                    className={`font-bold`}
                                     to="/user/login"
                                 >
                                     LOGIN

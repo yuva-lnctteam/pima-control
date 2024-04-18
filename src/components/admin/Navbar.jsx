@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/images/LOGO.png";
 
 const navLinks = [
-    { name: "Admin_Panel", path: "/admin/services" },
+    { name: "Admin Panel", path: "/admin/services" },
     { name: "Verticals", path: "/user/verticals/all" },
     { name: "About", path: "/about" },
 ];
@@ -32,15 +32,14 @@ const Navbar = () => {
     const listItemStyle = { fontSize: "0.9rem", fontWeight: "400" };
 
     return (
-        <nav className="flex flex-col md:flex-row justify-between px-10 md:px-pima-x py-pima-y items-center">
-            <div className="flex items-center w-full justify-between">
+        <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4 items-center">
+            <div className="flex items-center justify-between max-md:w-full">
                 <img
                     src={logo}
                     alt="pima-logo"
                     onClick={handleImgClick}
-                    className="cursor-pointer"
+                    className="cursor-pointer w-24"
                 />
-
                 <img
                     src={hamburgerImg}
                     alt="hamburger"
@@ -48,10 +47,10 @@ const Navbar = () => {
                     className="md:hidden w-12 h-12 p-2 cursor-pointer hover:scale-90 transition-all duration-150"
                 />
             </div>
-            <ul className="hidden md:flex gap-16 items-center flex-1">
+            <ul className="hidden md:flex gap-16 md:items-center ">
                 {navLinks.map((link, index) => (
                     <li key={index} className="hover:underline">
-                        <Link to={link.path} className="font-inter flex">
+                        <Link to={link.path} className="font-inter">
                             {link.name}
                         </Link>
                     </li>

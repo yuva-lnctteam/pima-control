@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -8,7 +8,6 @@ import { LoginForm } from "../../components/common/LoginForm";
 // My css
 import loginCss from "../../css/common/login-page.module.css";
 
-import logo from "../../assets/images/yuva_logo.png";
 import loginImg from "../../assets/images/loginImg.jpg";
 import { SERVER_ORIGIN } from "../../utilities/constants";
 
@@ -74,23 +73,25 @@ const LoginPage = () => {
     };
 
     return (
-        <>
-            <div className={"flex items-center mt-4 w-full justify-between px-14 lg:px-pima-x"}>
-                <LoginForm
-                    role="user"
-                    userId={creds.userId}
-                    password={creds.password}
-                    onChange={updateCreds}
-                    onClick={handleSubmit}
-                    isBtnDisabled={isLoading}
-                />
-                <img
-                    src={loginImg}
-                    alt="login"
-                    className={`${loginCss.loginImg} hidden lg:block xl:w-[56rem] w-[48rem]`}
-                />
-            </div>
-        </>
+        <div
+            className={
+                "flex items-center w-full justify-between px-14 lg:px-pima-x flex-1"
+            }
+        >
+            <LoginForm
+                role="user"
+                userId={creds.userId}
+                password={creds.password}
+                onChange={updateCreds}
+                onClick={handleSubmit}
+                isBtnDisabled={isLoading}
+            />
+            <img
+                src={loginImg}
+                alt="login"
+                className={`${loginCss.loginImg} hidden lg:block xl:w-[56rem] w-[48rem]`}
+            />
+        </div>
     );
 };
 

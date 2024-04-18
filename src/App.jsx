@@ -49,14 +49,14 @@ function App() {
     return (
         <Router>
             <ScrollToTop />
-            <div className="font-inter">
+            <div className="font-inter min-h-screen flex flex-col">
                 <Routes>
                     <Route
                         exact
                         path="/user/login"
                         element={
                             <>
-                                <UserNavbar />
+                                {/* <UserNavbar /> */}
                                 <UserLogin />
                             </>
                         }
@@ -215,7 +215,7 @@ function App() {
                         path="/admin/login"
                         element={
                             <>
-                                <AdminNavbar />
+                                {/* <AdminNavbar /> */}
                                 <AdminLogin />
                             </>
                         }
