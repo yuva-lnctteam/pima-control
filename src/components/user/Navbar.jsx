@@ -65,7 +65,7 @@ const Navbar = () => {
     const listItemStyle = { fontSize: "0.9rem", fontWeight: "400" };
 
     return (
-        <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4 items-center">
+        <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4 items-center relative">
             <div className="flex items-center justify-between max-md:w-full">
                 <img
                     src={logo}
@@ -80,7 +80,7 @@ const Navbar = () => {
                     className="md:hidden w-12 h-12 p-2 cursor-pointer hover:scale-90 transition-all duration-150"
                 />
             </div>
-            <ul className="hidden md:flex gap-12 md:items-center bg--50">
+            <ul className="hidden md:flex gap-12 md:items-center">
                 {navLinks.map((link, index) => (
                     <li key={index} className="hover:underline font-medium">
                         <Link to={link.path} className="font-inter">
@@ -103,7 +103,7 @@ const Navbar = () => {
                                 My Profile
                             </button> */}
                             <button
-                                className="rounded font-medium w-32 ml-8 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red border-2 hover:border-2 border-pima-red"
+                                className="rounded font-medium w-32 ml-8 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red border-2 text-base hover:border-2 border-pima-red"
                                 onClick={handleLogoutClick}
                             >
                                 Logout
@@ -112,7 +112,7 @@ const Navbar = () => {
                     ) : (
                         <>
                             <button
-                                className="rounded font-medium w-40 border-2 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red  hover:border-2 border-pima-red"
+                                className="rounded font-medium w-40 border-2 transition-all duration-150 bg-pima-red py-2 text-base text-center text-white hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
                                 onClick={handleLoginClick}
                             >
                                 Login
@@ -124,14 +124,25 @@ const Navbar = () => {
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.ul
-                        initial={{ height: 0, overflow: "hidden" }}
-                        animate={{ height: "auto" }}
-                        exit={{ height: 0, overflow: "hidden" }}
+                        initial={{ x: 500, overflow: "hidden" }}
+                        animate={{ x: 0 }}
+                        exit={{ x: 500, overflow: "hidden" }}
                         transition={{ duration: 0.5 }}
                         className={`
                 ${isMobileMenuOpen ? "flex" : "hidden"}
-             flex-col md:hidden gap-2 mt-6 items-center `}
+             flex-col md:hidden gap-10 mt-6 items-center fixed right-0 shadow-xl -top-6 bg-white w-[20rem] z-[10000] h-screen text-lg`}
                     >
+                        <li className="flex justify-end py-4 px-6 w-full mb-2">
+                            <img
+                                src={hamburgerImg}
+                                alt="hamburger"
+                                onClick={() =>
+                                    setIsMobileMenuOpen(!isMobileMenuOpen)
+                                }
+                                className="md:hidden w-12 h-12 p-2 cursor-pointer hover:scale-90 transition-all duration-150"
+                            />
+                        </li>
+
                         {navLinks.map((link, index) => (
                             <li key={index} className="hover:font-semibold">
                                 <Link to={link.path} className="font-inter">
@@ -143,18 +154,7 @@ const Navbar = () => {
                             {localStorage.getItem("token") ? (
                                 <>
                                     <button
-                                        className="rounded w-32 text-pima-red py-2 justify-center items-center border border-pima-red gap-2 flex hover:bg-pima-red hover:text-white hover:border-pima-red transition-all duration-150"
-                                        onClick={handleProfileClick}
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faUser}
-                                            className="ml-1"
-                                        />
-                                        {"   "}
-                                        My Profile
-                                    </button>
-                                    <button
-                                        className="rounded w-32 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                        className="rounded w-32 transition-all duration-150 bg-pima-red text-center text-white hover:bg-white hover:text-pima-red hover:border py-2 text-base hover:border-pima-red"
                                         onClick={handleLogoutClick}
                                     >
                                         Logout
@@ -163,7 +163,7 @@ const Navbar = () => {
                             ) : (
                                 <>
                                     <button
-                                        className="rounded w-40 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                        className="rounded w-32 transition-all duration-150 bg-pima-red text-center text-white hover:bg-white hover:text-pima-red py-2 text-base hover:border hover:border-pima-red"
                                         onClick={handleLoginClick}
                                     >
                                         Login
