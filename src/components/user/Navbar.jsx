@@ -112,7 +112,7 @@ const Navbar = () => {
                     ) : (
                         <>
                             <button
-                                className="rounded font-medium w-40 border-2 transition-all duration-150 bg-pima-red py-2 text-base text-center text-white hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
+                                className="rounded font-medium w-40 border-2 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
                                 onClick={handleLoginClick}
                             >
                                 Login

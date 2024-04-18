@@ -1,64 +1,27 @@
 import React from "react";
 
-//my modules
-import css from "../../css/common/card.module.css";
-
-function Card(props) {
+function Card() {
     return (
-        <div className={css.cardDiv}>
-            {props.type === "course" ? null : (
-                <img
-                    className={css.cardImg}
-                    src={
-                        props.type === "vertical"
-                            ? props.data.imgSrc
-                            : props.data.vdoThumbnail
-                    }
-                    alt={props.data.name}
-                />
-            )}
-            <div className={css.cardDetails}>
-                <p className={css.cardName}>
-                    {props.type === "unit"
-                        ? props.data.video.title
-                        : props.data.name}
+        <div className="flex rounded-[5px] h-[160px] card-shadow">
+            <div className="bg-pima-red text-white flex flex-col p-4 rounded-l-[5px] w-[140px] gap-4">
+                <span className="uppercase text-[10px] underline underline-offset-[3px] font-semibold">
+                    vertical
+                </span>
+                <span className="text-xl font-semibold">
+                    How to use the machines
+                </span>
+            </div>
+            <div className="flex flex-col p-4 rounded-r-[5px] flex-1 items-end justify-between">
+                <span className="text-[10px] uppercase font-medium">
+                    4 courses
+                </span>
+                <p className="text-sm line-clamp-3">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Veritatis dicta provident maiores ad eveniet, sed nostrum at
+                    perspiciatis molestiae repellendus
                 </p>
-                <p className={css.cardDesc}>
-                    {props.type === "unit"
-                        ? props.data.video.desc
-                        : props.data.desc}
-                </p>
-
-                <p className={css.cardCount}>
-                    {props.type === "vertical"
-                        ? props.data.courseCount + " Courses"
-                        : props.type === "course"
-                        ? props.data.unitCount + " Units"
-                        : props.data.quizCount + " Questions"}
-                </p>
-                <p
-                    className={css.cardCount}
-                    style={{ textDecoration: "none", fontSize: "14px" }}
-                >
-                    {props.type === "vertical"
-                        ? props.data.certUnlocked +
-                          " Certificates Unlocked by Users"
-                        : ""}
-                </p>
-
-                <button
-                    className={css.cardViewBtn}
-                    id={props.data._id}
-                    onClick={(e) => {
-                        props.onClick(e);
-                    }}
-                >
-                    View{" "}
-                    {props.type === "vertical"
-                        ? "courses"
-                        : props.type === "course"
-                        ? "units"
-                        : "unit"}
+                <button className="text-[10px] uppercase text-pima-red underline underline-offset-[3px] font-semibold">
+                    Explore Course →
                 </button>
             </div>
         </div>
