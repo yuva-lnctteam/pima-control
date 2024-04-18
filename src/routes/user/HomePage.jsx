@@ -13,97 +13,157 @@ import homeCss from "../../css/user/home-page.module.css";
 import vCss from "../../css/user/verticals-page.module.css";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
-import logo from "../../assets/images/yuva-logo-transparent.png";
+import logo from "../../assets/images/home.png";
+import bkt from "../../assets/images/bkt.jpg";
+import colgate from "../../assets/images/colgate.png";
+import balaji from "../../assets/images/balaji.jpg";
+import marathon from "../../assets/images/marathon.jpg";
+import nkp from "../../assets/images/nkp.jpg";
+import about from "../../assets/images/about.png";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 const HomePage = () => {
-    const params = useLocation();
-    // const [allVerticals, setAllVerticals] = useState([]);
-    const [projectVerticals, setProjectVerticals] = useState([]); // [vertical1, vertical2]
-    const [initiativeVerticals, setInitiativeVerticals] = useState([]); // [vertical3, vertical4, vertical5, vertical6]
-    const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
+  const params = useLocation();
+  // const [allVerticals, setAllVerticals] = useState([]);
+  const [projectVerticals, setProjectVerticals] = useState([]); // [vertical1, vertical2]
+  const [initiativeVerticals, setInitiativeVerticals] = useState([]); // [vertical3, vertical4, vertical5, vertical6]
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        setIsLoading(true);
+  useEffect(() => {
+    setIsLoading(true);
 
-        async function getAllVerticals() {
-            try {
-                const userId = process.env.REACT_APP_USER_ID;
-                const userPassword = process.env.REACT_APP_USER_PASSWORD;
-                const basicAuth = btoa(`${userId}:${userPassword}`);
-                const response = await fetch(
-                    `${SERVER_ORIGIN}/api/user/auth/verticals/all`,
-                    {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Basic ${basicAuth}`,
-                        },
-                    }
-                );
+    async function getAllVerticals() {
+      try {
+        const userId = process.env.REACT_APP_USER_ID;
+        const userPassword = process.env.REACT_APP_USER_PASSWORD;
+        const basicAuth = btoa(`${userId}:${userPassword}`);
+        const response = await fetch(
+          `${SERVER_ORIGIN}/api/user/auth/verticals/all`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Basic ${basicAuth}`,
+            },
+          }
+        );
 
-                const result = await response.json();
-                // (result);
+        const result = await response.json();
+        // (result);
 
-                if (response.status >= 400 && response.status < 600) {
-                    if (response.status === 500) {
-                        toast.error(result.statusText);
-                    }
-                } else if (response.ok && response.status === 200) {
-                    setProjectVerticals(result.allVerticals?.slice(0, 2));
-                    setInitiativeVerticals(result.allVerticals?.slice(2));
-                    // setAllVerticals(result.allVerticals);
-                } else {
-                    // for future
-                }
-            } catch (err) {}
-
-            setIsLoading(false);
+        if (response.status >= 400 && response.status < 600) {
+          if (response.status === 500) {
+            toast.error(result.statusText);
+          }
+        } else if (response.ok && response.status === 200) {
+          setProjectVerticals(result.allVerticals?.slice(0, 2));
+          setInitiativeVerticals(result.allVerticals?.slice(2));
+          // setAllVerticals(result.allVerticals);
+        } else {
+          // for future
         }
+      } catch (err) {}
 
-        getAllVerticals();
-    }, []);
-
-    async function handleViewCourses(e) {
-        const verticalId = e.target.id;
-        // if (localStorage.getItem("token")) {
-        // } else
-        try {
-            const userId = process.env.REACT_APP_USER_ID;
-            const userPassword = process.env.REACT_APP_USER_PASSWORD;
-            const basicAuth = btoa(`${userId}:${userPassword}`);
-            const response = await fetch(
-                `${SERVER_ORIGIN}/api/user/auth/check-authorized`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "auth-token": localStorage.getItem("token"),
-                        Authorization: `Basic ${basicAuth}`,
-                    },
-                }
-            );
-            // (result);
-
-            if (response.status >= 400 && response.status < 600) {
-                navigate("/user/login");
-            } else if (response.ok && response.status === 200) {
-                navigate(`/user/verticals/${verticalId}/courses/all`);
-            } else {
-                // for future
-            }
-        } catch (error) {}
+      setIsLoading(false);
     }
 
-    const element = (
-        <>
-            {/* <HeaderCard>
+    getAllVerticals();
+  }, []);
+
+  async function handleViewCourses(e) {
+    const verticalId = e.target.id;
+    // if (localStorage.getItem("token")) {
+    // } else
+    try {
+      const userId = process.env.REACT_APP_USER_ID;
+      const userPassword = process.env.REACT_APP_USER_PASSWORD;
+      const basicAuth = btoa(`${userId}:${userPassword}`);
+      const response = await fetch(
+        `${SERVER_ORIGIN}/api/user/auth/check-authorized`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+            Authorization: `Basic ${basicAuth}`,
+          },
+        }
+      );
+      // (result);
+
+      if (response.status >= 400 && response.status < 600) {
+        navigate("/user/login");
+      } else if (response.ok && response.status === 200) {
+        navigate(`/user/verticals/${verticalId}/courses/all`);
+      } else {
+        // for future
+      }
+    } catch (error) {}
+  }
+
+  const element = (
+    <>
+      <hero>
+        <div className="flex flex-col-reverse md:flex-row justify-around p-10">
+          <div className="w-full md:w-2/5">
+            <p className="font-bold  md:text-4xl lg:text-6xl pb-4 md:pb-8 text-2xl">
+              Data driven career planning for every student{" "}
+            </p>
+            <p className="md:pb-12  pb-6 text-sm md:text-base">
+              Pima's 40-year experience working with numerous sectors and
+              processes has given it a deep understanding of technology,
+              customer needs, and the problems, what Automation and Electrical
+              solutions can solve.
+            </p>
+
+            <button className="py-2 px-10 bg-pima-red text-white rounded mt-4">
+              Explore Policies
+            </button>
+          </div>
+          <div className="w-full md:w-3/5 lg:w-2/5">
+            <img src={logo} />
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row items-center md:justify-around w-4/5 md:w-full pb-12">
+          {" "}
+          <img className="w-[200px] h-[78px]" src={colgate} />
+          <img className="w-[120px] h-[78px]" src={balaji} />{" "}
+          <img className="w-[153px] h-[100px]" src={marathon} />{" "}
+          <img className="w-[150px] h-[70px]" src={nkp} />{" "}
+          <img className="w-[150px] h-[110px]" src={bkt} />{" "}
+        </div>
+
+        {/* black */}
+      </hero>
+
+      <div className="bg-black flex flex-col gap-5 md:flex-row py-20 justify-around w-full">
+        <div className="px-10  md:w-1/3">
+          <p className="text-white text-4xl font-bold pb-12">
+            How to use the website
+          </p>
+          <p className="text-white text-sm md:text-base pb-5">
+            With this intuitive interface, employees can easily navigate through
+            courses, track their progress, and assess their understanding
+            through interactive quizzes and tests.
+          </p>
+          <p className="text-white text-sm md:text-base pb-5">
+            Our platform not only equips employees with the necessary knowledge
+            but also provides employers with valuable insights into employee
+            comprehension and areas for improvement. Join us on a journey
+            towards a more informed and empowered workforce.
+          </p>
+        </div>
+        <div className="flex justify-center md:w-1/3">
+          <img src={about} />
+        </div>
+      </div>
+
+      {/* <HeaderCard>
         <p className={vCss.headerText}>Here's what we have got for you !</p>
       </HeaderCard> */}
-            <div className="min-h-screen bg-red-100">Home Page</div>
-            {/* <div className={`${homeCss.outerDiv} row`}>
+      {/* <div className={`${homeCss.outerDiv} row hero`}>
                 <div
                     className={`col-lg-8 col-md-8 col-sm-8 ${homeCss.introDiv}`}
                 >
@@ -191,7 +251,7 @@ const HomePage = () => {
                 </CardGrid>
             </section> */}
 
-            {/* {allVerticals.length > 0 ? (
+      {/* {allVerticals.length > 0 ? (
         <section id="verticals">
           <CardGrid>
             {allVerticals.map((vertical) => (
@@ -211,10 +271,10 @@ const HomePage = () => {
       ) : (
         <h1 className="nothingText">Sorry, we found nothing</h1>
       )} */}
-        </>
-    );
+    </>
+  );
 
-    return <>{isLoading ? <Loader /> : element}</>;
+  return <>{isLoading ? <Loader /> : element}</>;
 };
 
 export default HomePage;
