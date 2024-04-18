@@ -111,7 +111,7 @@ const HomePage = () => {
             <p className="font-bold  md:text-4xl lg:text-6xl pb-4 md:pb-8 text-2xl">
               Data driven career planning for every student{" "}
             </p>
-            <p className="md:pb-12  pb-6 text-sm md:text-base">
+            <p className="md:pb-12 text-sm md:text-base  pb-6 text-sm md:text-base">
               Pima's 40-year experience working with numerous sectors and
               processes has given it a deep understanding of technology,
               customer needs, and the problems, what Automation and Electrical
@@ -126,7 +126,7 @@ const HomePage = () => {
             <img src={logo} />
           </div>
         </div>
-        <div className="flex flex-col md:flex-row items-center md:justify-around w-4/5 md:w-full pb-12">
+        <div className="flex flex-col md:flex-row items-center md:justify-around w-4/5 md:w-full pb-12 text-sm md:text-base">
           {" "}
           <img className="w-[200px] h-[78px]" src={colgate} />
           <img className="w-[120px] h-[78px]" src={balaji} />{" "}
@@ -134,13 +134,11 @@ const HomePage = () => {
           <img className="w-[150px] h-[70px]" src={nkp} />{" "}
           <img className="w-[150px] h-[110px]" src={bkt} />{" "}
         </div>
-
-        {/* black */}
       </hero>
-
-      <div className="bg-black flex flex-col gap-5 md:flex-row py-20 justify-around w-full">
-        <div className="px-10  md:w-1/3">
-          <p className="text-white text-4xl font-bold pb-12">
+      {/* black */}
+      <div className="bg-black flex flex-col gap-5 lg:flex-row py-20 justify-around w-full mb-5">
+        <div className="px-10 w-full lg:w-1/3">
+          <p className="text-white md:text-4xl font-bold pb-12 text-sm">
             How to use the website
           </p>
           <p className="text-white text-sm md:text-base pb-5">
@@ -155,8 +153,125 @@ const HomePage = () => {
             towards a more informed and empowered workforce.
           </p>
         </div>
-        <div className="flex justify-center md:w-1/3">
+        <div className="p-8 flex justify-center">
           <img src={about} />
+        </div>
+      </div>
+
+      {/* policies */}
+      <div className="flex flex-col ">
+        <div className="flex flex-col w-max p-4 ml-10 md:ml-20 ">
+          <p className="text-4xl font-bold">Learn Policies</p>
+          <div className="border-2 border-pima-red w-3/4"></div>
+        </div>
+
+        <div className="flex p-1 md:p-10 md:m-10 gap-8 flex-col lg:flex-row">
+          <card className="flex shadow-lg">
+            <div className="bg-pima-red p-5">
+              <p className="text-white text-underline text-sm font-semibold">
+                VERTICAL
+              </p>
+              <div className="flex justify-center items-center h-full">
+                {" "}
+                <p className="text-white font-bold text-xl md:text-4xl">
+                  How to use the Machines
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col p-5">
+              <p className="ml-auto pb-4">4 COURSES</p>
+              <p className="pb-12 text-sm md:text-base">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Dignissim cras tincidunt lobortis feugiat vivamus at augue eget
+                arcu. Ut sem nulla pharetra diam{" "}
+              </p>
+              <p className="ml-auto text-pima-red">EXPLORE COURSE →</p>
+            </div>
+          </card>
+
+          <card className="flex shadow-lg">
+            <div className="bg-pima-red p-5">
+              <p className="text-white text-underline text-sm font-semibold">
+                VERTICAL
+              </p>
+              <div className="flex justify-center items-center h-full">
+                {" "}
+                <p className="text-white font-bold text-xl md:text-4xl">
+                  How to use the Machines
+                </p>    
+              </div>
+            </div>
+            <div className="flex flex-col p-5">
+              <p className="ml-auto pb-4">4 COURSES</p>
+              <p className="pb-12 text-sm md:text-base">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Dignissim cras tincidunt lobortis feugiat vivamus at augue eget
+                arcu. Ut sem nulla pharetra diam{" "}
+              </p>
+              <p className="ml-auto text-pima-red">EXPLORE COURSE →</p>
+            </div>
+          </card>
+        </div>
+      </div>
+
+      <div className="flex flex-col ">
+        <div className="flex flex-col w-max p-4 ml-10 md:ml-20 ">
+          <p className="text-2xl md:text-4xl font-bold">
+            Our Terms & Conditions
+          </p>
+          <div className="border-2 border-pima-red w-3/4"></div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row p-1 md:p-10 md:m-10 gap-8">
+          <card className="flex shadow-lg">
+            <div className="bg-pima-red p-5">
+              <p className="text-white text-underline text-sm font-semibold">
+                VERTICAL
+              </p>
+              <div className="flex justify-center items-center h-full">
+                {" "}
+                <p className="text-white font-bold text-xl md:text-4xl">
+                  How to use the Machines
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col p-5">
+              <p className="ml-auto pb-4">4 COURSES</p>
+              <p className="pb-12 text-sm md:text-base">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Dignissim cras tincidunt lobortis feugiat vivamus at augue eget
+                arcu. Ut sem nulla pharetra diam{" "}
+              </p>
+              <p className="ml-auto text-pima-red">EXPLORE COURSE →</p>
+            </div>
+          </card>
+
+          <card className="flex shadow-lg">
+            <div className="bg-pima-red p-5">
+              <p className="text-white text-underline text-sm font-semibold">
+                VERTICAL
+              </p>
+              <div className="flex justify-center items-center h-full">
+                {" "}
+                <p className="text-white font-bold text-xl md:text-4xl">
+                  How to use the Machines
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col p-5">
+              <p className="ml-auto pb-4">4 COURSES</p>
+              <p className="pb-12 text-sm md:text-base">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Dignissim cras tincidunt lobortis feugiat vivamus at augue eget
+                arcu. Ut sem nulla pharetra diam{" "}
+              </p>
+              <p className="ml-auto text-pima-red">EXPLORE COURSE →</p>
+            </div>
+          </card>
         </div>
       </div>
 
@@ -219,7 +334,7 @@ const HomePage = () => {
                 <CardGrid className={homeCss["card-grid-verticals"]}>
                     {projectVerticals.map((vertical) => (
                         <div
-                            className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
+                            className="col-lg-6 col-md-6 col-sm-12 text-sm md:text-base cardOuterDiv"
                             key={vertical._id}
                         >
                             <Card
@@ -238,7 +353,7 @@ const HomePage = () => {
                 <CardGrid className={homeCss["card-grid-verticals"]}>
                     {initiativeVerticals.map((vertical) => (
                         <div
-                            className="col-lg-6 col-md-6 col-sm-12 cardOuterDiv"
+                            className="col-lg-6 col-md-6 col-sm-12 text-sm md:text-base cardOuterDiv"
                             key={vertical._id}
                         >
                             <Card
@@ -256,7 +371,7 @@ const HomePage = () => {
           <CardGrid>
             {allVerticals.map((vertical) => (
               <div
-                className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
+                className="col-lg-4 col-md-6 col-sm-12 text-sm md:text-base cardOuterDiv"
                 key={vertical._id}
               >
                 <Card
