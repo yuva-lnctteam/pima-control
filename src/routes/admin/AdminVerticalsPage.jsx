@@ -10,11 +10,12 @@ import Loader from "../../components/common/Loader";
 import { SERVER_ORIGIN, validation } from "../../utilities/constants";
 import { refreshScreen } from "../../utilities/helper_functions";
 import { motion, AnimatePresence } from "framer-motion";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 const VerticalsPage = () => {
-    const [isAddModalOpen, setIsAddModalOpen] = useState(true);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [allVerticals, setAllVerticals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [newVertical, setNewVertical] = useState({
@@ -22,6 +23,8 @@ const VerticalsPage = () => {
         desc: "",
         imgSrc: "",
     });
+    const [toDeleteVerticalId, setToDeleteVerticalId] = useState("");
+    const [confirmText, setConfirmText] = useState("");
 
     const navigate = useNavigate();
 
@@ -114,18 +117,11 @@ const VerticalsPage = () => {
         } catch (err) {}
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////
-
     async function handleAddOrViewCourses(e) {
         const verticalId = e.target.id;
         // (verticalId);
-        navigate(`/admin/verticals/${verticalId}/courses/all`);
+        navigate(`/admin/content/verticals/${verticalId}/courses/all`);
     }
-
-    ////////////////////////////////////// Delete Vertical Modal ///////////////////////////////////////////////////
-
-    const [toDeleteVerticalId, setToDeleteVerticalId] = useState("");
-    const [confirmText, setConfirmText] = useState("");
 
     function onConfirmTextChange(e) {
         setConfirmText(e.target.value);
@@ -234,7 +230,7 @@ const VerticalsPage = () => {
     const loader = <Loader />;
 
     const verticalList = (
-        <section className="mt-10 bg-gray-200">
+        <section className="mt-8">
             {allVerticals.length > 0 ? (
                 <CardGrid>
                     {allVerticals.map((vertical) => (
@@ -256,63 +252,38 @@ const VerticalsPage = () => {
     );
 
     return (
-        <div className="px-pima-x py-pima-y">
-            <h1 className="text-4xl font-extrabold">Manage Verticals</h1>
-            {/* <p className="headerSubtitle">
-                    You can View/Add/Delete verticals from here
-                </p>
-                <p className="headerSubtitle">
-                    Note: Deleting a vertical is irreversible. Do it at your own
-                    risk.
-                </p> */}
-            <button
-                onClick={() => setIsAddModalOpen((prev) => !prev)}
-                className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2 mt-6"
-            >
-                Add a new vertical
-            </button>
+        <div className="relative">
             <AnimatePresence>
                 {isAddModalOpen && (
-                    <div
-                        className="flex flex-col items-center gap-6"
-                        initial={{ y: -500, overflow: "hidden" }}
-                        animate={{ y: 0 }}
-                        exit={{ y: -500, overflow: "hidden" }}
-                        transition={{ duration: 0.5 }}
+                    <motion.div
+                        className="fixed bg-white flex flex-col items-center gap-6 border p-6 px-10 m-auto left-0 right-0 top-0 bottom-0 w-[900px] h-fit rounded-[5px] z-[999]"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
                     >
-                        <h3 className="text-4xl font-extrabold text-center">
+                        <XMarkIcon
+                            className="w-6 h-6 absolute right-4 top-4 cursor-pointer"
+                            onClick={() => setIsAddModalOpen(false)}
+                        />
+                        <h3 className="text-4xl font-bold text-center">
                             Add a Vertical
                         </h3>
 
                         <div className="flex flex-col gap-6 w-full">
-                            <div className="flex gap-6">
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    minLength={1}
-                                    maxLength={
-                                        validation.verticalModal.name.maxLen
-                                    }
-                                    onChange={onAddChange}
-                                    value={newVertical.name}
-                                    autoComplete="off"
-                                    className="w-full max-w-[700px] px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a]"
-                                    placeholder="Title of the Vertical"
-                                />
-
-                                <input
-                                    type="text"
-                                    id="imgSrc"
-                                    name="imgSrc"
-                                    onChange={onAddChange}
-                                    value={newVertical.imgSrc}
-                                    autoComplete="off"
-                                    className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a]"
-                                    placeholder="Image URL of the Vertical"
-                                />
-                            </div>
                             <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                minLength={1}
+                                maxLength={validation.verticalModal.name.maxLen}
+                                onChange={onAddChange}
+                                value={newVertical.name}
+                                autoComplete="off"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
+                                placeholder="Title of the Vertical"
+                            />
+                            <textarea
                                 type="text"
                                 id="desc"
                                 name="desc"
@@ -320,21 +291,42 @@ const VerticalsPage = () => {
                                 maxLength={validation.verticalModal.desc.maxLen}
                                 value={newVertical.desc}
                                 autoComplete="off"
-                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a]"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] resize-none placeholder:text-sm"
                                 placeholder="Description of the Vertical"
                             />
                             <button
                                 onClick={handleAddVertical}
                                 type="button"
-                                className="w-full max-w-[600px] text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center"
+                                className="w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center"
                             >
                                 Add Vertical
                             </button>
                         </div>
-                    </div>
+                    </motion.div>
                 )}
             </AnimatePresence>
-            {isLoading ? loader : verticalList}
+            <div
+                className={`px-pima-x py-pima-y flex flex-col gap-6 transition-all duration-[250] ${
+                    isAddModalOpen ? "blur-md pointer-events-none" : ""
+                }`}
+            >
+                <h1 className="text-4xl font-extrabold">Manage Verticals</h1>
+                <div className="flex flex-col gap-2">
+                    <p className="text-stone-600">
+                        You can View / Add / Delete verticals from here. Note:
+                        Deleting a vertical is irreversible. Do it at your own
+                        risk.
+                    </p>
+                </div>
+                <button
+                    onClick={() => setIsAddModalOpen(!isAddModalOpen)}
+                    className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
+                >
+                    Create a Vertical
+                </button>
+
+                {isLoading ? loader : verticalList}
+            </div>
         </div>
     );
 };

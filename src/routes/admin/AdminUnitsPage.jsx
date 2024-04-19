@@ -7,23 +7,24 @@ import Card from "../../components/admin/Card";
 import { CardGrid } from "../../components/common/CardGrid";
 import Loader from "../../components/common/Loader";
 
-// My css
-import css from "../../css/admin/units-page.module.css";
-
 import { SERVER_ORIGIN } from "../../utilities/constants";
 import {
     getVideoThumbnail,
     refreshScreen,
 } from "../../utilities/helper_functions";
+import { motion, AnimatePresence } from "framer-motion";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const UnitsPage = () => {
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [allUnits, setAllUnits] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
 
+    console.log(1);
     useEffect(() => {
         async function getAllUnits() {
             setIsLoading(true);
@@ -139,8 +140,7 @@ const UnitsPage = () => {
             } else {
                 // for future
             }
-        } catch (err) {
-        }
+        } catch (err) {}
 
         refClose.current.click();
     }
@@ -226,7 +226,7 @@ const UnitsPage = () => {
     const loader = <Loader />;
 
     const element = (
-        <section id="units">
+        <section className="mt-8">
             {allUnits.length > 0 ? (
                 <CardGrid>
                     {allUnits.map((unit) => {
@@ -236,10 +236,7 @@ const UnitsPage = () => {
                         unit.vdoThumbnail = vdoThumbnail;
 
                         return (
-                            <div
-                                className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
-                                key={unit._id}
-                            >
+                            <div key={unit._id}>
                                 <Card
                                     data={unit}
                                     type="unit"
@@ -250,25 +247,92 @@ const UnitsPage = () => {
                     })}
                 </CardGrid>
             ) : (
-                <h1 className="nothingText">Sorry, we found nothing</h1>
+                <h1 className="text-3xl font-bold text-center">
+                    No courses to show!
+                </h1>
             )}
         </section>
     );
 
     return (
-        <div className={css.outerDiv}>
-            <div style={{ textAlign: "center" }}>
+        <div className="relative">
+            <AnimatePresence>
+                {isAddModalOpen && (
+                    <motion.div
+                        className="fixed bg-white flex flex-col items-center gap-6 border p-6 px-10 m-auto left-0 right-0 top-0 bottom-0 w-[900px] h-fit rounded-[5px] z-[999]"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <XMarkIcon
+                            className="w-6 h-6 absolute right-4 top-4 cursor-pointer"
+                            onClick={() => setIsAddModalOpen(false)}
+                        />
+                        <h3 className="text-4xl font-bold text-center">
+                            Create Unit
+                        </h3>
+
+                        <div className="flex flex-col gap-6 w-full">
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                minLength={1}
+                                // maxLength={validation.verticalModal.name.maxLen}
+                                // onChange={onAddChange}
+                                // value={newVertical.name}
+                                autoComplete="off"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
+                                placeholder="Title of the Unit"
+                            />
+                            <textarea
+                                type="text"
+                                id="desc"
+                                name="desc"
+                                // onChange={onAddChange}
+                                // maxLength={validation.verticalModal.desc.maxLen}
+                                // value={newVertical.desc}
+                                autoComplete="off"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] resize-none placeholder:text-sm"
+                                placeholder="Description of the Unit"
+                            />
+                            <button
+                                // onClick={handleAddVertical}
+                                type="button"
+                                className="w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center"
+                            >
+                                Add Unit
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <div
+                className={`px-pima-x py-pima-y flex flex-col gap-6 transition-all duration-[250] ${
+                    isAddModalOpen ? "blur-md pointer-events-none" : ""
+                }`}
+            >
+                <h1 className="text-4xl font-extrabold">Manage Units</h1>
+                <div className="flex flex-col gap-2">
+                    <p className="text-stone-600">
+                        You can View / Add / Delete verticals from here. Note:
+                        Deleting a vertical is irreversible. Do it at your own
+                        risk.
+                    </p>
+                </div>
                 <button
-                    className={`${css.addBtn} commonBtn`}
-                    onClick={redirectToAddUnitPage}
+                    onClick={() => setIsAddModalOpen((prev) => !prev)}
+                    className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
                 >
-                    Add a new Unit
+                    Create a Unit
                 </button>
+
+                {isLoading ? loader : element}
+
+                {/* {deleteModal} */}
             </div>
-
-            {isLoading ? loader : element}
-
-            {deleteModal}
         </div>
     );
 };
