@@ -1,69 +1,178 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SERVER_ORIGIN } from "../../utilities/constants";
+import toast from "react-hot-toast";
 
 const AdminCreateUser = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [user, setUser] = useState({
+        fullName: "",
+        email: "",
+        password: "",
+        phone: "",
+        jobPosition: "",
+        userId: "",
+    });
 
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     async function canVisitPage() {
-    //         setIsLoading(true);
 
-    //         try {
-    //             const adminId = process.env.REACT_APP_ADMIN_ID;
-    //             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-    //             const basicAuth = btoa(`${adminId}:${adminPassword}`);
-    //             const response = await fetch(
-    //                 `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
-    //                 {
-    //                     method: "POST",
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                         "auth-token": localStorage.getItem("token"),
-    //                         Authorization: `Basic ${basicAuth}`,
-    //                     },
-    //                 }
-    //             );
+    useEffect(() => {
+        async function canVisitPage() {
+            setIsLoading(true);
 
-    //             const result = await response.json();
-    //             // (result);
+            try {
+                const adminId = process.env.REACT_APP_ADMIN_ID;
+                const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+                const basicAuth = btoa(`${adminId}:${adminPassword}`);
+                const response = await fetch(
+                    `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "auth-token": localStorage.getItem("token"),
+                            Authorization: `Basic ${basicAuth}`,
+                        },
+                    }
+                );
 
-    //             if (response.status >= 400 && response.status < 600) {
-    //                 if (response.status === 401) {
-    //                     navigate("/admin/login");
-    //                 }
-    //             } else if (response.ok && response.status === 200) {
-    //             } else {
-    //                 // for future
-    //             }
-    //         } catch (err) {
-    //             // (err.message);
-    //         }
+                const result = await response.json();
+                // (result);
 
-    //         setIsLoading(false);
-    //     }
+                if (response.status >= 400 && response.status < 600) {
+                    if (response.status === 401) {
+                        navigate("/admin/login");
+                    }
+                } else if (response.ok && response.status === 200) {
+                } else {
+                    // for future
+                }
 
-    //     canVisitPage();
-    // }, []);
+                setIsLoading(false);
+            } catch (err) {
+                // (err.message);
+            }
+
+            setIsLoading(false);
+        }
+
+        canVisitPage();
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (
+            !user.fullName ||
+            !user.email ||
+            !user.password ||
+            !user.phone ||
+            !user.jobPosition ||
+            !user.userId
+        ) {
+            toast.error("Please fill all the fields");
+            return;
+        }
+
+        if (user.password.length < 8 || user.password.includes(" ")) {
+            toast.error(
+                "Password should be atleast 8 characters long and should not contain spaces"
+            );
+            return;
+        }
+
+        if (user.phone.length !== 10 || isNaN(user.phone)) {
+            toast.error("Phone number should be valid and 10 digits long");
+            return;
+        }
+
+        if (user.userId.length < 6 || user.userId.includes(" ")) {
+            toast.error(
+                "UserId should be atleast 6 characters long and should not contain spaces"
+            );
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const adminId = process.env.REACT_APP_ADMIN_ID;
+            const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+            const basicAuth = btoa(`${adminId}:${adminPassword}`);
+
+            let modifiedUser = {
+                email: user.email.toLowerCase(),
+                password: user.password,
+                phone: user.phone,
+                jobPosition: user.jobPosition,
+                userId: user.userId.toLowerCase(),
+                fName: user.fullName.split(" ")[0],
+                lName: user.fullName.split(" ")?.[1] || "",
+            };
+
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/admin/auth/register-user`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth-token": localStorage.getItem("token"),
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                    body: JSON.stringify(modifiedUser),
+                }
+            );
+
+            const result = await response.json();
+            // (result);
+
+            if (response.status >= 400 && response.status < 600) {
+                if (response.status === 401) {
+                    navigate("/admin/login");
+                }
+            } else if (response.ok && response.status === 200) {
+                if (result.userDoc) {
+                    navigate("/admin/manage-users");
+                }
+            } else {
+                // for future
+            }
+
+            setIsLoading(false);
+        } catch (err) {
+            // (err.message);
+            // console.log(err.message);
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className="create-user flex flex-col gap-6 w-full justify-center mt-14 px-14 lg:px-pima-x">
             <h3 className="text-5xl font-extrabold text-center">Create User</h3>
-            <form className="flex flex-col gap-8 justify-center">
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-8 justify-center text-sm"
+            >
                 <div className="flex gap-8 justify-center flex-col md:flex-row mt-8">
                     <input
+                        value={user.fullName}
+                        onChange={(e) =>
+                            setUser({ ...user, fullName: e.target.value })
+                        }
                         type="text"
-                        placeholder="First Name"
+                        placeholder="Full Name"
                         className={
-                            "w-full max-w-[700px] px-5 py-3 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                            "w-full max-w-[700px] px-4 py-3 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
                         }
                     />
                     <input
                         type="text"
-                        placeholder="Last Name"
+                        value={user.userId}
+                        onChange={(e) =>
+                            setUser({ ...user, userId: e.target.value })
+                        }
+                        placeholder="User Id"
                         className={
-                            "w-full px-5 py-3 max-w-[700px] bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                            "w-full px-4 py-3 max-w-[700px] bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
                         }
                     />
                 </div>
@@ -71,15 +180,23 @@ const AdminCreateUser = () => {
                     <input
                         type="email"
                         placeholder="Email"
+                        value={user.email}
+                        onChange={(e) =>
+                            setUser({ ...user, email: e.target.value })
+                        }
                         className={
-                            "w-full px-5 max-w-[700px] py-3 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                            "w-full px-4 py-3 max-w-[700px] bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
                         }
                     />
                     <input
                         type="password"
                         placeholder="Password"
+                        value={user.password}
+                        onChange={(e) =>
+                            setUser({ ...user, password: e.target.value })
+                        }
                         className={
-                            "w-full px-5 py-3 max-w-[700px] bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                            "w-full px-4 py-3 max-w-[700px] bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
                         }
                     />
                 </div>
@@ -87,23 +204,38 @@ const AdminCreateUser = () => {
                     <input
                         type="text"
                         placeholder="Phone Number"
+                        value={user.phone}
+                        onChange={(e) =>
+                            setUser({ ...user, phone: e.target.value })
+                        }
                         className={
-                            "w-full px-5 py-3 max-w-[700px] bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                            "w-full px-4 py-3 max-w-[700px] bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
                         }
                     />
                     <input
                         type="text"
+                        value={user.jobPosition}
+                        onChange={(e) =>
+                            setUser({ ...user, jobPosition: e.target.value })
+                        }
                         placeholder="Job Position"
                         className={
-                            "w-full px-5 py-3 max-w-[700px] bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                            "w-full px-4 py-3 max-w-[700px] bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
                         }
                     />
                 </div>
 
                 <button
-                    className={`w-full max-w-[600px] self-center text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded mt-8 uppercase font-medium`}
+                    disabled={isLoading}
+                    type="submit"
+                    className={`w-full max-w-[300px] self-center text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded mt-2 uppercase font-medium`}
                 >
-                    Register User
+                    {isLoading ? "Registering User" : "Register User"}
+                    {isLoading && (
+                        <div className="ml-2">
+                            <div className="loader"></div>
+                        </div>
+                    )}
                 </button>
             </form>
         </div>

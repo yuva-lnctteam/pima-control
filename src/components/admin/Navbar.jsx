@@ -8,8 +8,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/images/LOGO.png";
 
 const navLinks = [
-    { name: "Manage Users", path: "/admin/manage-users" },
-    { name: "Manage Content", path: "/admin/manage-content" },
+    { name: "Users", path: "/admin/manage-users" },
+    { name: "Content", path: "/admin/manage-content" },
 ];
 
 const Navbar = () => {
@@ -37,7 +37,7 @@ const Navbar = () => {
                     src={logo}
                     alt="pima-logo"
                     onClick={handleImgClick}
-                    className="cursor-pointer w-24"
+                    className="cursor-pointer w-[5rem]"
                 />
                 {pathname !== "/user/login" && pathname !== "/admin/login" && (
                     <img
@@ -50,7 +50,7 @@ const Navbar = () => {
             </div>
             {pathname !== "/user/login" && pathname !== "/admin/login" && (
                 <>
-                    <ul className="hidden md:flex gap-12 md:items-center ">
+                    <ul className="hidden md:flex gap-12 text-base md:items-center ">
                         {navLinks.map((link, index) => (
                             <li
                                 key={index}
@@ -66,7 +66,8 @@ const Navbar = () => {
                             {localStorage.getItem("token") ? (
                                 <>
                                     <button
-                                        className="rounded w-32 ml-8 transition-all duration-150 border-2  bg-pima-red py-1.5 text-center text-white text-base hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
+                                        className="rounded w-24 ml-6transition-all duration-150 border-2  bg-pima-red py-1 text-center text-white text-sm hover:bg-white hover:text-pima-red 
+                                         hover:border-2 border-pima-red"
                                         onClick={handleLogoutClick}
                                     >
                                         Logout
@@ -75,7 +76,8 @@ const Navbar = () => {
                             ) : (
                                 <>
                                     <button
-                                        className="rounded w-32 ml-8 transition-all duration-150 border-2  bg-pima-red py-1.5 text-center text-white text-base hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
+                                        className="rounded w-24 ml-8 transition-all duration-150 border-2  bg-pima-red py-1 text-center text-white 
+                                        text-sm hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
                                         onClick={handleLoginClick}
                                     >
                                         Login
@@ -93,7 +95,7 @@ const Navbar = () => {
                                 transition={{ duration: 0.5 }}
                                 className={`
                 ${isMobileMenuOpen ? "flex" : "hidden"}
-             flex-col md:hidden gap-10 mt-6 items-center fixed right-0 shadow-xl -top-6 bg-white w-[20rem] z-[10000] h-screen text-lg`}
+             flex-col md:hidden gap-10 mt-6 items-center fixed right-0 shadow-xl -top-6 bg-white w-[20rem] z-[10000] h-screen text-base`}
                             >
                                 <li className="flex justify-end py-4 px-6 w-full mb-2">
                                     <img
@@ -121,11 +123,12 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                 ))}
-                                <li className="flex mt-2 flex-col gap-4 ml-4">
+                                <li className="flex mt-2 flex-col gap-4">
                                     {localStorage.getItem("token") ? (
                                         <>
                                             <button
-                                                className="rounded w-32 transition-all duration-150 bg-pima-red text-center text-white hover:bg-white hover:text-pima-red hover:border py-2 text-base hover:border-pima-red"
+                                                className="rounded w-24 transition-all duration-150 bg-pima-red text-center text-white hover:bg-white hover:text-pima-red border py-1.5 
+                                                text-sm border-pima-red"
                                                 onClick={handleLogoutClick}
                                             >
                                                 Logout
@@ -134,7 +137,7 @@ const Navbar = () => {
                                     ) : (
                                         <>
                                             <button
-                                                className="rounded w-32 transition-all duration-150 bg-pima-red text-center text-white hover:bg-white hover:text-pima-red py-2 text-base hover:border hover:border-pima-red"
+                                                className="rounded w-20 transition-all duration-150 bg-pima-red text-center text-white hover:bg-white hover:text-pima-red py-2 text-base hover:border hover:border-pima-red"
                                                 onClick={handleLoginClick}
                                             >
                                                 Login

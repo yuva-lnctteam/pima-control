@@ -72,7 +72,7 @@ const Navbar = () => {
                     src={logo}
                     alt="pima-logo"
                     onClick={() => navigate("/")}
-                    className="cursor-pointer w-24"
+                    className="cursor-pointer w-18"
                 />
                 {pathname !== "/user/login" && pathname !== "/admin/login" && (
                     <img
