@@ -140,7 +140,7 @@ const AdminCreateUser = () => {
             setIsLoading(false);
         } catch (err) {
             // (err.message);
-            // console.log(err.message);
+            console.log(err.message);
             setIsLoading(false);
         }
     };

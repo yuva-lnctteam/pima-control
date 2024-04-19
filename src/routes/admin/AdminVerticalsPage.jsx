@@ -18,6 +18,7 @@ const VerticalsPage = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [allVerticals, setAllVerticals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [addVerticalLoading, setAddVerticalLoading] = useState(false);
     const [newVertical, setNewVertical] = useState({
         name: "",
         desc: "",
@@ -84,6 +85,7 @@ const VerticalsPage = () => {
     async function handleAddVertical() {
         // todo: validate input
         try {
+            setAddVerticalLoading(true);
             const adminId = process.env.REACT_APP_ADMIN_ID;
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
             const basicAuth = btoa(`${adminId}:${adminPassword}`);
@@ -108,13 +110,19 @@ const VerticalsPage = () => {
                 } else if (response.status === 500) {
                     toast.error(result.statusText);
                 }
+
+                setAddVerticalLoading(false);
             } else if (response.ok && response.status === 200) {
                 refreshScreen();
                 // set fields in modal to empty if not refreshing scrn
             } else {
+                setAddVerticalLoading(false);
                 // for future
             }
-        } catch (err) {}
+        } catch (err) {
+            // (err.message);
+            setAddVerticalLoading(false);
+        }
     }
 
     async function handleAddOrViewCourses(e) {
@@ -251,12 +259,14 @@ const VerticalsPage = () => {
         </section>
     );
 
+    // add a vertical modal
+
     return (
         <div className="relative">
             <AnimatePresence>
                 {isAddModalOpen && (
                     <motion.div
-                        className="fixed bg-white flex flex-col items-center gap-6 border p-6 px-10 m-auto left-0 right-0 top-0 bottom-0 w-[900px] h-fit rounded-[5px] z-[999]"
+                        className="fixed bg-white flex flex-col items-center gap-6 border p-6 px-10 m-auto left-0 right-0 top-0 bottom-0 max-w-[900px] h-fit rounded-[5px] z-[999]"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -282,6 +292,18 @@ const VerticalsPage = () => {
                                 autoComplete="off"
                                 className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
                                 placeholder="Title of the Vertical"
+                            />
+                            <input
+                                type="text"
+                                id="Image Source URL"
+                                name="imgSrc"
+                                minLength={1}
+                                maxLength={validation.verticalModal.name.maxLen}
+                                onChange={onAddChange}
+                                value={newVertical.imgSrc}
+                                autoComplete="off"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
+                                placeholder="Image Source URL"
                             />
                             <textarea
                                 type="text"

@@ -19,6 +19,7 @@ const CoursesPage = () => {
     const [allCourses, setAllCourses] = useState([]);
     const [newCourse, setNewCourse] = useState({ name: "", desc: "" });
     const [isLoading, setIsLoading] = useState(false);
+    const [addCourseLoading, setAddCourseLoading] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
 
@@ -129,6 +130,7 @@ const CoursesPage = () => {
         const { verticalId } = params;
 
         // todo: validate input
+        setAddCourseLoading(true);
         try {
             const adminId = process.env.REACT_APP_ADMIN_ID;
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
@@ -165,8 +167,11 @@ const CoursesPage = () => {
                 // for future
             }
 
+            setAddCourseLoading(false);
             refClose.current.click();
-        } catch (err) {}
+        } catch (err) {
+            setAddCourseLoading(false);
+        }
     }
 
     /////////////////////////////////////// Delete Course Modal //////////////////////////////////////////////////
@@ -368,8 +373,8 @@ const CoursesPage = () => {
                                 name="name"
                                 minLength={1}
                                 maxLength={validation.verticalModal.name.maxLen}
-                                // onChange={onAddChange}
-                                // value={newVertical.name}
+                                onChange={onChange}
+                                value={newCourse.name}
                                 autoComplete="off"
                                 className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
                                 placeholder="Title of the Course"
@@ -378,15 +383,16 @@ const CoursesPage = () => {
                                 type="text"
                                 id="desc"
                                 name="desc"
-                                // onChange={onAddChange}
+                                onChange={onChange}
                                 maxLength={validation.verticalModal.desc.maxLen}
-                                // value={newVertical.desc}
+                                value={newCourse.desc}
                                 autoComplete="off"
                                 className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] resize-none placeholder:text-sm"
                                 placeholder="Description of the Course"
                             />
                             <button
-                                // onClick={handleAddVertical}
+                                onClick={handleAddCourse}
+                                disabled={addCourseLoading}
                                 type="button"
                                 className="w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center"
                             >
