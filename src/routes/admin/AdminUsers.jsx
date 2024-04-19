@@ -144,10 +144,19 @@ const AdminUsers = () => {
             <h1 className="text-4xl font-extrabold">Manage Users</h1>
 
             <div className="flex justify-between mt-8">
-                <input className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]" type="text" name="" id="" placeholder="Search by Name"/>
-                <button onClick={() => navigate('/admin/users/register-user')}  className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2">
-                            Create User
-                        </button>
+                <input
+                    className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]"
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="Search by Name"
+                />
+                <button
+                    onClick={() => navigate("/admin/users/register-user")}
+                    className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
+                >
+                    Create User
+                </button>
             </div>
 
             <div className="bg-[#dcdcdc] h-screen mt-8 rounded-[5px]"></div>

@@ -100,12 +100,12 @@ const HomePage = () => {
     const element = (
         <main className="mt-10 min-h-screen">
             <section className="flex flex-col">
-                <div className="flex flex-col-reverse  md:flex-row px-pima-x w-full">
-                    <div className="basis-1/2 md:w-2/5 flex flex-col gap-10 flex-1 pr-14 pt-12">
-                        <p className="font-black md:text-4xl lg:text-6xl ">
+                <div className="flex flex-col-reverse  md:flex-row px-pima-x w-full items-center">
+                    <div className="basis-1/2 md:w-2/5 flex flex-col gap-10 flex-1 mb-12">
+                        <p className="font-black md:text-4xl lg:text-6xl pr-[100px]">
                             Data driven career planning for every student
                         </p>
-                        <p className="text-sm md:text-base">
+                        <p className="text-sm md:text-base pr-[140px]">
                             Pima's 40-year experience working with numerous
                             sectors and processes has given it a deep
                             understanding of technology, customer needs, and the
@@ -158,7 +158,7 @@ const HomePage = () => {
                 </div>
             </section>
             {/* Verticals */}
-            <section className="px-pima-x py-10 flex flex-col gap-14">
+            <section className="px-pima-x py-20 flex flex-col gap-14">
                 <div className="flex flex-col">
                     <div className="mb-12">
                         <h2

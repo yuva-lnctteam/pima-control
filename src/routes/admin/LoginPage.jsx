@@ -41,7 +41,6 @@ const LoginPage = () => {
             );
 
             const result = await response.json();
-            // (response);
 
             setIsLoading(false);
 
@@ -60,7 +59,7 @@ const LoginPage = () => {
                 if ("token" in result) {
                     const token = result.token;
                     localStorage.setItem("token", token);
-                    navigate("/admin/services");
+                    navigate("/admin/manage-users");
                 }
             } else {
                 // for future

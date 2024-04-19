@@ -8,8 +8,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/images/LOGO.png";
 
 const navLinks = [
-    { name: "Users", path: "/admin/manage-users" },
-    { name: "Content", path: "/user/manage-content" },
+    { name: "Manage Users", path: "/admin/manage-users" },
+    { name: "Manage Content", path: "/admin/manage-content" },
 ];
 
 const Navbar = () => {
@@ -17,6 +17,7 @@ const Navbar = () => {
     const pathname = useLocation().pathname;
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
     const handleLoginClick = (e) => {
         navigate("/admin/login");
     };
@@ -28,8 +29,6 @@ const Navbar = () => {
     function handleImgClick() {
         navigate("/");
     }
-
-    const listItemStyle = { fontSize: "0.9rem", fontWeight: "400" };
 
     return (
         <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4 items-center relative">
@@ -51,19 +50,23 @@ const Navbar = () => {
             </div>
             {pathname !== "/user/login" && pathname !== "/admin/login" && (
                 <>
-                    <ul className="hidden md:flex gap-16 md:items-center ">
+                    <ul className="hidden md:flex gap-12 md:items-center ">
                         {navLinks.map((link, index) => (
-                            <li key={index} className="hover:underline">
+                            <li
+                                key={index}
+                                className="hover:border-b-2 border-pima-red transition-all"
+                                style={{ textDecorationColor: "#ed3237" }}
+                            >
                                 <Link to={link.path} className="font-inter">
                                     {link.name}
                                 </Link>
                             </li>
                         ))}
-                        <li className="flex">
+                        <li className="flex ml-4">
                             {localStorage.getItem("token") ? (
                                 <>
                                     <button
-                                        className="rounded w-32 ml-8 transition-all duration-150 bg-pima-red py-2 text-center text-white text-base hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                        className="rounded w-32 ml-8 transition-all duration-150 border-2  bg-pima-red py-1.5 text-center text-white text-base hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
                                         onClick={handleLogoutClick}
                                     >
                                         Logout
@@ -72,7 +75,7 @@ const Navbar = () => {
                             ) : (
                                 <>
                                     <button
-                                        className="rounded w-40 transition-all duration-150 bg-pima-red py-2 text-center text-white py-2 text-base hover:bg-white hover:text-pima-red hover:border hover:border-pima-red"
+                                        className="rounded w-32 ml-8 transition-all duration-150 border-2  bg-pima-red py-1.5 text-center text-white text-base hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
                                         onClick={handleLoginClick}
                                     >
                                         Login

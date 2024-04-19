@@ -1,22 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 // My components
 import Card from "../../components/admin/Card";
-import HeaderCard from "../../components/common/HeaderCard";
 import { CardGrid } from "../../components/common/CardGrid";
 import Loader from "../../components/common/Loader";
 
-// My css
-import css from "../../css/admin/verticals-page.module.css";
-
 import { SERVER_ORIGIN, validation } from "../../utilities/constants";
 import { refreshScreen } from "../../utilities/helper_functions";
+import { motion, AnimatePresence } from "framer-motion";
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 const VerticalsPage = () => {
+    const [isAddModalOpen, setIsAddModalOpen] = useState(true);
     const [allVerticals, setAllVerticals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [newVertical, setNewVertical] = useState({
@@ -72,23 +70,12 @@ const VerticalsPage = () => {
         getAllVerticals();
     }, []);
 
-    //////////////////////////////// Add Vertical Modal ////////////////////////////////////////
-
-    const ref = useRef(null);
-    const refClose = useRef(null);
-
-    async function openAddModal() {
-        ref.current.click();
-    }
-
     function onAddChange(e) {
         const updatedVertical = {
             ...newVertical,
             [e.target.name]: e.target.value,
         };
         setNewVertical(updatedVertical);
-
-        // (updatedVertical);
     }
 
     async function handleAddVertical() {
@@ -124,10 +111,7 @@ const VerticalsPage = () => {
             } else {
                 // for future
             }
-
-            refClose.current.click();
-        } catch (err) {
-        }
+        } catch (err) {}
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -139,15 +123,9 @@ const VerticalsPage = () => {
     }
 
     ////////////////////////////////////// Delete Vertical Modal ///////////////////////////////////////////////////
-    const ref2 = useRef(null);
-    const refClose2 = useRef(null);
+
     const [toDeleteVerticalId, setToDeleteVerticalId] = useState("");
     const [confirmText, setConfirmText] = useState("");
-
-    function openDeleteModal(e) {
-        ref2.current.click();
-        setToDeleteVerticalId(e.target.id);
-    }
 
     function onConfirmTextChange(e) {
         setConfirmText(e.target.value);
@@ -188,16 +166,12 @@ const VerticalsPage = () => {
             } else {
                 // for future
             }
-
-            refClose2.current.click();
-        } catch (error) {
-        }
+        } catch (error) {}
     }
 
     const deleteModal = (
         <>
             <button
-                ref={ref2}
                 type="button"
                 className="btn btn-primary d-none"
                 data-bs-toggle="modal"
@@ -206,13 +180,7 @@ const VerticalsPage = () => {
                 Launch demo modal
             </button>
 
-            <div
-                className="modal fade"
-                id="exampleModal3"
-                tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-            >
+            <div>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -222,12 +190,7 @@ const VerticalsPage = () => {
                             >
                                 Delete vertical
                             </h5>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            />
+                            <button type="button" className="btn-close" />
                         </div>
                         <div className="modal-body">
                             <div style={{ marginBottom: "1rem" }}>
@@ -236,7 +199,6 @@ const VerticalsPage = () => {
                                 </label>
                                 <input
                                     type="text"
-                                    className="modalInput"
                                     id="confirm"
                                     autoComplete="off"
                                     name="confirm"
@@ -251,7 +213,6 @@ const VerticalsPage = () => {
                                 type="button"
                                 className="modalCloseBtn"
                                 data-bs-dismiss="modal"
-                                ref={refClose2}
                             >
                                 Close
                             </button>
@@ -272,95 +233,61 @@ const VerticalsPage = () => {
 
     const loader = <Loader />;
 
-    const element = (
-        <section id="verticals">
+    const verticalList = (
+        <section className="mt-10 bg-gray-200">
             {allVerticals.length > 0 ? (
                 <CardGrid>
                     {allVerticals.map((vertical) => (
-                        <div
-                            className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
-                            key={vertical._id}
-                        >
+                        <div className="" key={vertical._id}>
                             <Card
                                 data={vertical}
                                 type="vertical"
                                 onAddViewClick={handleAddOrViewCourses}
-                                onDeleteClick={openDeleteModal}
                             />
                         </div>
                     ))}
                 </CardGrid>
             ) : (
-                <h1 className="nothingText">Sorry, we found nothing</h1>
+                <h1 className="text-3xl font-bold text-center">
+                    No verticals to show!
+                </h1>
             )}
         </section>
     );
 
     return (
-        <div className={css.outerDiv}>
-            <HeaderCard>
-                <h1 className="headerTitle">Verticals</h1>
-
-                <hr />
-                <p className="headerSubtitle">
+        <div className="px-pima-x py-pima-y">
+            <h1 className="text-4xl font-extrabold">Manage Verticals</h1>
+            {/* <p className="headerSubtitle">
                     You can View/Add/Delete verticals from here
                 </p>
                 <p className="headerSubtitle">
                     Note: Deleting a vertical is irreversible. Do it at your own
                     risk.
-                </p>
-
-                <button
-                    onClick={openAddModal}
-                    className={`${css.addBtn} commonBtn`}
-                >
-                    Add a new vertical
-                </button>
-            </HeaderCard>
-
-            {isLoading ? loader : element}
-
+                </p> */}
             <button
-                ref={ref}
-                type="button"
-                className="btn btn-primary d-none"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal2"
+                onClick={() => setIsAddModalOpen((prev) => !prev)}
+                className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2 mt-6"
             >
-                Launch demo modal
+                Add a new vertical
             </button>
+            <AnimatePresence>
+                {isAddModalOpen && (
+                    <div
+                        className="flex flex-col items-center gap-6"
+                        initial={{ y: -500, overflow: "hidden" }}
+                        animate={{ y: 0 }}
+                        exit={{ y: -500, overflow: "hidden" }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <h3 className="text-4xl font-extrabold text-center">
+                            Add a Vertical
+                        </h3>
 
-            <div
-                className="modal fade"
-                id="exampleModal2"
-                tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5
-                                className="modal-title text-ff1"
-                                id="exampleModalLabel"
-                            >
-                                Add a new vertical
-                            </h5>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            />
-                        </div>
-                        <div className="modal-body">
-                            <div style={{ marginBottom: "0.8rem" }}>
-                                <label htmlFor="name" className="modalLabel">
-                                    Name *
-                                </label>
+                        <div className="flex flex-col gap-6 w-full">
+                            <div className="flex gap-6">
                                 <input
                                     type="text"
-                                    className="modalInput"
                                     id="name"
                                     name="name"
                                     minLength={1}
@@ -370,65 +297,44 @@ const VerticalsPage = () => {
                                     onChange={onAddChange}
                                     value={newVertical.name}
                                     autoComplete="off"
+                                    className="w-full max-w-[700px] px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a]"
+                                    placeholder="Title of the Vertical"
                                 />
-                            </div>
-                            <div className="mb-3">
-                                <label
-                                    htmlFor="description"
-                                    className="modalLabel"
-                                >
-                                    Description *
-                                </label>
+
                                 <input
                                     type="text"
-                                    className="modalInput"
-                                    id="desc"
-                                    name="desc"
-                                    onChange={onAddChange}
-                                    maxLength={
-                                        validation.verticalModal.desc.maxLen
-                                    }
-                                    value={newVertical.desc}
-                                    autoComplete="off"
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="imgSrc" className="modalLabel">
-                                    Image Source *
-                                </label>
-                                <input
-                                    type="text"
-                                    className="modalInput"
                                     id="imgSrc"
                                     name="imgSrc"
                                     onChange={onAddChange}
                                     value={newVertical.imgSrc}
                                     autoComplete="off"
+                                    className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a]"
+                                    placeholder="Image URL of the Vertical"
                                 />
                             </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="modalCloseBtn"
-                                data-bs-dismiss="modal"
-                                ref={refClose}
-                            >
-                                Close
-                            </button>
+                            <input
+                                type="text"
+                                id="desc"
+                                name="desc"
+                                onChange={onAddChange}
+                                maxLength={validation.verticalModal.desc.maxLen}
+                                value={newVertical.desc}
+                                autoComplete="off"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a]"
+                                placeholder="Description of the Vertical"
+                            />
                             <button
                                 onClick={handleAddVertical}
                                 type="button"
-                                className="modalAddBtn"
+                                className="w-full max-w-[600px] text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center"
                             >
                                 Add Vertical
                             </button>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            {deleteModal}
+                )}
+            </AnimatePresence>
+            {isLoading ? loader : verticalList}
         </div>
     );
 };

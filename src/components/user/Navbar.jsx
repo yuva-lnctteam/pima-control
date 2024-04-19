@@ -89,7 +89,8 @@ const Navbar = () => {
                         {navLinks.map((link, index) => (
                             <li
                                 key={index}
-                                className="hover:underline font-medium"
+                                className="hover:border-b-2 border-pima-red transition-all"
+                                style={{ textDecorationColor: "#ed3237" }}
                             >
                                 <Link to={link.path} className="font-inter">
                                     {link.name}

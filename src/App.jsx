@@ -28,9 +28,9 @@ import PrivacyPolicy from "./routes/user/PrivacyPolicy";
 // Admin Pages
 import AdminLogin from "./routes/admin/LoginPage";
 import AdminServices from "./routes/admin/ServicesPage";
-import AdminVerticals from "./routes/admin/VerticalsPage";
-import AdminCourses from "./routes/admin/CoursesPage.jsx";
-import AdminUnits from "./routes/admin/UnitsPage";
+import AdminVerticals from "./routes/admin/AdminVerticalsPage.jsx";
+import AdminCourses from "./routes/admin/AdminCoursesPage.jsx";
+import AdminUnits from "./routes/admin/AdminUnitsPage.jsx";
 import AdminAddUnit from "./routes/admin/AddUnitPage";
 
 import AdminUsers from "./routes/admin/AdminUsers.jsx";
@@ -221,7 +221,7 @@ function App() {
                         }
                     />
                     <Route
-                        path="/admin/verticals/all"
+                        path="/admin/manage-content"
                         element={
                             <>
                                 <AdminNavbar />
@@ -257,7 +257,7 @@ function App() {
                         }
                     />
                     <Route
-                        path="/admin/verticals/:verticalId/courses/all"
+                        path="/admin/content/verticals/:verticalId/courses/all"
                         element={
                             <>
                                 <AdminNavbar />
@@ -266,7 +266,7 @@ function App() {
                         }
                     />
                     <Route
-                        path="/admin/verticals/:verticalId/courses/:courseId/units/all"
+                        path="/admin/content/verticals/:verticalId/courses/:courseId/units/all"
                         element={
                             <>
                                 <AdminNavbar />
@@ -275,7 +275,7 @@ function App() {
                         }
                     />
                     <Route
-                        path="/admin/verticals/:verticalId/courses/:courseId/units/add"
+                        path="/admin/content/verticals/:verticalId/courses/:courseId/units/add"
                         element={
                             <>
                                 <AdminNavbar />

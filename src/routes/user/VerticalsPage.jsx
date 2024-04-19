@@ -74,8 +74,6 @@ const VerticalsPage = () => {
 
     const element = (
         <div className={css.outerDiv}>
-            {/* <HeaderCard>
-      </HeaderCard> */}
             <p className={vCss.headerText}>Here's what we have got for you!</p>
             <div className="horizontal"></div>
 
