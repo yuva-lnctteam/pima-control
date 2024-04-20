@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-hot-toast";
 import logo from "../../assets/images/LOGO.png";
 import hamburgerImg from "../../assets/images/hamburger.png";
@@ -12,7 +10,6 @@ import { SERVER_ORIGIN } from "../../utilities/constants";
 const navLinks = [
     { name: "Home", path: "/" },
     { name: "Verticals", path: "/user/verticals/all" },
-    { name: "About", path: "/about" },
 ];
 
 const Navbar = () => {
