@@ -265,7 +265,7 @@ const UnitsPage = () => {
             {/* <AnimatePresence>
                 {isAddModalOpen && (
                     <motion.div
-                        className="fixed bg-white flex flex-col items-center gap-6 border p-6 px-10 m-auto left-0 right-0 top-0 bottom-0 w-[900px] h-fit rounded-[5px] z-[999]"
+                        className="fixed bg-white flex flex-col items-center gap-6 border p-6 px-10 m-auto left-0 right-0 top-0 bottom-0 max-w-[900px] h-fit rounded-[5px] z-[999]"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -275,7 +275,7 @@ const UnitsPage = () => {
                             className="w-6 h-6 absolute right-4 top-4 cursor-pointer"
                             onClick={() => setIsAddModalOpen(false)}
                         />
-                        <h3 className="text-4xl font-bold text-center">
+                        <h3 className="text-4xl font-bold text-center max-md:text-3xl">
                             Create Unit
                         </h3>
 
@@ -300,7 +300,7 @@ const UnitsPage = () => {
                                 // maxLength={validation.verticalModal.desc.maxLen}
                                 // value={newVertical.desc}
                                 autoComplete="off"
-                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] resize-none placeholder:text-sm"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] resize-none placeholder:text-sm h-[200px]"
                                 placeholder="Description of the Unit"
                             />
                             <button
@@ -316,7 +316,7 @@ const UnitsPage = () => {
             </AnimatePresence> */}
 
             <div
-                className={`px-pima-x py-pima-y flex flex-col gap-6 transition-all duration-[250] ${
+                className={`px-pima-x max-md:px-8 py-pima-y flex flex-col gap-6 transition-all duration-[250] ${
                     isAddModalOpen ? "blur-md pointer-events-none" : ""
                 }`}
             >

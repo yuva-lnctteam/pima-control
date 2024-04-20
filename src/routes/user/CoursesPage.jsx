@@ -87,19 +87,19 @@ const CoursesPage = () => {
     const loader = <Loader />;
 
     const element = (
-        <div className={css.outerDiv}>
-            <HeaderCard>
-                <p className={css.vNameText}>{verticalInfo.name}</p>
-                <p className={css.vDescText}>{verticalInfo.desc}</p>
-            </HeaderCard>
-
+        <div className="px-pima-x py-pima-y flex flex-col gap-10 mt-8">
+            <h2
+                className="text-4xl font-extrabold underline-offset-[10px] underline leading-relaxed"
+                style={{
+                    textDecorationColor: "#ed3237",
+                }}
+            >
+                Courses
+            </h2>
             {allCourses.length > 0 ? (
                 <CardGrid>
                     {allCourses.map((course) => (
-                        <div
-                            className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
-                            key={course._id}
-                        >
+                        <div key={course._id}>
                             <Card
                                 data={course}
                                 type="course"

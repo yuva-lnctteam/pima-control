@@ -73,17 +73,19 @@ const VerticalsPage = () => {
     const loader = <Loader />;
 
     const element = (
-        <div className={css.outerDiv}>
-            <p className={vCss.headerText}>Here's what we have got for you!</p>
-            <div className="horizontal"></div>
-
+        <div className="px-pima-x py-pima-y flex flex-col gap-10 mt-8">
+            <h2
+                className="text-4xl font-extrabold underline-offset-[10px] underline leading-relaxed"
+                style={{
+                    textDecorationColor: "#ed3237",
+                }}
+            >
+                Verticals
+            </h2>
             {allVerticals.length > 0 ? (
                 <CardGrid>
                     {allVerticals.map((vertical) => (
-                        <div
-                            className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
-                            key={vertical._id}
-                        >
+                        <div key={vertical._id}>
                             <Card
                                 data={vertical}
                                 type="vertical"
