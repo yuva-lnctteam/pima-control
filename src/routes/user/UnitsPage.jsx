@@ -85,12 +85,15 @@ const UserUnits = () => {
     const loader = <Loader />;
 
     const element = (
-        <div className={css.outerDiv}>
-            <HeaderCard>
-                <p className={css.cNameText}>{courseInfo.name}</p>
-                <p className={css.cDescText}>{courseInfo.desc}</p>
-            </HeaderCard>
-
+        <div className="px-pima-x py-pima-y flex flex-col gap-10 mt-8">
+            <h2
+                className="text-4xl font-extrabold underline-offset-[10px] underline leading-relaxed"
+                style={{
+                    textDecorationColor: "#ed3237",
+                }}
+            >
+                Units
+            </h2>
             <CardGrid>
                 {allUnits.length > 0 ? (
                     allUnits.map((unit) => {
@@ -100,10 +103,7 @@ const UserUnits = () => {
                         unit.vdoThumbnail = vdoThumbnail;
 
                         return (
-                            <div
-                                className="col-lg-4 col-md-6 col-sm-12 cardOuterDiv"
-                                key={unit._id}
-                            >
+                            <div key={unit._id}>
                                 <Card
                                     data={unit}
                                     type="unit"

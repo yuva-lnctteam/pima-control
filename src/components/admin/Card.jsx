@@ -26,7 +26,7 @@ function Card(props) {
                 </p>
             </div>
             <div className="flex flex-col gap-14 rounded-b-[5px] p-6 items-stretch">
-                <p className="text-stone-600 line-clamp-[4] text-sm text-justify">
+                <p className="text-stone-600 line-clamp-[4] text-sm text-justify ">
                     {props.type === "unit"
                         ? props.data.video.desc
                         : props.data.desc}

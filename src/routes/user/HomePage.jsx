@@ -62,58 +62,58 @@ const HomePage = () => {
                     }
                 );
 
-    //             const result = await response.json();
-    //             // (result);
+                const result = await response.json();
+                // (result);
 
-    //             if (response.status >= 400 && response.status < 600) {
-    //                 if (response.status === 500) {
-    //                     toast.error(result.statusText);
-    //                 }
-    //             } else if (response.ok && response.status === 200) {
-    //                 setProjectVerticals(result.allVerticals?.slice(0, 2));
-    //                 setInitiativeVerticals(result.allVerticals?.slice(2));
-    //                 // setAllVerticals(result.allVerticals);
-    //             } else {
-    //                 // for future
-    //             }
-    //         } catch (err) {}
+                if (response.status >= 400 && response.status < 600) {
+                    if (response.status === 500) {
+                        toast.error(result.statusText);
+                    }
+                } else if (response.ok && response.status === 200) {
+                    setProjectVerticals(result.allVerticals?.slice(0, 2));
+                    setInitiativeVerticals(result.allVerticals?.slice(2));
+                    // setAllVerticals(result.allVerticals);
+                } else {
+                    // for future
+                }
+            } catch (err) {}
 
-    //         setIsLoading(false);
-    //     }
+            setIsLoading(false);
+        }
 
-    //     getAllVerticals();
-    // }, []);
+        getAllVerticals();
+    }, []);
 
-    // async function handleViewCourses(e) {
-    //     const verticalId = e.target.id;
-    //     // if (localStorage.getItem("token")) {
-    //     // } else
-    //     try {
-    //         const userId = process.env.REACT_APP_USER_ID;
-    //         const userPassword = process.env.REACT_APP_USER_PASSWORD;
-    //         const basicAuth = btoa(`${userId}:${userPassword}`);
-    //         const response = await fetch(
-    //             `${SERVER_ORIGIN}/api/user/auth/check-authorized`,
-    //             {
-    //                 method: "GET",
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                     "auth-token": localStorage.getItem("token"),
-    //                     Authorization: `Basic ${basicAuth}`,
-    //                 },
-    //             }
-    //         );
-    //         // (result);
+    async function handleViewCourses(e) {
+        const verticalId = e.target.id;
+        // if (localStorage.getItem("token")) {
+        // } else
+        try {
+            const userId = process.env.REACT_APP_USER_ID;
+            const userPassword = process.env.REACT_APP_USER_PASSWORD;
+            const basicAuth = btoa(`${userId}:${userPassword}`);
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/user/auth/check-authorized`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth-token": localStorage.getItem("token"),
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                }
+            );
+            // (result);
 
-    //         if (response.status >= 400 && response.status < 600) {
-    //             navigate("/user/login");
-    //         } else if (response.ok && response.status === 200) {
-    //             navigate(`/user/verticals/${verticalId}/courses/all`);
-    //         } else {
-    //             // for future
-    //         }
-    //     } catch (error) {}
-    // }
+            if (response.status >= 400 && response.status < 600) {
+                navigate("/user/login");
+            } else if (response.ok && response.status === 200) {
+                navigate(`/user/verticals/${verticalId}/courses/all`);
+            } else {
+                // for future
+            }
+        } catch (error) {}
+    }
 
     const element = (
         <main className="mt-10 min-h-screen">
