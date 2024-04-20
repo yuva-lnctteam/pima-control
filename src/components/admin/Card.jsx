@@ -6,9 +6,9 @@ function Card(props) {
             <div className="flex flex-col gap-5 bg-pima-red text-white p-6 pb-[100px] rounded-t-[5px]">
                 <div className="flex justify-between">
                     <p className="text-xs uppercase underline underline-offset-4">
-                        verticals
+                        {props.type}
                     </p>
-                    <p className="text-xs uppercase">
+                    <p className="text-xs uppercase text-right">
                         {props.type === "vertical"
                             ? props.data.courseCount + " Courses"
                             : props.type === "course"
@@ -25,7 +25,7 @@ function Card(props) {
                         : props.data.name}
                 </p>
             </div>
-            <div className="flex flex-col gap-14 rounded-b-[5px] p-6">
+            <div className="flex flex-col gap-14 rounded-b-[5px] p-6 items-stretch">
                 <p className="text-stone-600 line-clamp-[4] text-sm text-justify">
                     {props.type === "unit"
                         ? props.data.video.desc

@@ -90,12 +90,16 @@ export const LoginForm = (props) => {
                     </div>
                 ) : (
                     <form className="w-full max-w-[500px]">
-                        <h1 className={`font-inter font-extrabold text-5xl text-center`}>
+                        <h1
+                            className={`font-inter font-extrabold text-5xl text-center`}
+                        >
                             Login
                         </h1>
                         <div className="mt-12 flex flex-col gap-6">
                             <input
-                                className={"w-full px-5 py-5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"}
+                                className={
+                                    "w-full px-5 py-3.5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                                }
                                 type="text"
                                 placeholder={
                                     props.role === "user"
@@ -116,7 +120,9 @@ export const LoginForm = (props) => {
                             />
 
                             <input
-                                className={"w-full px-5 py-5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"}
+                                className={
+                                    "w-full px-5 py-3.5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                                }
                                 type="password"
                                 placeholder="Password"
                                 name="password"
@@ -126,43 +132,35 @@ export const LoginForm = (props) => {
                                 autoComplete="off"
                             />
 
-                        {loader && (
-                            <div className={css.forgotPassLoaderWrapper}>
-                                <div className={css.forgotPassLoader}>
-                                    <Spinloader />
+                            {loader && (
+                                <div className={css.forgotPassLoaderWrapper}>
+                                    <div className={css.forgotPassLoader}>
+                                        <Spinloader />
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                        <button
-                            className={`w-full text-center py-4 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded`}
-                            onClick={handleLogInClick}
-                            disabled={props.isBtnDisabled}
-                        >
-                            {props.isBtnDisabled ? "Logging in..." : "LOGIN"}
-                        </button>
+                            )}
+                            <button
+                                className={`w-full text-center py-3.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded font-medium`}
+                                onClick={handleLogInClick}
+                                disabled={props.isBtnDisabled}
+                            >
+                                {props.isBtnDisabled
+                                    ? "Logging in..."
+                                    : "LOGIN"}
+                            </button>
                         </div>
                         {props.role === "user" ? (
-                            <div className="flex items-center w-full gap-2 justify-center mt-6">
-                                <p className={"text-center"}>
-                                    Is Admin?
-                                </p>
-                                <Link
-                                    className={`font-bold`}
-                                    to="/admin/login"
-                                >
-                                    LOGIN
+                            <div className="flex items-center w-full gap-2 justify-center mt-3.5 text-sm">
+                                <p className={"text-center"}>Is Admin?</p>
+                                <Link className={`font-bold`} to="/admin/login">
+                                    Login
                                 </Link>
                             </div>
                         ) : (
-                            <div className="flex items-center w-full gap-2 justify-center mt-6">
-                                <p className={"text-sm"}>
-                                    Is User?
-                                </p>
-                                <Link
-                                    className={`font-bold`}
-                                    to="/user/login"
-                                >
-                                    LOGIN
+                            <div className="flex items-center w-full gap-2 justify-center mt-3.5 text-sm">
+                                <p className={"text-sm"}>Is User?</p>
+                                <Link className={`font-bold`} to="/user/login">
+                                    Login
                                 </Link>
                             </div>
                         )}
