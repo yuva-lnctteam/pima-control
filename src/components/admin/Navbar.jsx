@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from "../../assets/images/yi_logo.png";
 import hamburgerImg from "../../assets/images/hamburger.png";
@@ -6,6 +6,7 @@ import hamburgerImg from "../../assets/images/hamburger.png";
 import css from "../../css/admin/navbar.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/images/LOGO.png";
+import { SERVER_ORIGIN } from "../../utilities/constants";
 
 const navLinks = [
     { name: "Users", path: "/admin/manage-users" },
@@ -18,6 +19,31 @@ const Navbar = () => {
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
+    useEffect(() => {
+        const verifyToken = async () => {
+            const adminId = process.env.REACT_APP_ADMIN_ID;
+            const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+            const basicAuth = btoa(`${adminId}:${adminPassword}`);
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/admin/auth/verity-token`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth-token": localStorage.getItem("token"),
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            if (result.userDoc) {
+            } else {
+                navigate("/admin/login");
+            }
+        };
+        verifyToken();
+    }, [navigate]);
+
     const handleLoginClick = (e) => {
         navigate("/admin/login");
     };
@@ -26,9 +52,6 @@ const Navbar = () => {
         localStorage.removeItem("token");
         navigate("/admin/login");
     };
-    function handleImgClick() {
-        navigate("/");
-    }
 
     return (
         <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4 items-center relative">
@@ -36,7 +59,6 @@ const Navbar = () => {
                 <img
                     src={logo}
                     alt="pima-logo"
-                    onClick={handleImgClick}
                     className="cursor-pointer w-[5rem]"
                 />
                 {pathname !== "/user/login" && pathname !== "/admin/login" && (

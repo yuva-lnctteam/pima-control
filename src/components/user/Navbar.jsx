@@ -19,12 +19,13 @@ const Navbar = () => {
     const pathname = useLocation().pathname;
 
     useEffect(() => {
+        if(pathname === "/user/login" || pathname === "/user/register") return;
         const verifyToken = async () => {
             const userId = process.env.REACT_APP_USER_ID;
             const userPassword = process.env.REACT_APP_USER_PASSWORD;
             const basicAuth = btoa(`${userId}:${userPassword}`);
             const response = await fetch(
-                `${SERVER_ORIGIN}/api/user/auth/verity-token`,
+                `${SERVER_ORIGIN}/api/user/auth/verify-token`,
                 {
                     method: "POST",
                     headers: {
@@ -37,9 +38,12 @@ const Navbar = () => {
             const result = await response.json();
             if (result.userDoc) {
                 setIsUserLoggedIn(true);
+            } else {
+                navigate("/user/login");
             }
         };
-    }, []);
+        verifyToken();
+    }, [navigate]);
 
     const handleLoginClick = (e) => {
         navigate("/user/login");
@@ -68,8 +72,12 @@ const Navbar = () => {
                 <img
                     src={logo}
                     alt="pima-logo"
-                    onClick={() => navigate("/")}
-                    className="cursor-pointer w-18"
+                    onClick={() => {
+                        if (pathname !== "/user/login") {
+                            navigate("/");
+                        }
+                    }}
+                    className="cursor-pointer w-[5rem]"
                 />
                 {pathname !== "/user/login" && pathname !== "/admin/login" && (
                     <img

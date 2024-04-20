@@ -43,6 +43,24 @@ const HomePage = () => {
     //                     },
     //                 }
     //             );
+    useEffect(() => {
+        setIsLoading(true);
+        
+        async function getAllVerticals() {
+            try {
+                const userId = process.env.REACT_APP_USER_ID;
+                const userPassword = process.env.REACT_APP_USER_PASSWORD;
+                const basicAuth = btoa(`${userId}:${userPassword}`);
+                const response = await fetch(
+                    `${SERVER_ORIGIN}/api/user/auth/verticals/all`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Basic ${basicAuth}`,
+                        },
+                    }
+                );
 
     //             const result = await response.json();
     //             // (result);
