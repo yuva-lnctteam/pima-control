@@ -73,6 +73,7 @@ const UserSingleUnit = () => {
                         toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
+                    console.log("*************",result);
                     setUnit(result.unit);
                     setVideoInfo(result.unit.video);
                     setIsQuizBtnDisabled(!result.isEligibleToTakeQuiz);
@@ -121,89 +122,92 @@ const UserSingleUnit = () => {
     // }
 
     const element = (
-        <div className={css.outerDiv}>
-            {unit.video !== null ? (
-                <VideoPlayer
-                    video={unit.video}
-                    storedWatchPercentage={storedWatchPercentage}
-                    handleChangeQuizState={handleChangeQuizState}
-                    videoWatchTimeCutoffPercentage={
-                        videoWatchTimeCutoffPercentage
-                    }
-                />
-            ) : null}
-
-            {unit.video ? (
-                <div className={css.common}>
-                    <HeaderCard>
-                        {unit.video.title && unit.video.title.length > 0 ? (
-                            <h1 className={css.vdoTitle}>{unit.video.title}</h1>
-                        ) : null}
-                        {unit.video.desc && unit.video.desc.length > 0 ? (
-                            <p className={css.vdoDesc}>
-                                What you'll learn: {unit.video.desc}
-                            </p>
-                        ) : null}
-                    </HeaderCard>
-                </div>
-            ) : null}
-
-            {unit.text && unit.text.length > 0 ? (
-                <div className={css.common}>
-                    <SecCard>
-                        <h2 className={css.secHeading}>Text to read</h2>
-                        <UnitText text={unit.text} />
-                    </SecCard>
-                </div>
-            ) : null}
-
-            {unit.activities && unit.activities.length > 0 ? (
-                <div className={css.common}>
-                    <SecCard>
-                        <h2 className={css.secHeading}>Activities</h2>
-
-                        {unit.activities.map((activity, index) => {
-                            return (
-                                <div key={index}>
-                                    <UnitActivity
-                                        index={index}
-                                        activity={activity}
-                                    />
-                                </div>
-                            );
-                        })}
-                    </SecCard>
-                </div>
-            ) : null}
-
-            {unit.quiz && unit.quiz.length > 0 ? (
-                <div className="row">
-                    <div
-                        className={`${css.quizDiv} ${css.common} col-lg-6 col-md-6`}
-                    >
-                        <SecCard>
-                            <h2 className={css.secHeading}>Quiz</h2>
-
-                            <p className={css.secText}>
-                                {isQuizBtnDisabled
-                                    ? `Note: You need to watch atleast ${vars.video.MIN_WATCH_TIME_IN_PERCENT}% of the video to unlock the quiz. (Kindly refresh the page after watching video to unlock the quiz.)`
-                                    : "Quiz has been unlocked, click the button below to take quiz."}
-                            </p>
-
-                            <button
-                                className={css.secBtn}
-                                onClick={handleOpenQuizClick}
-                                disabled={isQuizBtnDisabled}
-                            >
-                                {isQuizBtnDisabled
-                                    ? "Quiz Locked"
-                                    : "Open Quiz"}
-                            </button>
-                        </SecCard>
-                    </div>
-                </div>
-            ) : null}
+        <div>
+            <h1></h1>
         </div>
+        // <div className={css.outerDiv}>
+        //     {unit.video !== null ? (
+        //         <VideoPlayer
+        //             video={unit.video}
+        //             storedWatchPercentage={storedWatchPercentage}
+        //             handleChangeQuizState={handleChangeQuizState}
+        //             videoWatchTimeCutoffPercentage={
+        //                 videoWatchTimeCutoffPercentage
+        //             }
+        //         />
+        //     ) : null}
+
+        //     {unit.video ? (
+        //         <div className={css.common}>
+        //             <HeaderCard>
+        //                 {unit.video.title && unit.video.title.length > 0 ? (
+        //                     <h1 className={css.vdoTitle}>{unit.video.title}</h1>
+        //                 ) : null}
+        //                 {unit.video.desc && unit.video.desc.length > 0 ? (
+        //                     <p className={css.vdoDesc}>
+        //                         What you'll learn: {unit.video.desc}
+        //                     </p>
+        //                 ) : null}
+        //             </HeaderCard>
+        //         </div>
+        //     ) : null}
+
+        //     {unit.text && unit.text.length > 0 ? (
+        //         <div className={css.common}>
+        //             <SecCard>
+        //                 <h2 className={css.secHeading}>Text to read</h2>
+        //                 <UnitText text={unit.text} />
+        //             </SecCard>
+        //         </div>
+        //     ) : null}
+
+        //     {unit.activities && unit.activities.length > 0 ? (
+        //         <div className={css.common}>
+        //             <SecCard>
+        //                 <h2 className={css.secHeading}>Activities</h2>
+
+        //                 {unit.activities.map((activity, index) => {
+        //                     return (
+        //                         <div key={index}>
+        //                             <UnitActivity
+        //                                 index={index}
+        //                                 activity={activity}
+        //                             />
+        //                         </div>
+        //                     );
+        //                 })}
+        //             </SecCard>
+        //         </div>
+        //     ) : null}
+
+        //     {unit.quiz && unit.quiz.length > 0 ? (
+        //         <div className="row">
+        //             <div
+        //                 className={`${css.quizDiv} ${css.common} col-lg-6 col-md-6`}
+        //             >
+        //                 <SecCard>
+        //                     <h2 className={css.secHeading}>Quiz</h2>
+
+        //                     <p className={css.secText}>
+        //                         {isQuizBtnDisabled
+        //                             ? `Note: You need to watch atleast ${vars.video.MIN_WATCH_TIME_IN_PERCENT}% of the video to unlock the quiz. (Kindly refresh the page after watching video to unlock the quiz.)`
+        //                             : "Quiz has been unlocked, click the button below to take quiz."}
+        //                     </p>
+
+        //                     <button
+        //                         className={css.secBtn}
+        //                         onClick={handleOpenQuizClick}
+        //                         disabled={isQuizBtnDisabled}
+        //                     >
+        //                         {isQuizBtnDisabled
+        //                             ? "Quiz Locked"
+        //                             : "Open Quiz"}
+        //                     </button>
+        //                 </SecCard>
+        //             </div>
+        //         </div>
+        //     ) : null}
+        // </div>
     );
 
     return <>{isLoading ? <Loader /> : element}</>;

@@ -218,10 +218,8 @@ const AdminAddUnit = () => {
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
             const basicAuth = btoa(`${adminId}:${adminPassword}`);
             const unit = {
-                video: video,
-                text: text,
-                activities: activities,
-                quiz: quiz,
+                video: unitDet,
+                quiz: quizArr,
             };
 
             const response = await fetch(
@@ -260,12 +258,450 @@ const AdminAddUnit = () => {
         } catch (err) {}
     }
 
+    // const [quizDet, setQuizDet] = useState({
+    //     question: String,
+    //     options: [
+    //         { text: "", isChecked: false },
+    //         { text: "", isChecked: false },
+    //         { text: "", isChecked: false },
+    //         { text: "", isChecked: false },
+    //     ],
+    // });
+
+    function handleQue(e) {
+        const val = e.target.value;
+
+        setQuestion(val);
+    }
+
+    const handleOptionChange = (index) => {
+        const updatedOptions = [...options];
+        updatedOptions[index].isChecked = !updatedOptions[index].isChecked;
+        setOptions(updatedOptions);
+    };
+
+    const handleTextChange = (index, newText) => {
+        const updatedOptions = [...options];
+        updatedOptions[index].text = newText;
+        setOptions(updatedOptions);
+    };
+
+    // const [quizDet, setQuizDet] = useState({
+    //     question: String,
+    //     option1: String,
+    //     option2: String,
+    //     option3: String,
+    //     option4: String,
+    // });
+
+    // function handleQue(e) {
+    //     const q = e.target.value;
+
+    //     setQuizDet((prevVal) => {
+    //         return {
+    //             question: q,
+    //             option1: prevVal.oprtion1,
+    //             option2: prevVal.oprtion2,
+    //             option3: prevVal.oprtion3,
+    //             option4: prevVal.oprtion4,
+    //         };
+    //     });
+    // }
+
+    // function handleOp1(e) {
+    //     const o = e.target.value;
+
+    //     setQuizDet((prevVal) => {
+    //         return {
+    //             question: prevVal.question,
+    //             option1: o,
+    //             option2: prevVal.option2,
+    //             option3: prevVal.option3,
+    //             option4: prevVal.option4,
+    //         };
+    //     });
+    // }
+    // function handleOp2(e) {
+    //     const o = e.target.value;
+
+    //     setQuizDet((prevVal) => {
+    //         return {
+    //             question: prevVal.question,
+    //             option1: prevVal.option1,
+    //             option2: o,
+    //             option3: prevVal.option3,
+    //             option4: prevVal.option4,
+    //         };
+    //     });
+    // }
+    // function handleOp3(e) {
+    //     const o = e.target.value;
+
+    //     setQuizDet((prevVal) => {
+    //         return {
+    //             question: prevVal.question,
+    //             option1: prevVal.option1,
+    //             option2: prevVal.option2,
+    //             option3: o,
+    //             option4: prevVal.option4,
+    //         };
+    //     });
+    // }
+    // function handleOp4(e) {
+    //     const o = e.target.value;
+
+    //     setQuizDet((prevVal) => {
+    //         return {
+    //             question: prevVal.question,
+    //             option1: prevVal.option1,
+    //             option2: prevVal.option2,
+    //             option3: prevVal.option3,
+    //             option4: o,
+    //         };
+    //     });
+    // }
+
+    const [unitDet, setUnitDet] = useState({
+        title: String,
+        vdoSrc: URL,
+        desc: String,
+    });
+
+    const [quizArr, setQuizArr] = useState([]);
+    const [question, setQuestion] = useState("");
+    const [options, setOptions] = useState([
+        { text: "", isChecked: false },
+        { text: "", isChecked: false },
+        { text: "", isChecked: false },
+        { text: "", isChecked: false },
+    ]);
+    function handleQuizSubmit(e) {
+        e.preventDefault();
+
+        const quizDet = {
+            question: question,
+            opArr: options,
+        };
+
+        setQuizArr([...quizArr, quizDet]);
+
+        setQuestion("");
+        setOptions([
+            { text: "", isChecked: false },
+            { text: "", isChecked: false },
+            { text: "", isChecked: false },
+            { text: "", isChecked: false },
+        ]);
+
+        console.log(quizArr);
+
+        // console.log("Question:", quizDet.question);
+        // console.log("Options:", quizDet.options);
+
+        // console.log(quizDet);
+
+        // const quizDet = {
+        //     question:
+        // }
+
+        // setQuizArr((prevVal) => {
+        //     return [...prevVal, quizDet];
+        // });
+
+        // setQuizArr((prevVal) => {
+        //     return [...prevVal, quizDet];
+        // });
+    }
+
+    function handleUnitDetSubmit(e) {
+        e.preventDefault();
+
+        console.log(unitDet);
+    }
+
+    function handleQueDelete(index) {
+        setQuizArr((prevVal) => {
+            let newVal = [...prevVal];
+            newVal.splice(index, 1);
+
+            // (newQuiz);
+
+            return newVal;
+        });
+    }
+
     return (
         <>
-            {isLoading ? (
-                <Loader />
-            ) : (
-                <div className={css.outerDiv}>
+            {/* {isLoading ? ( */}
+            {/* <Loader /> */}
+            {/* ) : ( */}
+            <div className=" py-pima-y px-pima-x">
+                <h1 className="text-4xl">Add Unit Here</h1>
+                <div className="flex py-pima-y">
+                    <form
+                        className="flex flex-col gap-6 w-[50%] pr-pima-x"
+                        action=""
+                        onSubmit={handleUnitDetSubmit}
+                    >
+                        <label
+                            className="text-sm font-light"
+                            htmlFor="unitTitle"
+                        >
+                            Unit Title:
+                            <input
+                                className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
+                                type="text"
+                                id="unitTitle"
+                                placeholder="Enter The Unit Title"
+                                onChange={(e) => {
+                                    setUnitDet((prevVal) => {
+                                        return {
+                                            title: e.target.value,
+                                            vdoUrl: prevVal.vdoUrl,
+                                            desc: prevVal.desc,
+                                        };
+                                    });
+                                }}
+                            />
+                        </label>
+
+                        <label
+                            className="text-sm font-light"
+                            htmlFor="videoUrl"
+                        >
+                            Video URL:
+                            <input
+                                className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
+                                type="url"
+                                id="videoUrl"
+                                placeholder="Paste the related video url"
+                                onChange={(e) => {
+                                    setUnitDet((prevVal) => {
+                                        return {
+                                            title: prevVal.title,
+                                            vdoUrl: e.target.value,
+                                            desc: prevVal.desc,
+                                        };
+                                    });
+                                }}
+                            />
+                        </label>
+
+                        <label
+                            className="text-sm font-light"
+                            htmlFor="unitDescription"
+                        >
+                            Unit Text-to-Read:
+                            <textarea
+                                className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem] "
+                                type="text"
+                                id="unitDescription"
+                                placeholder="Enter The Unit Description"
+                                rows="8"
+                                onChange={(e) => {
+                                    setUnitDet((prevVal) => {
+                                        return {
+                                            title: prevVal.title,
+                                            vdoUrl: prevVal.vdoUrl,
+                                            desc: e.target.value,
+                                        };
+                                    });
+                                }}
+                            />
+                        </label>
+
+                        <button
+                            type="submit"
+                            className=" px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center"
+                        >
+                            Add
+                        </button>
+                    </form>
+                    <div className="flex-1 h-screen/2 bg-red-300"></div>
+                </div>
+
+                <hr />
+
+                <div className="py-pima-y">
+                    {/* -------------------------------QUIZ QUESTION------------------------------- */}
+
+                    <h1 className="text-4xl">Edit Quiz Here</h1>
+                    <div className="flex py-pima-y">
+                        <form
+                            className="flex flex-col gap-6 w-[50%] pr-pima-x"
+                            action=""
+                            onSubmit={handleQuizSubmit}
+                        >
+                            <label>
+                                Question:
+                                <input
+                                    className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
+                                    type="text"
+                                    value={question}
+                                    onChange={(e) =>
+                                        setQuestion(e.target.value)
+                                    }
+                                />
+                            </label>
+                            <br />
+                            {options.map((option, index) => (
+                                <div className="flex" key={index}>
+                                    <input
+                                        className=" w-4 mr-4"
+                                        type="checkbox"
+                                        checked={option.isChecked}
+                                        onChange={() => {
+                                            const updatedOptions = [...options];
+                                            updatedOptions[index].isCorrect =
+                                                !option.isCorrect;
+                                            setOptions(updatedOptions);
+                                        }}
+                                    />
+                                    <label className="text-sm" htmlFor="">
+                                        Option {index + 1}:
+                                        <input
+                                            className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
+                                            type="text"
+                                            value={option.text}
+                                            onChange={(e) => {
+                                                const updatedOptions = [
+                                                    ...options,
+                                                ];
+                                                updatedOptions[index].text =
+                                                    e.target.value;
+                                                setOptions(updatedOptions);
+                                            }}
+                                        />
+                                    </label>
+                                </div>
+                            ))}
+                            <button
+                                type="submit"
+                                className=" px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center"
+                            >
+                                Add
+                            </button>
+                        </form>
+
+                        {/* ------------------------- ALL QUESTIONS DISPLAY ------------------------- */}
+
+                        <div className="flex-1 ">
+                            {quizArr.map((item, index) => (
+                                <div className="mb-6 flex gap-2" key={index}>
+                                    <p
+                                        className="border-1 bg-red-200 rounded px-1 py-0 text-red-500 text-sm h-fit hover:cursor-pointer"
+                                        onClick={handleQueDelete}
+                                    >
+                                        x
+                                    </p>
+
+                                    <div>
+                                        <p className="font-semibold mb-4">
+                                            Q. {item.question}
+                                        </p>
+
+                                        {item.opArr.map((opt, optIndex) => (
+                                            <p
+                                                className="text-sm"
+                                                key={optIndex}
+                                            >
+                                                {optIndex + 1}.{"\u0029"}{" "}
+                                                {opt.text}{" "}
+                                            </p>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <button
+                        onClick={handleAddUnit}
+                        className=" px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center"
+                        disabled={isAddUnitBtnDisabled}
+                    >
+                        Upload Unit
+                    </button>
+                    {/* {quizArr.map((op, index) => {
+                        return (
+                            <div key={index}>
+                                <p>{op.options[index].text}</p>
+                            </div>
+                        );
+                    })} */}
+
+                    {/* <form action="" onSubmit={handleQuizSubmit}>
+                        <input
+                            onChange={handleQue}
+                            className="border-2"
+                            type="text"
+                            placeholder="Enter Question"
+                        />
+
+                        <div>
+                            <input
+                                onChange={handleOp1}
+                                className="border-2"
+                                type="text"
+                                placeholder="Option 1"
+                            />
+                            <input
+                                onChange={handleOp2}
+                                className="border-2"
+                                type="text"
+                                placeholder="Option 2"
+                            />
+                            <input
+                                onChange={handleOp3}
+                                className="border-2"
+                                type="text"
+                                placeholder="Option 3"
+                            />
+                            <input
+                                onChange={handleOp4}
+                                className="border-2"
+                                type="text"
+                                placeholder="Option 4"
+                            />
+                        </div>
+
+                        <button type="submit" className="border-2">
+                            Add
+                        </button>
+                    </form> */}
+
+                    {/* {quizArr.map((q, index) => {
+                        return (
+                            <div>
+                                <p>
+                                    {index + 1}. {q.question}
+                                </p>
+                                <p>{q.option1}</p>
+                                <p>{q.option2}</p>
+                                <p>{q.option3}</p>
+                                <p>{q.option4}</p>
+                            </div>
+                        );
+                    })} */}
+
+                    {/* <div>
+                        <p>{quizDet.question}</p>
+
+                        <p>{quizDet.option1}</p>
+                        <p>{quizDet.option2}</p>
+                        <p>{quizDet.option3}</p>
+                        <p>{quizDet.option4}</p>
+                    </div> */}
+                </div>
+            </div>
+            {/* )} */}
+        </>
+    );
+};
+
+export default AdminAddUnit;
+
+{
+    /* <div className={css.outerDiv}>
                     <h1 className={css.headingText}>
                         Adding a new unit for course
                     </h1>
@@ -355,10 +791,5 @@ const AdminAddUnit = () => {
                             Add Unit
                         </button>
                     </div>
-                </div>
-            )}
-        </>
-    );
-};
-
-export default AdminAddUnit;
+                </div> */
+}
