@@ -145,83 +145,89 @@ const UnitsPage = () => {
         refClose.current.click();
     }
 
-    const deleteModal = (
-        <>
-            <button
-                ref={ref}
-                type="button"
-                className="btn btn-primary d-none"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal3"
-            >
-                Launch demo modal
-            </button>
+    function handleCreateUnit() {
+        navigate(
+            "/admin/content/verticals/:verticalId/courses/:courseId/units/add"
+        );
+    }
 
-            <div
-                className="modal fade"
-                id="exampleModal3"
-                tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5
-                                className="modal-title text-ff1"
-                                id="exampleModalLabel"
-                            >
-                                Delete Unit
-                            </h5>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            />
-                        </div>
-                        <div className="modal-body">
-                            <div style={{ marginBottom: "0.8rem" }}>
-                                <label htmlFor="name" className="modalLabel">
-                                    Confirmation
-                                </label>
-                                <input
-                                    type="text"
-                                    className="modalInput"
-                                    id="confirm"
-                                    name="confirm"
-                                    minLength={3}
-                                    required
-                                    placeholder="Type 'Confirm' to delete"
-                                    value={confirmText}
-                                    onChange={onConfirmTextChange}
-                                    autoComplete="off"
-                                />
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="modalCloseBtn"
-                                data-bs-dismiss="modal"
-                                ref={refClose}
-                            >
-                                Close
-                            </button>
-                            <button
-                                onClick={handleDeleteUnit}
-                                type="button"
-                                className="modalDltBtn"
-                                disabled={confirmText !== "Confirm"}
-                            >
-                                Delete unit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+    // const deleteModal = (
+    //     <>
+    //         <button
+    //             ref={ref}
+    //             type="button"
+    //             className="btn btn-primary d-none"
+    //             data-bs-toggle="modal"
+    //             data-bs-target="#exampleModal3"
+    //         >
+    //             Launch demo modal
+    //         </button>
+
+    //         <div
+    //             className="modal fade"
+    //             id="exampleModal3"
+    //             tabIndex="-1"
+    //             aria-labelledby="exampleModalLabel"
+    //             aria-hidden="true"
+    //         >
+    //             <div className="modal-dialog">
+    //                 <div className="modal-content">
+    //                     <div className="modal-header">
+    //                         <h5
+    //                             className="modal-title text-ff1"
+    //                             id="exampleModalLabel"
+    //                         >
+    //                             Delete Unit
+    //                         </h5>
+    //                         <button
+    //                             type="button"
+    //                             className="btn-close"
+    //                             data-bs-dismiss="modal"
+    //                             aria-label="Close"
+    //                         />
+    //                     </div>
+    //                     <div className="modal-body">
+    //                         <div style={{ marginBottom: "0.8rem" }}>
+    //                             <label htmlFor="name" className="modalLabel">
+    //                                 Confirmation
+    //                             </label>
+    //                             <input
+    //                                 type="text"
+    //                                 className="modalInput"
+    //                                 id="confirm"
+    //                                 name="confirm"
+    //                                 minLength={3}
+    //                                 required
+    //                                 placeholder="Type 'Confirm' to delete"
+    //                                 value={confirmText}
+    //                                 onChange={onConfirmTextChange}
+    //                                 autoComplete="off"
+    //                             />
+    //                         </div>
+    //                     </div>
+    //                     <div className="modal-footer">
+    //                         <button
+    //                             type="button"
+    //                             className="modalCloseBtn"
+    //                             data-bs-dismiss="modal"
+    //                             ref={refClose}
+    //                         >
+    //                             Close
+    //                         </button>
+    //                         <button
+    //                             onClick={handleDeleteUnit}
+    //                             type="button"
+    //                             className="modalDltBtn"
+    //                             disabled={confirmText !== "Confirm"}
+    //                         >
+    //                             Delete unit
+    //                         </button>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </>
+    // );
 
     const loader = <Loader />;
 
@@ -256,7 +262,7 @@ const UnitsPage = () => {
 
     return (
         <div className="relative">
-            <AnimatePresence>
+            {/* <AnimatePresence>
                 {isAddModalOpen && (
                     <motion.div
                         className="fixed bg-white flex flex-col items-center gap-6 border p-6 px-10 m-auto left-0 right-0 top-0 bottom-0 w-[900px] h-fit rounded-[5px] z-[999]"
@@ -307,7 +313,7 @@ const UnitsPage = () => {
                         </div>
                     </motion.div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence> */}
 
             <div
                 className={`px-pima-x py-pima-y flex flex-col gap-6 transition-all duration-[250] ${
@@ -323,7 +329,7 @@ const UnitsPage = () => {
                     </p>
                 </div>
                 <button
-                    onClick={() => setIsAddModalOpen((prev) => !prev)}
+                    onClick={handleCreateUnit}
                     className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
                 >
                     Create a Unit

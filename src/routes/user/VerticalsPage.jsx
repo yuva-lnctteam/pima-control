@@ -65,7 +65,7 @@ const VerticalsPage = () => {
     }, []);
 
     function handleViewCourses(e) {
-        const verticalId = e.target.id;
+        const verticalId = e.target._id;
         // (verticalId);
         navigate(`/user/verticals/${verticalId}/courses/all`);
     }
