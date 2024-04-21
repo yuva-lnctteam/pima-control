@@ -16,6 +16,7 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const VerticalsPage = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [allVerticals, setAllVerticals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [addVerticalLoading, setAddVerticalLoading] = useState(false);
@@ -173,68 +174,6 @@ const VerticalsPage = () => {
         } catch (error) {}
     }
 
-    const deleteModal = (
-        <>
-            <button
-                type="button"
-                className="btn btn-primary d-none"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal3"
-            >
-                Launch demo modal
-            </button>
-
-            <div>
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5
-                                className="modal-title text-ff1"
-                                id="exampleModalLabel"
-                            >
-                                Delete vertical
-                            </h5>
-                            <button type="button" className="btn-close" />
-                        </div>
-                        <div className="modal-body">
-                            <div style={{ marginBottom: "1rem" }}>
-                                <label htmlFor="confirm" className="modalLabel">
-                                    Confirmation
-                                </label>
-                                <input
-                                    type="text"
-                                    id="confirm"
-                                    autoComplete="off"
-                                    name="confirm"
-                                    placeholder="Type 'Confirm' to delete"
-                                    value={confirmText}
-                                    onChange={onConfirmTextChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="modalCloseBtn"
-                                data-bs-dismiss="modal"
-                            >
-                                Close
-                            </button>
-                            <button
-                                onClick={handleDeleteVertical}
-                                type="button"
-                                className="modalDltBtn"
-                                disabled={confirmText !== "Confirm"}
-                            >
-                                Delete Vertical
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
-
     const loader = <Loader />;
 
     const verticalList = (
@@ -242,13 +181,16 @@ const VerticalsPage = () => {
             {allVerticals.length > 0 ? (
                 <CardGrid>
                     {allVerticals.map((vertical) => (
-                        <div className="" key={vertical._id}>
-                            <Card
-                                data={vertical}
-                                type="vertical"
-                                onAddViewClick={handleAddOrViewCourses}
-                            />
-                        </div>
+                        <Card
+                            data={vertical}
+                            key={vertical._id}
+                            type="vertical"
+                            onAddViewClick={handleAddOrViewCourses}
+                            onDeleteClick={() => {
+                                setIsDeleteModalOpen(true);
+                                // setToDeleteVerticalId(vertical._id);
+                            }}
+                        />
                     ))}
                 </CardGrid>
             ) : (
@@ -327,9 +269,53 @@ const VerticalsPage = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+            <AnimatePresence>
+                {isDeleteModalOpen && (
+                    <motion.div
+                        className="fixed bg-white flex flex-col items-center gap-6 border p-6 px-10 m-auto left-0 right-0 top-0 bottom-0 max-w-[700px] h-fit rounded-[5px] z-[999]"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <XMarkIcon
+                            className="w-6 h-6 absolute right-4 top-4 cursor-pointer"
+                            onClick={() => setIsDeleteModalOpen(false)}
+                        />
+                        <h3 className="text-4xl font-bold text-center max-md:text-3xl">
+                            Confirm delete
+                        </h3>
+
+                        <div className="flex flex-col gap-5 w-full">
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                minLength={1}
+                                // maxLength={validation.verticalModal.name.maxLen}
+                                // onChange={onAddChange}
+                                // value={newVertical.name}
+                                autoComplete="off"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
+                                placeholder="Please type 'delete' to confirm deletion."
+                            />
+
+                            <button
+                                onClick={() => setIsDeleteModalOpen(false)}
+                                type="button"
+                                className="w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center text-sm"
+                            >
+                                Confirm
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
             <div
                 className={`px-pima-x max-md:px-8 py-pima-y flex flex-col gap-6 transition-all duration-[250] ${
-                    isAddModalOpen ? "blur-md pointer-events-none" : ""
+                    isAddModalOpen || isDeleteModalOpen
+                        ? "blur-lg pointer-events-none"
+                        : ""
                 }`}
             >
                 <h1 className="text-4xl font-extrabold">Manage Verticals</h1>

@@ -140,10 +140,9 @@ const AdminUsers = () => {
     }, [page, sortType, searchQuery, rerender, navigate]);
 
     return (
-        <div className="px-pima-x py-pima-y">
+        <div className="px-pima-x py-pima-y flex flex-col gap-8 max-md:px-10">
             <h1 className="text-4xl font-extrabold">Manage Users</h1>
-
-            <div className="flex justify-between mt-8">
+            <div className="flex justify-between flex-wrap gap-4">
                 <input
                     className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]"
                     type="text"
@@ -158,17 +157,15 @@ const AdminUsers = () => {
                     Create User
                 </button>
             </div>
-
-            <div className="bg-[#dcdcdc] h-screen mt-8 rounded-[5px]"></div>
-            {/* <div className={css.filterBtns}>
-                <button
-                    className={css.sortTypeBtn}
-                    onClick={() => setSortType(!sortType)}
-                >
-                    Sort Type - ({sortType ? "Ascending" : "Descending"})
-                </button>
-                <div className={css.searchInputs}>
-                    <div>
+            <div className="flex flex-col gap-8">
+                <div className="flex justify-between flex-wrap gap-4">
+                    <button
+                        className="bg-pima-gray py-2 px-6 rounded-[5px] text-white"
+                        onClick={() => setSortType(!sortType)}
+                    >
+                        Sort Type - ({sortType ? "Ascending" : "Descending"})
+                    </button>
+                    <div className="flex flex-wrap gap-4">
                         <input
                             type="text"
                             value={searchQuery}
@@ -177,125 +174,127 @@ const AdminUsers = () => {
                                 setSearchQuery(e.target.value);
                                 setPage(1);
                             }}
-                            className={css.searchInput}
+                            className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]"
                         />
-                    </div>
-                    <div className={css.collegeSearch}>
-                        <form
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                setRerender((p) => !p);
-                            }}
-                        >
-                            <input
-                                type="text"
-                                value={searchCollege}
-                                className={css.searchInput}
-                                onChange={(e) => {
-                                    setSearchCollege(e.target.value);
-                                    setIsDropDownOpen(true);
+                        <div className="">
+                            <form
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    setRerender((p) => !p);
                                 }}
-                                placeholder="Search Colleges"
-                            />
-                        </form>
-                        {isDropDownOpen && (
-                            <div className={css.searchCollegeDropdown}>
-                                {colleges
-                                    ?.filter((item) => {
-                                        const searchTerm =
-                                            searchCollege.toLowerCase();
-                                        const college = item.toLowerCase();
+                            >
+                                <input
+                                    type="text"
+                                    value={searchCollege}
+                                    className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]"
+                                    onChange={(e) => {
+                                        setSearchCollege(e.target.value);
+                                        setIsDropDownOpen(true);
+                                    }}
+                                    placeholder="Search Colleges"
+                                />
+                            </form>
+                            {isDropDownOpen && (
+                                <div className="">
+                                    {colleges
+                                        ?.filter((item) => {
+                                            const searchTerm =
+                                                searchCollege.toLowerCase();
+                                            const college = item.toLowerCase();
 
-                                        return (
-                                            searchTerm &&
-                                            college.startsWith(searchTerm)
-                                        );
-                                    })
-                                    .slice(0, 10)
-                                    .map((college) => (
-                                        <div
-                                            value={college}
-                                            className={
-                                                css.searchCollegeDropdownRow
-                                            }
-                                            onClick={() => {
-                                                setSearchCollege(college);
-                                                setRerender((p) => !p);
-                                                setIsDropDownOpen(false);
-                                            }}
-                                            key={college}
-                                        >
-                                            {college}
-                                        </div>
-                                    ))}
-                            </div>
-                        )}
+                                            return (
+                                                searchTerm &&
+                                                college.startsWith(searchTerm)
+                                            );
+                                        })
+                                        .slice(0, 10)
+                                        .map((college) => (
+                                            <div
+                                                value={college}
+                                                className=""
+                                                onClick={() => {
+                                                    setSearchCollege(college);
+                                                    setRerender((p) => !p);
+                                                    setIsDropDownOpen(false);
+                                                }}
+                                                key={college}
+                                            >
+                                                {college}
+                                            </div>
+                                        ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
+                </div>
+                {isLoading ? (
+                    <Loader />
+                ) : (
+                    <div className="flex flex-col gap-8 overflow-x-scroll">
+                        <table className="">
+                            <thead className="bg-pima-gray">
+                                <tr className="text-base">
+                                    <th>Sr no.</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Mobile no.</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody className="w-full">
+                                {allUsers?.map((user, idx) => (
+                                    <tr key={user?._id}>
+                                        <td>
+                                            {page === 1
+                                                ? idx + 1
+                                                : idx + 1 + (page - 1) * 20}
+                                        </td>
+                                        <td>
+                                            {capitalizeFirstLetter(user?.fName)}{" "}
+                                            {capitalizeFirstLetter(user?.lName)}
+                                        </td>
+                                        <td>{user?.email}</td>
+                                        <td>
+                                            {user?.password || "password here"}
+                                        </td>
+                                        <td>{user?.phone}</td>
+                                        <td>
+                                            <button
+                                                className="bg-pima-gray py-1.5 px-4 rounded-[5px] text-white text-sm"
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/admin/users/${user?.userId}`
+                                                    )
+                                                }
+                                            >
+                                                View Details
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+                <div className="flex justify-between items-center">
+                    <button
+                        className="bg-pima-red py-2 px-8 text-sm text-white rounded-[5px]"
+                        onClick={() => decrement()}
+                    >
+                        Prev
+                    </button>
+                    <span className="font-medium">
+                        Page: {page} of {totalPages}
+                    </span>
+                    <button
+                        className="bg-pima-red py-2 px-8 text-sm text-white rounded-[5px]"
+                        onClick={() => increment()}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
-            {isLoading ? (
-                <Loader />
-            ) : (
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Sr no.</th>
-                                <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Mobile no.</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {allUsers?.map((user, idx) => (
-                                <tr key={user._id}>
-                                    <td>
-                                        {page === 1
-                                            ? idx + 1
-                                            : idx + 1 + (page - 1) * 20}
-                                    </td>
-                                    <td>
-                                        {capitalizeFirstLetter(user.fName)}{" "}
-                                        {capitalizeFirstLetter(user.lName)}
-                                    </td>
-                                    <td>{user.email}</td>
-                                    <td>{user.phone}</td>
-                                    <td>
-                                        <button
-                                            className={css.viewBtn}
-                                            onClick={() =>
-                                                navigate(
-                                                    `/admin/users/${user.userId}`
-                                                )
-                                            }
-                                        >
-                                            View Details
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div className={css.paginationBtns}>
-                        <button
-                            className={css.prevBtn}
-                            onClick={() => decrement()}
-                        >
-                            Prev
-                        </button>
-                        <span>
-                            Page: {page} of {totalPages}
-                        </span>
-                        <button
-                            className={css.nextBtn}
-                            onClick={() => increment()}
-                        >
-                            Next
-                        </button>
-                    </div>
-                </div>
-            )} */}
         </div>
     );
 };

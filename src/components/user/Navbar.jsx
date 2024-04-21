@@ -19,7 +19,7 @@ const Navbar = () => {
     const pathname = useLocation().pathname;
 
     useEffect(() => {
-        if(pathname === "/user/login" || pathname === "/user/register") return;
+        if (pathname === "/user/login" || pathname === "/user/register") return;
         const verifyToken = async () => {
             const userId = process.env.REACT_APP_USER_ID;
             const userPassword = process.env.REACT_APP_USER_PASSWORD;
@@ -67,7 +67,7 @@ const Navbar = () => {
     const listItemStyle = { fontSize: "0.9rem", fontWeight: "400" };
 
     return (
-        <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4 items-center relative">
+        <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4 items-center sticky top-0 bg-[#ffffff]">
             <div className="flex items-center justify-between max-md:w-full">
                 <img
                     src={logo}
@@ -102,7 +102,7 @@ const Navbar = () => {
                                 </Link>
                             </li>
                         ))}
-                        <li className="flex ml-12">
+                        <li className="flex">
                             {localStorage.getItem("token") ? (
                                 <>
                                     {/* <button
@@ -117,7 +117,7 @@ const Navbar = () => {
                                 My Profile
                             </button> */}
                                     <button
-                                        className="rounded font-medium w-32 ml-8 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red border-2 text-base hover:border-2 border-pima-red"
+                                        className="rounded font-medium w-32 ml-8 transition-all duration-150 bg-pima-red py-1.5 text-center text-white hover:bg-white hover:text-pima-red border-2 text-sm hover:border-2 border-pima-red"
                                         onClick={handleLogoutClick}
                                     >
                                         Logout
@@ -126,7 +126,7 @@ const Navbar = () => {
                             ) : (
                                 <>
                                     <button
-                                        className="rounded font-medium w-40 border-2 transition-all duration-150 bg-pima-red py-2 text-center text-white hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
+                                        className="rounded font-medium w-40 border-2 transition-all duration-150 bg-pima-red py-1.5 text-center text-white hover:bg-white hover:text-pima-red hover:border-2 border-pima-red"
                                         onClick={handleLoginClick}
                                     >
                                         Login
@@ -172,7 +172,7 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                 ))}
-                                <li className="flex mt-2 flex-col gap-4 ml-4">
+                                <li className="flex mt-2 flex-col gap-4">
                                     {localStorage.getItem("token") ? (
                                         <>
                                             <button
