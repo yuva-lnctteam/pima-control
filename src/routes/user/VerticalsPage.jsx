@@ -65,7 +65,7 @@ const VerticalsPage = () => {
     }, []);
 
     function handleViewCourses(e) {
-        const verticalId = e.target._id;
+        const verticalId = e.target.id;
         // (verticalId);
         navigate(`/user/verticals/${verticalId}/courses/all`);
     }
@@ -85,7 +85,7 @@ const VerticalsPage = () => {
             {allVerticals.length > 0 ? (
                 <CardGrid>
                     {allVerticals.map((vertical) => (
-                        <div key={vertical._id}>
+                        <div key={vertical.id}>
                             <Card
                                 data={vertical}
                                 type="vertical"

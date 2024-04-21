@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import ReactPlayer from "react-player/youtube";
 
 // My components
 import SecCard from "../../components/common/SecCard";
@@ -71,7 +72,7 @@ const AdminAddUnit = () => {
 
     const [unitDet, setUnitDet] = useState({
         title: String,
-        vdoSrc: URL,
+        vdoSrc: null,
         desc: String,
     });
 
@@ -88,9 +89,12 @@ const AdminAddUnit = () => {
         e.preventDefault();
         setIsAddUnitBtnDisabled(false);
 
+        // To display only the options which have text in an orderly manner
+        const filteredOptions = options.filter((op) => op.text.trim() !== "");
+
         const quizDet = {
             question: question,
-            opArr: options,
+            opArr: filteredOptions,
         };
 
         setQuizArr([...quizArr, quizDet]);
@@ -128,7 +132,7 @@ const AdminAddUnit = () => {
                                     setUnitDet((prevVal) => {
                                         return {
                                             title: e.target.value,
-                                            vdoUrl: prevVal.vdoUrl,
+                                            vdoSrc: prevVal.vdoSrc,
                                             desc: prevVal.desc,
                                         };
                                     });
@@ -150,7 +154,7 @@ const AdminAddUnit = () => {
                                     setUnitDet((prevVal) => {
                                         return {
                                             title: prevVal.title,
-                                            vdoUrl: e.target.value,
+                                            vdoSrc: e.target.value,
                                             desc: prevVal.desc,
                                         };
                                     });
@@ -173,7 +177,7 @@ const AdminAddUnit = () => {
                                     setUnitDet((prevVal) => {
                                         return {
                                             title: prevVal.title,
-                                            vdoUrl: prevVal.vdoUrl,
+                                            vdoSrc: prevVal.vdoSrc,
                                             desc: e.target.value,
                                         };
                                     });
@@ -181,7 +185,22 @@ const AdminAddUnit = () => {
                             />
                         </label>
                     </form>
-                    <div className="flex-1 h-screen/2 bg-red-300"></div>
+
+                    {/* --------------------- INPUT VIDEO PREVIEW -------------------- */}
+
+                    <div className="flex-1 h-screen/2 bg-red-200 justify-center items-center rounded">
+                        {unitDet.vdoSrc ? (
+                            <ReactPlayer
+                                width="100%"
+                                height="100%"
+                                url={unitDet.vdoSrc}
+                            />
+                        ) : (
+                            <p className=" text-center text-white ">
+                                Video Preview Appears Here
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 <hr />
@@ -196,7 +215,7 @@ const AdminAddUnit = () => {
                             action=""
                             onSubmit={handleQuizSubmit}
                         >
-                            <label>
+                            <label className="text-sm font-light">
                                 Question:
                                 <input
                                     className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
@@ -205,10 +224,11 @@ const AdminAddUnit = () => {
                                     onChange={(e) =>
                                         setQuestion(e.target.value)
                                     }
+                                    required
                                 />
                             </label>
                             <br />
-                            <div className="grid grid-cols-2">
+                            <div className="grid grid-cols-2 gap-y-6">
                                 {options.map((option, index) => (
                                     <div className="flex" key={index}>
                                         <input
@@ -221,14 +241,17 @@ const AdminAddUnit = () => {
                                                 ];
                                                 updatedOptions[
                                                     index
-                                                ].isCorrect = !option.isCorrect;
+                                                ].isChecked = !option.isChecked;
                                                 setOptions(updatedOptions);
                                             }}
                                         />
-                                        <label className="text-sm" htmlFor="">
+                                        <label
+                                            className="text-sm font-light"
+                                            htmlFor=""
+                                        >
                                             Option {index + 1}:
                                             <input
-                                                className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
+                                                className="border-2 w-full px-2 py-2 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
                                                 type="text"
                                                 value={option.text}
                                                 onChange={(e) => {
@@ -254,7 +277,7 @@ const AdminAddUnit = () => {
 
                         {/* ------------------------- ALL QUESTIONS DISPLAY ------------------------- */}
 
-                        <div className="flex-1 ">
+                        <div className="flex-1 max-h-[70vh] overflow-y-auto">
                             {quizArr.map((item, index) => (
                                 <div className="mb-6 flex gap-2" key={index}>
                                     <p
@@ -277,15 +300,20 @@ const AdminAddUnit = () => {
                                             Q. {item.question}
                                         </p>
 
-                                        {item.opArr.map((op, opIndex) => (
-                                            <p
-                                                className="text-sm"
-                                                key={opIndex}
-                                            >
-                                                {opIndex + 1}.{"\u0029"}{" "}
-                                                {op.text}{" "}
-                                            </p>
-                                        ))}
+                                        {item.opArr.map((op, opIndex) => {
+                                            if (op.text === "") {
+                                                return null;
+                                            }
+                                            return (
+                                                <p
+                                                    className="text-sm"
+                                                    key={opIndex}
+                                                >
+                                                    {opIndex + 1}.{"\u0029"}{" "}
+                                                    {op.text}{" "}
+                                                </p>
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             ))}

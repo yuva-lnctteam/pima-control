@@ -4,15 +4,11 @@ import { toast } from "react-hot-toast";
 
 // My components
 import VideoPlayer from "../../components/user/VideoPlayer";
-import UnitText from "../../components/user/UnitText";
-import SecCard from "../../components/common/SecCard";
-import UnitActivity from "../../components/user/UnitActivity";
-import HeaderCard from "../../components/common/HeaderCard";
+// import UnitText from "../../components/user/UnitText";
+// import SecCard from "../../components/common/SecCard";
+// import UnitActivity from "../../components/user/UnitActivity";
+// import HeaderCard from "../../components/common/HeaderCard";
 import Loader from "../../components/common/Loader";
-
-// My css
-import "../../css/user/u-single-unit-page.css";
-import css from "../../css/user/single-unit-page.module.css";
 
 import { SERVER_ORIGIN, vars } from "../../utilities/constants";
 
@@ -73,7 +69,7 @@ const UserSingleUnit = () => {
                         toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
-                    console.log("*************",result);
+                    console.log("*************", result);
                     setUnit(result.unit);
                     setVideoInfo(result.unit.video);
                     setIsQuizBtnDisabled(!result.isEligibleToTakeQuiz);
@@ -123,91 +119,59 @@ const UserSingleUnit = () => {
 
     const element = (
         <div>
-            <h1></h1>
+            <div className="flex px-pima-x py-pima-y h-[80vh]">
+                <div className="flex w-[50%] flex-col justify-between pt-16 pr-16">
+                    {/* <h1 className=" text-5xl">{videoInfo.title}</h1> */}
+                    {/* <p>{videoInfo.desc}</p> */}
+                    <div>
+                        <h1 className="text-[2.9rem] font-extrabold capitalize">
+                            Lorem ipsum dolor sit amet, consectetur
+                        </h1>
+                        <p className=" font-light  text-justify text-sm mt-10">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Viverra tellus in hac habitasse
+                            platea dictumst vestibulum. Sed egestas egestas
+                            fringilla phasellus faucibus scelerisque eleifend
+                            donec. Sapien pellentesque habitant morbi tristique
+                            senectus et netus et malesuada. Eget gravida cum
+                            sociis natoque penatibus et magnis dis.
+                            <br />
+                            <br />
+                            Sed ullamcorper morbi tincidunt ornare massa eget.
+                            Sem fringilla ut morbi tincidunt. Semper quis lectus
+                            nulla at volutpat diam. Amet mattis vulputate enim
+                            nulla aliquet porttitor lacus. Diam donec adipiscing
+                            tristique risus nec feugiat in fermentum.
+                        </p>
+                    </div>
+                    <div className="relative">
+                        <button
+                            onClick={handleOpenQuizClick}
+                            className={
+                                isQuizBtnDisabled
+                                    ? " text-gray-500 absolute bottom-0 right-0 underline underline-offset-2 cursor-not-allowed"
+                                    : "absolute bottom-0 right-0 underline underline-offset-2"
+                            }
+                            disabled={isQuizBtnDisabled}
+                        >
+                            Take Quiz →
+                        </button>
+                    </div>
+                </div>
+
+                <div className="flex-1 pl-10">
+                    <VideoPlayer
+                        url={videoInfo.vdoSrc}
+                        storedWatchPercentage={storedWatchPercentage}
+                        handleChangeQuizState={handleChangeQuizState}
+                        videoWatchTimeCutoffPercentage={
+                            videoWatchTimeCutoffPercentage
+                        }
+                    />
+                </div>
+            </div>
         </div>
-        // <div className={css.outerDiv}>
-        //     {unit.video !== null ? (
-        //         <VideoPlayer
-        //             video={unit.video}
-        //             storedWatchPercentage={storedWatchPercentage}
-        //             handleChangeQuizState={handleChangeQuizState}
-        //             videoWatchTimeCutoffPercentage={
-        //                 videoWatchTimeCutoffPercentage
-        //             }
-        //         />
-        //     ) : null}
-
-        //     {unit.video ? (
-        //         <div className={css.common}>
-        //             <HeaderCard>
-        //                 {unit.video.title && unit.video.title.length > 0 ? (
-        //                     <h1 className={css.vdoTitle}>{unit.video.title}</h1>
-        //                 ) : null}
-        //                 {unit.video.desc && unit.video.desc.length > 0 ? (
-        //                     <p className={css.vdoDesc}>
-        //                         What you'll learn: {unit.video.desc}
-        //                     </p>
-        //                 ) : null}
-        //             </HeaderCard>
-        //         </div>
-        //     ) : null}
-
-        //     {unit.text && unit.text.length > 0 ? (
-        //         <div className={css.common}>
-        //             <SecCard>
-        //                 <h2 className={css.secHeading}>Text to read</h2>
-        //                 <UnitText text={unit.text} />
-        //             </SecCard>
-        //         </div>
-        //     ) : null}
-
-        //     {unit.activities && unit.activities.length > 0 ? (
-        //         <div className={css.common}>
-        //             <SecCard>
-        //                 <h2 className={css.secHeading}>Activities</h2>
-
-        //                 {unit.activities.map((activity, index) => {
-        //                     return (
-        //                         <div key={index}>
-        //                             <UnitActivity
-        //                                 index={index}
-        //                                 activity={activity}
-        //                             />
-        //                         </div>
-        //                     );
-        //                 })}
-        //             </SecCard>
-        //         </div>
-        //     ) : null}
-
-        //     {unit.quiz && unit.quiz.length > 0 ? (
-        //         <div className="row">
-        //             <div
-        //                 className={`${css.quizDiv} ${css.common} col-lg-6 col-md-6`}
-        //             >
-        //                 <SecCard>
-        //                     <h2 className={css.secHeading}>Quiz</h2>
-
-        //                     <p className={css.secText}>
-        //                         {isQuizBtnDisabled
-        //                             ? `Note: You need to watch atleast ${vars.video.MIN_WATCH_TIME_IN_PERCENT}% of the video to unlock the quiz. (Kindly refresh the page after watching video to unlock the quiz.)`
-        //                             : "Quiz has been unlocked, click the button below to take quiz."}
-        //                     </p>
-
-        //                     <button
-        //                         className={css.secBtn}
-        //                         onClick={handleOpenQuizClick}
-        //                         disabled={isQuizBtnDisabled}
-        //                     >
-        //                         {isQuizBtnDisabled
-        //                             ? "Quiz Locked"
-        //                             : "Open Quiz"}
-        //                     </button>
-        //                 </SecCard>
-        //             </div>
-        //         </div>
-        //     ) : null}
-        // </div>
     );
 
     return <>{isLoading ? <Loader /> : element}</>;
