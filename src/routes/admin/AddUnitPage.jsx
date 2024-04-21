@@ -264,7 +264,7 @@ const AdminAddUnit = () => {
                                                 ];
                                                 updatedOptions[
                                                     index
-                                                ].isCorrect = !option.isCorrect;
+                                                ].isChecked = !option.isChecked;
                                                 setOptions(updatedOptions);
                                             }}
                                         />
