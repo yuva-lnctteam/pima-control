@@ -1,4 +1,4 @@
-.outerDiv {
+/* .outerDiv {
     margin-top: 8rem;
 }
 
@@ -39,8 +39,8 @@
 
 .xlDownloadBtn:hover {
     /* color: black; */
-    text-decoration: underline;
-}
+/* text-decoration: underline; */
+/* }
 
 input[type="file"] {
     display: none;
@@ -97,16 +97,16 @@ input[type="file"] {
     padding-right: 2rem;
     color: white;
     font-family: var(--font-family-2);
-}
+} */
 
-.addBtn:hover {
+/* .addBtn:hover {
     background-color: var(--yuva-dark-blue);
 }
 
 .paginationBtns {
     display: flex;
     /* width: 500px; */
-    align-items: center;
+/* align-items: center;
     justify-content: space-between;
     margin: 2rem auto 0rem auto;
 }
@@ -135,14 +135,14 @@ input[type="file"] {
 
 
 .searchInput {
-    border-radius: 0.4rem;
-    outline: none;
-    /* border-color: 1px solid var(--pima-red); */
-    border: 1px solid;
+    border-radius: 0.4rem; */
+/* outline: none; */
+/* border-color: 1px solid var(--pima-red); */
+/* border: 1px solid;
     height: 40px;
     width: 300px;
-}
-
+} */
+/* 
 .searchCollegeDropdown {
     background-color: #fff;
     width: 100%;
@@ -204,7 +204,7 @@ input[type="file"] {
     color: white;
     font-weight: 600;
     height: 40px;
-}
+} */
 
 /* // sets
 
@@ -301,24 +301,24 @@ tbody tr:last-child {
         margin-top: 6rem;
     }
     .filterBtns {
-            display : flex;
-            flex-direction: column;
-            /* flex-wrap: wrap; */
+        display: flex;
+        flex-direction: column;
+        /* flex-wrap: wrap; */
     }
     .searchInputs {
-            margin-top : 15px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
-    
-    .paginationBtns{
+
+    .paginationBtns {
         justify-content: initial;
-        margin : 0 20px;
+        margin: 0 20px;
     }
     .prevBtn,
     .nextBtn,
     .sortTypeBtn {
-        margin : 20px 20px 0 20px;
+        margin: 20px 20px 0 20px;
     }
 }

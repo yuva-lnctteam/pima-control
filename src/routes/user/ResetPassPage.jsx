@@ -15,58 +15,6 @@ const UserResetPass = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const canVisitPage = async () => {
-            try {
-                const userId = process.env.REACT_APP_USER_ID;
-                const userPassword = process.env.REACT_APP_USER_PASSWORD;
-                const basicAuth = btoa(`${userId}:${userPassword}`);
-                setIsLoading(true);
-                const response = await fetch(
-                    `${SERVER_ORIGIN}/api/user/auth/verify-token`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "auth-token": localStorage.getItem("token"),
-                            Authorization: `Basic ${basicAuth}`,
-                        },
-                    }
-                );
-
-                const result = await response.json();
-                // (response);
-
-
-                if (response.status >= 400 && response.status < 600) {
-                    if (response.status === 401) {
-                        if (
-                            !("isLoggedIn" in result) ||
-                            result.isLoggedIn === false
-                        ) {
-                            // redirect to login page, navigate("/user/login");
-                        }
-                    } else {
-                        alert("Internal server error"); // todo: toast notify
-                    }
-                } else if (response.ok && response.status === 200) {
-                    if (result.userDoc.isPassReset) {
-                        if (result.userDoc.isRegistered) {
-                        } else {
-                        }
-                    }
-                } else {
-                    // for future
-                }
-
-                setIsLoading(false);
-            } catch (error) {
-            }
-        };
-
-        canVisitPage();
-    }, []);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 

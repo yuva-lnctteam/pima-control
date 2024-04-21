@@ -20,49 +20,6 @@ const AdminAddUnit = () => {
     const navigate = useNavigate();
     const params = useParams();
 
-    useEffect(() => {
-        async function canVisitPage() {
-            setIsLoading(true);
-
-            const { verticalId, courseId, unitId } = params;
-
-            try {
-                const adminId = process.env.REACT_APP_ADMIN_ID;
-                const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-                const basicAuth = btoa(`${adminId}:${adminPassword}`);
-                const response = await fetch(
-                    `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
-                    {
-                        method: "POST",
-                        headers: {
-                            // "Content-Type": "application/json",
-                            "auth-token": localStorage.getItem("token"),
-                            Authorization: `Basic ${basicAuth}`,
-                        },
-                    }
-                );
-
-                const result = await response.json();
-                // (result);
-
-                setIsLoading(false);
-
-                if (response.status >= 400 && response.status < 600) {
-                    if (response.status === 401) {
-                        navigate("/user/login"); // login or role issue
-                    } else {
-                        toast.error(result.statusText);
-                    }
-                } else if (response.ok && response.status === 200) {
-                }
-            } catch (err) {
-                // (err.message);
-            }
-        }
-
-        canVisitPage();
-    }, []);
-
     async function handleAddUnit() {
         setIsAddUnitBtnDisabled(true);
         const { verticalId, courseId } = params;
@@ -380,3 +337,4 @@ const AdminAddUnit = () => {
 };
 
 export default AdminAddUnit;
+    

@@ -16,49 +16,6 @@ const AdminCreateUser = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        async function canVisitPage() {
-            setIsLoading(true);
-
-            try {
-                const adminId = process.env.REACT_APP_ADMIN_ID;
-                const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-                const basicAuth = btoa(`${adminId}:${adminPassword}`);
-                const response = await fetch(
-                    `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "auth-token": localStorage.getItem("token"),
-                            Authorization: `Basic ${basicAuth}`,
-                        },
-                    }
-                );
-
-                const result = await response.json();
-                // (result);
-
-                if (response.status >= 400 && response.status < 600) {
-                    if (response.status === 401) {
-                        navigate("/admin/login");
-                    }
-                } else if (response.ok && response.status === 200) {
-                } else {
-                    // for future
-                }
-
-                setIsLoading(false);
-            } catch (err) {
-                // (err.message);
-            }
-
-            setIsLoading(false);
-        }
-
-        canVisitPage();
-    }, []);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (
@@ -130,9 +87,7 @@ const AdminCreateUser = () => {
                     navigate("/admin/login");
                 }
             } else if (response.ok && response.status === 200) {
-                if (result.userDoc) {
-                    navigate("/admin/manage-users");
-                }
+                navigate("/admin/manage-users");
             } else {
                 // for future
             }

@@ -45,7 +45,7 @@ const HomePage = () => {
     //             );
     useEffect(() => {
         setIsLoading(true);
-        
+
         async function getAllVerticals() {
             try {
                 const userId = process.env.REACT_APP_USER_ID;
@@ -70,8 +70,8 @@ const HomePage = () => {
                         toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
-                    setProjectVerticals(result.allVerticals?.slice(0, 2));
-                    setInitiativeVerticals(result.allVerticals?.slice(2));
+                    setProjectVerticals(result.allVerticals?.slice(0, 3));
+                    setInitiativeVerticals(result.allVerticals?.slice(3));
                     // setAllVerticals(result.allVerticals);
                 } else {
                     // for future
@@ -185,9 +185,14 @@ const HomePage = () => {
                         </h2>
                     </div>
                     <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:grid-cols-1">
-                        <Card />
-                        <Card />
-                        <Card />
+                        {projectVerticals.map((vertical, index) => (
+                            <Card
+                                key={index}
+                                type="vertical"
+                                data={vertical}
+                                onClick={handleViewCourses}
+                            />
+                        ))}
                     </div>
                     <button className="text-sm uppercase text-pima-red underline underline-offset-[3px] font-semibold self-start mt-6">
                         All Course →
@@ -205,9 +210,14 @@ const HomePage = () => {
                         </h2>
                     </div>
                     <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:grid-cols-1">
-                        <Card />
-                        <Card />
-                        <Card />
+                        {initiativeVerticals.map((vertical, index) => (
+                            <Card
+                                key={index}
+                                type="vertical"
+                                data={vertical}
+                                onClick={handleViewCourses}
+                            />
+                        ))}
                     </div>
                     <button className="text-sm uppercase text-pima-red underline underline-offset-[3px] font-semibold self-start mt-6">
                         All Policies →
