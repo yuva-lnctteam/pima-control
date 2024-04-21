@@ -3,7 +3,7 @@ import ReactPlayer from "react-player/youtube";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-import { SERVER_ORIGIN } from "../../utilities/constants";
+import { SERVER_ORIGIN, vars } from "../../utilities/constants";
 import "../../css/user/react-player.css";
 // import { roundOffDecimalPlaces } from "../../utilities/helper_functions";
 // const url = "https://www.youtube.com/watch?v=WQBldOTxN4M";
@@ -23,6 +23,7 @@ import "../../css/user/react-player.css";
 const VideoPlayer = (props) => {
     useEffect(() => {
         toast('Please "pause" the video frequently to "save your progress"');
+        toast(`Note: You need to watch atleast ${vars.video.MIN_WATCH_TIME_IN_PERCENT}% of the video to unlock the quiz. (Kindly refresh the page after watching video to unlock the quiz.)`, {duration:6000})
         //  return () => {
         //     ();
         //  }
@@ -65,6 +66,8 @@ const VideoPlayer = (props) => {
         setTotalWatchPercentage((prev) => {
             return newWatchPercentage;
         });
+
+        // console.log(newWatchPercentage);
         // (totalWatchPercentage);
     }
 
@@ -122,11 +125,11 @@ const VideoPlayer = (props) => {
     }
 
     return (
-        <div className="player-wrapper" style={{}}>
+        <div className="w-full h-full">
             <ReactPlayer
-                url={props.video.vdoSrc}
+                url={props.url} 
                 controls={true}
-                className="react-player"
+                // className="react-player"
                 width="100%"
                 height="100%"
                 onDuration={handleDuration}
