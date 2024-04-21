@@ -26,36 +26,6 @@ const UserProfile = () => {
     country: "",
   });
 
-  // Load user data when the component mounts
-  useEffect(() => {
-    // get the user from database.
-    const verifyToken = async () => {
-      const userId = process.env.REACT_APP_USER_ID;
-      const userPassword = process.env.REACT_APP_USER_PASSWORD;
-      const basicAuth = btoa(`${userId}:${userPassword}`);
-      const response = await fetch(
-        `${SERVER_ORIGIN}/api/user/auth/verify-token`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("token"),
-            Authorization: `Basic ${basicAuth}`,
-          },
-        }
-      );
-      const result = await response.json();
-      if (result.userDoc) {
-        setUser(result.userDoc);
-      } else {
-        toast.error("Please login to continue");
-        navigate("/user/login");
-      }
-    };
-
-    verifyToken();
-  }, []);
-
   // Handle form field changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;

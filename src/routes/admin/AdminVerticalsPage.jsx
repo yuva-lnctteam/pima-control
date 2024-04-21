@@ -260,7 +260,6 @@ const VerticalsPage = () => {
     );
 
     // add a vertical modal
-
     return (
         <div className="relative">
             <AnimatePresence>

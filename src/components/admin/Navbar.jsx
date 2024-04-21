@@ -25,7 +25,7 @@ const Navbar = () => {
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
             const basicAuth = btoa(`${adminId}:${adminPassword}`);
             const response = await fetch(
-                `${SERVER_ORIGIN}/api/admin/auth/verity-token`,
+                `${SERVER_ORIGIN}/api/admin/auth/verify-token`,
                 {
                     method: "POST",
                     headers: {
@@ -36,9 +36,13 @@ const Navbar = () => {
                 }
             );
             const result = await response.json();
-            if (result.userDoc) {
+            if (response.status >= 400 && response.status < 600) {
+                if (response.status === 401) {
+                    navigate("/admin/login");
+                }
+            } else if (response.ok && response.status === 200) {
             } else {
-                navigate("/admin/login");
+                // for future
             }
         };
         verifyToken();

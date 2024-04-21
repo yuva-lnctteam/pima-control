@@ -24,7 +24,6 @@ const UnitsPage = () => {
     const navigate = useNavigate();
     const params = useParams();
 
-    console.log(1);
     useEffect(() => {
         async function getAllUnits() {
             setIsLoading(true);
@@ -150,84 +149,6 @@ const UnitsPage = () => {
             "/admin/content/verticals/:verticalId/courses/:courseId/units/add"
         );
     }
-
-    // const deleteModal = (
-    //     <>
-    //         <button
-    //             ref={ref}
-    //             type="button"
-    //             className="btn btn-primary d-none"
-    //             data-bs-toggle="modal"
-    //             data-bs-target="#exampleModal3"
-    //         >
-    //             Launch demo modal
-    //         </button>
-
-    //         <div
-    //             className="modal fade"
-    //             id="exampleModal3"
-    //             tabIndex="-1"
-    //             aria-labelledby="exampleModalLabel"
-    //             aria-hidden="true"
-    //         >
-    //             <div className="modal-dialog">
-    //                 <div className="modal-content">
-    //                     <div className="modal-header">
-    //                         <h5
-    //                             className="modal-title text-ff1"
-    //                             id="exampleModalLabel"
-    //                         >
-    //                             Delete Unit
-    //                         </h5>
-    //                         <button
-    //                             type="button"
-    //                             className="btn-close"
-    //                             data-bs-dismiss="modal"
-    //                             aria-label="Close"
-    //                         />
-    //                     </div>
-    //                     <div className="modal-body">
-    //                         <div style={{ marginBottom: "0.8rem" }}>
-    //                             <label htmlFor="name" className="modalLabel">
-    //                                 Confirmation
-    //                             </label>
-    //                             <input
-    //                                 type="text"
-    //                                 className="modalInput"
-    //                                 id="confirm"
-    //                                 name="confirm"
-    //                                 minLength={3}
-    //                                 required
-    //                                 placeholder="Type 'Confirm' to delete"
-    //                                 value={confirmText}
-    //                                 onChange={onConfirmTextChange}
-    //                                 autoComplete="off"
-    //                             />
-    //                         </div>
-    //                     </div>
-    //                     <div className="modal-footer">
-    //                         <button
-    //                             type="button"
-    //                             className="modalCloseBtn"
-    //                             data-bs-dismiss="modal"
-    //                             ref={refClose}
-    //                         >
-    //                             Close
-    //                         </button>
-    //                         <button
-    //                             onClick={handleDeleteUnit}
-    //                             type="button"
-    //                             className="modalDltBtn"
-    //                             disabled={confirmText !== "Confirm"}
-    //                         >
-    //                             Delete unit
-    //                         </button>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     </>
-    // );
 
     const loader = <Loader />;
 
