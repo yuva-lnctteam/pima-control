@@ -60,7 +60,9 @@ const LoginPage = () => {
             } else {
                 // for future
             }
-        } catch (err) {}
+        } catch (err) {
+            setIsLoading(false);
+        }
     };
 
     const updateCreds = (e) => {

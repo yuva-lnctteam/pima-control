@@ -114,7 +114,7 @@ const AdminAddUnit = () => {
         <>
             <div className="py-pima-y px-pima-x">
                 <h1 className="text-4xl font-bold">Add Unit Here</h1>
-                <div className="flex py-pima-y">
+                <div className="flex py-pima-y w-full">
                     <form
                         className="flex flex-col gap-6 w-1/2 pr-pima-x"
                         action=""
@@ -190,7 +190,7 @@ const AdminAddUnit = () => {
 
                     {/* --------------------- INPUT VIDEO PREVIEW -------------------- */}
 
-                    <div className="bg-pima-gray rounded flex justify-center items-center">
+                    <div className="bg-pima-gray w-1/2 rounded flex justify-center items-center">
                         {unitDet.vdoSrc ? (
                             <ReactPlayer
                                 width="100%"
@@ -285,23 +285,23 @@ const AdminAddUnit = () => {
 
                         {/* ------------------------- ALL QUESTIONS DISPLAY ------------------------- */}
 
-                        <div className="max-h-[70vh] overflow-y-auto w-1/2">
+                        <div className="max-h-[70vh] overflow-y-auto w-1/2 pr-3">
                             {quizArr.map((item, index) => (
                                 <div
                                     className="mb-8 flex gap-2 w-full"
                                     key={index}
                                 >
-                                    <div className="flex gap-4">
+                                    <div className="flex gap-4 w-full">
                                         <span className="font-bold mt-1">
                                             {index + 1}.
                                         </span>
-                                        <div className="flex flex-col gap-4">
-                                            <div className="flex justify-between">
-                                                <span className="text-lg font-normal">
+                                        <div className="flex flex-col gap-4 flex-1">
+                                            <div className="flex justify-between w-full items-center">
+                                                <span className="text-lg font-normal flex-1">
                                                     {item.question}
                                                 </span>
                                                 <XMarkIcon
-                                                    className="w-7 h-7 border-1 bg-red-200 rounded px-1 text-red-500 hover:cursor-pointer stroke-2"
+                                                    className="w-6 h-6 border rounded-full px-1 border-red-500 hover:bg-red-500 hover:text-white text-red-500 hover:cursor-pointer stroke-2  transition-all duration-100"
                                                     onClick={() => {
                                                         setQuizArr(
                                                             (prevVal) => {
@@ -324,19 +324,26 @@ const AdminAddUnit = () => {
                                                             return null;
                                                         }
                                                         return (
-                                                            <p
-                                                                className={`px-4 py-2 rounded-[5px] h-auto justify-between break-words items-center flex-1  ${
+                                                            <div
+                                                                className={`px-4 py-2 flex rounded-[5px] h-auto gap-2 justify-between break-words items-center flex-1  ${
                                                                     op.isChecked
                                                                         ? "bg-green-100 border-[1px] border-green-500"
                                                                         : "border-[1px]"
                                                                 }`}
-                                                                key={opIndex}
                                                             >
-                                                                {op.text}
+                                                                <p
+                                                                    className={`
+                                                                    flex-1 break-words break-all`}
+                                                                    key={
+                                                                        opIndex
+                                                                    }
+                                                                >
+                                                                    {op.text}
+                                                                </p>
                                                                 {op.isChecked && (
-                                                                    <CheckmarkIcon className="w-5 h-5 bg-green-600" />
+                                                                    <CheckmarkIcon className="w-5 bg-green-600" />
                                                                 )}
-                                                            </p>
+                                                            </div>
                                                         );
                                                     }
                                                 )}

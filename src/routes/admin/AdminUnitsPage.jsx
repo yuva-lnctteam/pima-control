@@ -152,8 +152,9 @@ const UnitsPage = () => {
     }
 
     function handleCreateUnit() {
+        const { verticalId, courseId } = params;
         navigate(
-            "/admin/content/verticals/:verticalId/courses/:courseId/units/add"
+            `/admin/content/verticals/${verticalId}/courses/${courseId}/units/add`
         );
     }
 
