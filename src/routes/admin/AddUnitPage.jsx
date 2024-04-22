@@ -50,6 +50,12 @@ const AdminAddUnit = () => {
 
             setIsAddUnitBtnDisabled(false);
 
+            setUnitDet({
+                title: "",
+                vdoSrc: null,
+                desc: "",
+            });
+
             const result = await response.json();
 
             if (response.status >= 400 && response.status < 600) {
@@ -85,17 +91,31 @@ const AdminAddUnit = () => {
         { text: "", isChecked: false },
         { text: "", isChecked: false },
     ]);
+    const [validQuiz, setValidQuiz] = useState(false);
+
+    function handleCheck(index, option) {
+        const updatedOptions = [...options];
+        updatedOptions[index].isChecked = !option.isChecked;
+        setOptions(updatedOptions);
+
+        setValidQuiz(
+            updatedOptions.reduce(function (prev, op) {
+                return prev | op.isChecked;
+            }, 0)
+        );
+    }
 
     function handleQuizSubmit(e) {
         e.preventDefault();
         setIsAddUnitBtnDisabled(false);
+        setValidQuiz(false);
 
         // To display only the options which have text in an orderly manner
-        const filteredOptions = options.filter((op) => op.text.trim() !== "");
+        // const filteredOptions = options.filter((op) => op.text.trim() !== "");
 
         const quizDet = {
             question: question,
-            opArr: filteredOptions,
+            opArr: options,
         };
 
         setQuizArr([...quizArr, quizDet]);
@@ -108,25 +128,24 @@ const AdminAddUnit = () => {
             { text: "", isChecked: false },
         ]);
     }
-    console.log(quizArr);
 
     return (
         <>
-            <div className="py-pima-y px-pima-x">
+            <div className="py-pima-y px-pima-x flex flex-col">
                 <h1 className="text-4xl font-bold">Add Unit Here</h1>
-                <div className="flex py-pima-y w-full">
+                <div className="flex py-pima-y w-full flex-col-reverse md:flex-row items-center gap-6 md:gap-0">
                     <form
-                        className="flex flex-col gap-6 w-1/2 pr-pima-x"
+                        className="flex flex-col gap-6 w-full md:w-1/2 md:pr-pima-x items-center"
                         action=""
                         onChange={() => setIsAddUnitBtnDisabled(false)}
                     >
                         <label
-                            className="text-sm text-stone-500"
+                            className="text-sm text-stone-500 w-full"
                             htmlFor="unitTitle"
                         >
                             Unit Title
                             <input
-                                className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
+                                className="border-2 px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base w-full"
                                 type="text"
                                 id="unitTitle"
                                 placeholder="Enter The Unit Title"
@@ -143,7 +162,7 @@ const AdminAddUnit = () => {
                         </label>
 
                         <label
-                            className="text-sm text-stone-500"
+                            className="text-sm text-stone-500 w-full"
                             htmlFor="videoUrl"
                         >
                             Video URL
@@ -151,7 +170,7 @@ const AdminAddUnit = () => {
                                 className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
                                 type="url"
                                 id="videoUrl"
-                                placeholder="Paste the related video url"
+                                placeholder="Paste the related video url w-full"
                                 onChange={(e) => {
                                     setUnitDet((prevVal) => {
                                         return {
@@ -165,7 +184,7 @@ const AdminAddUnit = () => {
                         </label>
 
                         <label
-                            className="text-sm text-stone-500"
+                            className="text-sm text-stone-500 w-full"
                             htmlFor="unitDescription"
                         >
                             Unit Text-to-Read
@@ -190,7 +209,7 @@ const AdminAddUnit = () => {
 
                     {/* --------------------- INPUT VIDEO PREVIEW -------------------- */}
 
-                    <div className="bg-pima-gray w-1/2 rounded flex justify-center items-center">
+                    <div className="bg-pima-gray w-full min-h-[400px] md:w-1/2 rounded flex justify-center items-center">
                         {unitDet.vdoSrc ? (
                             <ReactPlayer
                                 width="100%"
@@ -211,9 +230,9 @@ const AdminAddUnit = () => {
                     {/* -------------------------------QUIZ QUESTION------------------------------- */}
 
                     <h1 className="text-4xl font-bold">Edit Quiz Here</h1>
-                    <div className="flex py-pima-y w-full gap-8">
+                    <div className="flex py-pima-y w-full gap-8 md:flex-row flex-col">
                         <form
-                            className="flex flex-col gap-6 w-1/2"
+                            className="flex flex-col gap-6 w-full md:w-1/2"
                             action=""
                             onSubmit={handleQuizSubmit}
                         >
@@ -232,7 +251,10 @@ const AdminAddUnit = () => {
                             </label>
                             <div className="grid grid-cols-2 gap-6 w-full">
                                 {options.map((option, index) => (
-                                    <div className="flex flex-col" key={index}>
+                                    <div
+                                        className="flex flex-col w-full"
+                                        key={index}
+                                    >
                                         <div className="flex">
                                             <div className="w-4 mr-3"></div>
                                             <label
@@ -247,16 +269,9 @@ const AdminAddUnit = () => {
                                                 className=" w-4 mr-3"
                                                 type="checkbox"
                                                 checked={option.isChecked}
-                                                onChange={() => {
-                                                    const updatedOptions = [
-                                                        ...options,
-                                                    ];
-                                                    updatedOptions[
-                                                        index
-                                                    ].isChecked =
-                                                        !option.isChecked;
-                                                    setOptions(updatedOptions);
-                                                }}
+                                                onChange={() =>
+                                                    handleCheck(index, option)
+                                                }
                                             />
                                             <input
                                                 className="border-2 w-full py-2 px-4 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
@@ -277,7 +292,12 @@ const AdminAddUnit = () => {
                             </div>
                             <button
                                 type="submit"
-                                className=" px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded self-center"
+                                className={` px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center ${
+                                    validQuiz && !(question.trim() === "")
+                                        ? ``
+                                        : "cursor-not-allowed bg-[#565656]"
+                                }`}
+                                disabled={!validQuiz || question.trim() === ""}
                             >
                                 Add
                             </button>
@@ -285,7 +305,7 @@ const AdminAddUnit = () => {
 
                         {/* ------------------------- ALL QUESTIONS DISPLAY ------------------------- */}
 
-                        <div className="max-h-[70vh] overflow-y-auto w-1/2 pr-3">
+                        <div className="max-h-[70vh] overflow-y-auto w-full mt-10 md:mt-0 md:w-1/2 pr-3">
                             {quizArr.map((item, index) => (
                                 <div
                                     className="mb-8 flex gap-2 w-full"
@@ -354,17 +374,19 @@ const AdminAddUnit = () => {
                             ))}
                         </div>
                     </div>
-                    <button
-                        onClick={handleAddUnit}
-                        className={` px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded mx-auto
+                </div>
+            </div>
+            <div className="py-2 w-full bg-white  sticky bottom-0 flex justify-center shadow-xl border-t inset-3">
+                <button
+                    onClick={handleAddUnit}
+                    className={` px-10 text-center self-center py-1.5 text-sm bg-pima-gray text-white rounded mx-auto
                             ${
                                 isAddUnitBtnDisabled ? "cursor-not-allowed" : ""
                             }`}
-                        disabled={isAddUnitBtnDisabled}
-                    >
-                        Upload Unit
-                    </button>
-                </div>
+                    disabled={isAddUnitBtnDisabled}
+                >
+                    Upload Unit
+                </button>
             </div>
         </>
     );
