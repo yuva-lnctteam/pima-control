@@ -93,7 +93,7 @@ export const LoginForm = (props) => {
                         <h1
                             className={`font-inter font-extrabold text-5xl text-center`}
                         >
-                            Login
+                            {props.role === "user" ? "User" : "Admin"} Login
                         </h1>
                         <div className="mt-12 flex flex-col gap-6">
                             <input
@@ -140,7 +140,7 @@ export const LoginForm = (props) => {
                                 </div>
                             )}
                             <button
-                                className={`w-full text-center py-3.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded font-medium`}
+                                className={`w-full text-center py-3.5 border-2 bg-pima-red hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all duration-150 text-white rounded font-medium`}
                                 onClick={handleLogInClick}
                                 disabled={props.isBtnDisabled}
                             >

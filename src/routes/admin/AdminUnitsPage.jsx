@@ -184,7 +184,7 @@ const UnitsPage = () => {
                 </CardGrid>
             ) : (
                 <h1 className="text-3xl font-bold text-center">
-                    No courses to show!
+                    No units to show!
                 </h1>
             )}
         </section>
@@ -258,7 +258,7 @@ const UnitsPage = () => {
                 </div>
                 <button
                     onClick={handleCreateUnit}
-                    className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
+                    className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
                 >
                     Create a Unit
                 </button>

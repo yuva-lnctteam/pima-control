@@ -58,7 +58,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4 items-center relative">
+        <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4  sticky top-0 items-center bg-[#ffffff]">
             <div className="flex items-center justify-between max-md:w-full">
                 <img
                     src={logo}

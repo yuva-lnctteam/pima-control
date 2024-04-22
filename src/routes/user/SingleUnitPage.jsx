@@ -66,7 +66,7 @@ const UserSingleUnit = () => {
                     } else if (response.status === 404) {
                         navigate("/user/resource-not-found");
                     } else {
-                        toast.error(result.statusText);
+                        // toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
                     console.log("*************", result);
@@ -124,10 +124,10 @@ const UserSingleUnit = () => {
                     {/* <h1 className=" text-5xl">{videoInfo.title}</h1> */}
                     {/* <p>{videoInfo.desc}</p> */}
                     <div>
-                        <h1 className="text-[2.9rem] font-extrabold capitalize">
+                        <h1 className="text-5xl font-extrabold capitalize">
                             Lorem ipsum dolor sit amet, consectetur
                         </h1>
-                        <p className=" font-light  text-justify text-sm mt-10">
+                        <p className="text-justify mt-10">
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit, sed do eiusmod tempor incididunt ut labore et
                             dolore magna aliqua. Viverra tellus in hac habitasse
@@ -148,11 +148,13 @@ const UserSingleUnit = () => {
                     <div className="relative">
                         <button
                             onClick={handleOpenQuizClick}
-                            className={
-                                isQuizBtnDisabled
-                                    ? " text-gray-500 absolute bottom-0 right-0 underline underline-offset-2 cursor-not-allowed"
-                                    : "absolute bottom-0 right-0 underline underline-offset-2"
-                            }
+                            className={`absolute bottom-0 right-0 underline underline-offset-4 font-medium
+                                ${
+                                    isQuizBtnDisabled
+                                        ? "text-gray-500 cursor-not-allowed"
+                                        : ""
+                                }
+                            `}
                             disabled={isQuizBtnDisabled}
                         >
                             Take Quiz →

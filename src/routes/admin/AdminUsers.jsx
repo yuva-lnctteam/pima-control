@@ -143,16 +143,9 @@ const AdminUsers = () => {
         <div className="px-pima-x py-pima-y flex flex-col gap-8 max-md:px-10">
             <h1 className="text-4xl font-extrabold">Manage Users</h1>
             <div className="flex justify-between flex-wrap gap-4">
-                <input
-                    className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]"
-                    type="text"
-                    name=""
-                    id=""
-                    placeholder="Search by Name"
-                />
                 <button
                     onClick={() => navigate("/admin/users/register-user")}
-                    className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
+                    className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
                 >
                     Create User
                 </button>
@@ -160,7 +153,7 @@ const AdminUsers = () => {
             <div className="flex flex-col gap-8">
                 <div className="flex justify-between flex-wrap gap-4 mt-6">
                     <button
-                        className="bg-pima-gray py-2 px-6 rounded-[5px] text-white"
+                        className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
                         onClick={() => setSortType(!sortType)}
                     >
                         Sort Type - ({sortType ? "Ascending" : "Descending"})
@@ -174,7 +167,7 @@ const AdminUsers = () => {
                                 setSearchQuery(e.target.value);
                                 setPage(1);
                             }}
-                            className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]"
+                            className="border-2 border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]"
                         />
                     </div>
                 </div>
@@ -208,7 +201,7 @@ const AdminUsers = () => {
                                         <td>{user?.phone}</td>
                                         <td>
                                             <button
-                                                className="bg-pima-gray py-1.5 px-4 rounded-[5px] text-white text-sm"
+                                                className="border-2 border-pima-gray py-1.5 px-4 rounded-[5px] text-black text-xs uppercase font-medium hover:bg-black hover:text-white transition-all"
                                                 onClick={() =>
                                                     navigate(
                                                         `/admin/users/${user?.userId}`
@@ -226,7 +219,7 @@ const AdminUsers = () => {
                 )}
                 <div className="flex justify-between items-center">
                     <button
-                        className="bg-pima-red py-2 px-8 text-sm text-white rounded-[5px]"
+                        className="px-8 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-1.5"
                         onClick={() => decrement()}
                     >
                         Prev
@@ -235,7 +228,7 @@ const AdminUsers = () => {
                         Page: {page} of {totalPages}
                     </span>
                     <button
-                        className="bg-pima-red py-2 px-8 text-sm text-white rounded-[5px]"
+                        className="px-8 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-1.5"
                         onClick={() => increment()}
                     >
                         Next

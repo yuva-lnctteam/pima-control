@@ -298,7 +298,7 @@ const CoursesPage = () => {
                             Add a Course
                         </h3>
 
-                        <div className="flex flex-col gap-6 w-full">
+                        <div className="flex flex-col gap-6 w-full items-center">
                             <input
                                 type="text"
                                 id="name"
@@ -326,7 +326,7 @@ const CoursesPage = () => {
                                 onClick={handleAddCourse}
                                 disabled={addCourseLoading}
                                 type="button"
-                                className="w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center"
+                                className="px-8 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase font-semibold text-sm"
                             >
                                 Add Course
                             </button>
@@ -424,7 +424,7 @@ const CoursesPage = () => {
 
                 <button
                     onClick={() => setIsAddModalOpen((prev) => !prev)}
-                    className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
+                    className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
                 >
                     Create a Course
                 </button>

@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/common/Loader";
 import { NewspaperIcon } from "@heroicons/react/24/outline";
-import userPP from "../../assets/images/user.png";
+
 
 function capitalizeFirstLetter(str) {
     return str?.charAt(0).toUpperCase() + str?.substr(1);

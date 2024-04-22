@@ -14,6 +14,7 @@ import balaji from "../../assets/images/balaji.jpg";
 import marathon from "../../assets/images/marathon.jpg";
 import nkp from "../../assets/images/nkp.jpg";
 import about from "../../assets/images/about.png";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -194,8 +195,22 @@ const HomePage = () => {
                             />
                         ))}
                     </div>
-                    <button className="text-sm uppercase text-pima-red underline underline-offset-[3px] font-semibold self-start mt-6">
-                        All Course →
+                    <button className="text-sm text-pima-red font-semibold self-start mt-6 flex items-center gap-1 border-b-[2px] border-pima-red uppercase group transition-all">
+                        All Courses{" "}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-4 h-4 stroke-[3px] transition-all group-hover:translate-x-1"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                            />
+                        </svg>
                     </button>
                 </div>
                 <div className="flex flex-col">
@@ -219,8 +234,22 @@ const HomePage = () => {
                             />
                         ))}
                     </div>
-                    <button className="text-sm uppercase text-pima-red underline underline-offset-[3px] font-semibold self-start mt-6">
-                        All Policies →
+                    <button className="text-sm text-pima-red font-semibold self-start mt-6 flex items-center gap-1 border-b-[2px] border-pima-red uppercase group transition-all">
+                        All Policies{" "}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-4 h-4 stroke-[3px] transition-all group-hover:translate-x-1"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                            />
+                        </svg>
                     </button>
                 </div>
             </section>
