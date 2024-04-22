@@ -21,6 +21,7 @@ const CoursesPage = () => {
     const [newCourse, setNewCourse] = useState({ name: "", desc: "" });
     const [isLoading, setIsLoading] = useState(false);
     const [addCourseLoading, setAddCourseLoading] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
 
@@ -197,6 +198,7 @@ const CoursesPage = () => {
         // (courseId);
 
         // todo: validate input
+        setDeleteLoading(true);
         try {
             const adminId = process.env.REACT_APP_ADMIN_ID;
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
@@ -233,7 +235,12 @@ const CoursesPage = () => {
             }
 
             refClose2.current.click();
-        } catch (err) {}
+            setDeleteLoading(false);
+            setConfirmText("");
+        } catch (err) {
+            setDeleteLoading(false);
+            setConfirmText("");
+        }
     }
 
     async function handleAddOrViewUnits(e) {
@@ -259,7 +266,7 @@ const CoursesPage = () => {
                             onAddViewClick={handleAddOrViewUnits}
                             onDeleteClick={() => {
                                 setIsDeleteModalOpen(true);
-                                // setToDeleteVerticalId(vertical._id);
+                                setToDeleteCourseId(course._id);
                             }}
                         />
                     ))}
@@ -351,17 +358,24 @@ const CoursesPage = () => {
                                 name="name"
                                 minLength={1}
                                 // maxLength={validation.verticalModal.name.maxLen}
-                                // onChange={onAddChange}
-                                // value={newVertical.name}
+                                onChange={onConfirmTextChange}
+                                value={confirmText}
                                 autoComplete="off"
                                 className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
                                 placeholder="Please type 'delete' to confirm deletion."
                             />
 
                             <button
-                                onClick={() => setIsDeleteModalOpen(false)}
+                                onClick={handleDeleteCourse}
                                 type="button"
-                                className="w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center text-sm"
+                                disabled={
+                                    deleteLoading || confirmText !== "delete"
+                                }
+                                className={`w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center text-sm ${
+                                    confirmText !== "delete"
+                                        ? "opacity-50 cursor-not-allowed"
+                                        : ""
+                                }`}
                             >
                                 Confirm
                             </button>

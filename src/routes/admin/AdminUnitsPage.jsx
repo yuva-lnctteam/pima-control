@@ -22,6 +22,7 @@ const UnitsPage = () => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [allUnits, setAllUnits] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
 
@@ -106,6 +107,7 @@ const UnitsPage = () => {
         // (courseId);
 
         // todo: validate input
+        setDeleteLoading(true);
         try {
             const adminId = process.env.REACT_APP_ADMIN_ID;
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
@@ -125,8 +127,6 @@ const UnitsPage = () => {
             const result = await response.json();
             // (result);
 
-            setIsLoading(false);
-
             if (response.status >= 400 && response.status < 600) {
                 if (response.status === 401) {
                     navigate("/admin/login"); // login or role issue
@@ -140,7 +140,13 @@ const UnitsPage = () => {
             } else {
                 // for future
             }
-        } catch (err) {}
+
+            setDeleteLoading(false);
+            setConfirmText("");
+        } catch (err) {
+            setDeleteLoading(false);
+            setConfirmText("");
+        }
 
         refClose.current.click();
     }
@@ -209,18 +215,24 @@ const UnitsPage = () => {
                                 id="name"
                                 name="name"
                                 minLength={1}
-                                // maxLength={validation.verticalModal.name.maxLen}
-                                // onChange={onAddChange}
-                                // value={newVertical.name}
+                                onChange={onConfirmTextChange}
+                                value={confirmText}
                                 autoComplete="off"
                                 className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
                                 placeholder="Please type 'delete' to confirm deletion."
                             />
 
                             <button
-                                onClick={() => setIsDeleteModalOpen(false)}
+                                onClick={handleDeleteUnit}
                                 type="button"
-                                className="w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center text-sm"
+                                disabled={
+                                    confirmText !== "delete" || deleteLoading
+                                }
+                                className={`w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center text-sm ${
+                                    confirmText !== "delete" || deleteLoading
+                                        ? "bg-stone-400 cursor-not-allowed"
+                                        : "hover:bg-pima-red"
+                                }`}
                             >
                                 Confirm
                             </button>
