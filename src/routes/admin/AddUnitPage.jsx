@@ -85,12 +85,26 @@ const AdminAddUnit = () => {
         { text: "", isChecked: false },
     ]);
 
+    const [validQuiz, setValidQuiz] = useState(false);
+
     function handleQuizSubmit(e) {
         e.preventDefault();
         setIsAddUnitBtnDisabled(false);
+        setValidQuiz(false);
 
         // To display only the options which have text in an orderly manner
         const filteredOptions = options.filter((op) => op.text.trim() !== "");
+
+        // setValidQuiz(
+        //     filteredOptions.map(function (op) {
+        //         if (op.isChecked === true) {
+        //             return true;
+        //         }
+        //         return false;
+        //     })
+        // );
+
+        // console.log(validQuiz);
 
         const quizDet = {
             question: question,
@@ -98,6 +112,8 @@ const AdminAddUnit = () => {
         };
 
         setQuizArr([...quizArr, quizDet]);
+
+        // options.map(op => if(op.isChecked!==true){})
 
         setQuestion("");
         setOptions([
@@ -243,6 +259,20 @@ const AdminAddUnit = () => {
                                                     index
                                                 ].isChecked = !option.isChecked;
                                                 setOptions(updatedOptions);
+
+                                                setValidQuiz(
+                                                    options.map(function (op) {
+                                                        if (
+                                                            op.isChecked ===
+                                                            true
+                                                        ) {
+                                                            return true;
+                                                        }
+                                                        return false;
+                                                    })
+                                                );
+
+                                                console.log(validQuiz);
                                             }}
                                         />
                                         <label
@@ -269,7 +299,9 @@ const AdminAddUnit = () => {
                             </div>
                             <button
                                 type="submit"
-                                className=" px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center"
+                                className={` px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center ${
+                                    validQuiz ? `` : `cursor-not-allowed`
+                                }`}
                             >
                                 Add
                             </button>
@@ -337,4 +369,3 @@ const AdminAddUnit = () => {
 };
 
 export default AdminAddUnit;
-    

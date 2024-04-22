@@ -24,6 +24,8 @@ const UnitsPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
+    const { verticalId, courseId } = params;
+
 
     useEffect(() => {
         async function getAllUnits() {
@@ -147,7 +149,7 @@ const UnitsPage = () => {
 
     function handleCreateUnit() {
         navigate(
-            "/admin/content/verticals/:verticalId/courses/:courseId/units/add"
+            `/admin/content/verticals/${verticalId}/courses/${courseId}/units/add`
         );
     }
 
