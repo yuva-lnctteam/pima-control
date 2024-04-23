@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -8,7 +8,7 @@ import SecCard from "../../components/common/SecCard";
 // My css
 import regisCss from "../../css/user/regis-page.module.css";
 
-import { SERVER_ORIGIN, vars, validation } from "../../utilities/constants";
+import { SERVER_ORIGIN, validation } from "../../utilities/constants";
 import { isRegisFormValid } from "../../utilities/helper_functions";
 
 const GreenMsg = (props) => {

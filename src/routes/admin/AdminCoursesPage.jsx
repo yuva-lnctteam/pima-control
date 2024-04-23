@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -16,7 +16,6 @@ const CoursesPage = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [verticalInfo, setverticalInfo] = useState({ name: "", desc: "" });
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [isSaveBtnDisabled, setIsSaveBtnDisabled] = useState(false);
     const [allCourses, setAllCourses] = useState([]);
     const [newCourse, setNewCourse] = useState({ name: "", desc: "" });
     const [isLoading, setIsLoading] = useState(false);
@@ -107,12 +106,6 @@ const CoursesPage = () => {
     //     } else {
     //       // for future
     //     }
-    //   } catch (err) {
-    //     (err.message);
-    //   }
-    // };
-
-    ////////////////////////////////////////////// Add Course Modal ///////////////////////////////////////////////////
 
     const ref = useRef(null);
     const refClose = useRef(null);

@@ -8,18 +8,15 @@ import Loader from "../../components/common/Loader";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
 import logo from "../../assets/images/home.png";
-import bkt from "../../assets/images/bkt.jpg";
 import colgate from "../../assets/images/colgate.png";
 import balaji from "../../assets/images/balaji.jpg";
 import marathon from "../../assets/images/marathon.jpg";
 import nkp from "../../assets/images/nkp.jpg";
 import about from "../../assets/images/about.png";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 const HomePage = () => {
-    const params = useLocation();
     // const [allVerticals, setAllVerticals] = useState([]);
     const [projectVerticals, setProjectVerticals] = useState([]); // [vertical1, vertical2]
     const [initiativeVerticals, setInitiativeVerticals] = useState([]); // [vertical3, vertical4, vertical5, vertical6]

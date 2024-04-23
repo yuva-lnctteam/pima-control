@@ -17,38 +17,27 @@ import UserVerticals from "./routes/user/VerticalsPage";
 import UserCourses from "./routes/user/CoursesPage";
 import UserUnits from "./routes/user/UnitsPage";
 import UserSingleUnit from "./routes/user/SingleUnitPage";
-import UserResetPass from "./routes/user/ResetPassPage";
-import UserRegis from "./routes/user/RegisPage";
 import UserQuiz from "./routes/user/QuizPage";
-import CertPage from "./routes/user/CertPage";
-import UserDashBoard from "./routes/user/Dashboard";
-import UserProfile from "./components/user/UserProfile";
-import PrivacyPolicy from "./routes/user/PrivacyPolicy";
 
 // Admin Pages
 import AdminLogin from "./routes/admin/LoginPage";
-import AdminServices from "./routes/admin/ServicesPage";
 import AdminVerticals from "./routes/admin/AdminVerticalsPage.jsx";
 import AdminCourses from "./routes/admin/AdminCoursesPage.jsx";
 import AdminUnits from "./routes/admin/AdminUnitsPage.jsx";
 import AdminAddUnit from "./routes/admin/AddUnitPage";
-
 import AdminUsers from "./routes/admin/AdminUsers.jsx";
 
 // Common Pages
 import NotFound from "./routes/common/NotFound";
-import UserAboutPage from "./routes/user/AboutPage";
 import Footer from "./routes/user/Footer";
 
 import "./App.css";
-import ScrollToTop from "./components/user/ScrollToTop";
 import AdminUserPage from "./routes/admin/AdminUserPage.jsx";
 import AdminCreateUser from "./routes/admin/AdminCreateUser.jsx";
 
 function App() {
     return (
         <Router>
-            <ScrollToTop />
             <div className="font-inter min-h-screen flex flex-col">
                 <Routes>
                     <Route
@@ -68,36 +57,6 @@ function App() {
                             <>
                                 <UserNavbar />
                                 <UserHome />
-                            </>
-                        }
-                    />
-                    {/* <Route
-                        exact
-                        path="/about"
-                        element={
-                            <>
-                                <UserNavbar />
-                                <UserAboutPage />
-                            </>
-                        }
-                    /> */}
-                    <Route
-                        exact
-                        path="/privacy-policy"
-                        element={
-                            <>
-                                <UserNavbar />
-                                <PrivacyPolicy />
-                            </>
-                        }
-                    />
-                    <Route
-                        exact
-                        path="/user/profile"
-                        element={
-                            <>
-                                <UserNavbar />
-                                <UserProfile />
                             </>
                         }
                     />
@@ -151,48 +110,7 @@ function App() {
                             </>
                         }
                     />
-                    <Route
-                        exact
-                        path="/user/reset-password"
-                        element={
-                            <>
-                                <UserNavbar />
-                                <UserResetPass />
-                            </>
-                        }
-                    />
 
-                    {/* <Route
-                        exact
-                        path="/user/register"
-                        element={
-                            <>
-                                <UserNavbar />
-                                <UserRegis />
-                            </>
-                        }
-                    /> */}
-
-                    <Route
-                        exact
-                        path="/user/certificate/:certId"
-                        element={
-                            <>
-                                <UserNavbar />
-                                <CertPage />
-                            </>
-                        }
-                    />
-                    <Route
-                        exact
-                        path="/user/dashboard"
-                        element={
-                            <>
-                                <UserNavbar />
-                                <UserDashBoard />
-                            </>
-                        }
-                    />
                     <Route
                         path="/admin/manage-users"
                         element={
@@ -306,7 +224,7 @@ function App() {
                     />
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
-                {/* <Footer /> */}
+                <Footer />
             </div>
 
             <Toaster

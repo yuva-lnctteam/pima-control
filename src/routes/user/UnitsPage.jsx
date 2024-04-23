@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -9,10 +9,7 @@ import { getVideoThumbnail } from "../../utilities/helper_functions";
 import Loader from "../../components/common/Loader";
 import Card from "../../components/user/Card";
 
-// My css
-import css from "../../css/user/units-page.module.css";
 import { CardGrid } from "../../components/common/CardGrid";
-import HeaderCard from "../../components/common/HeaderCard";
 
 //! If allVerticals is empty, then it will throw an error when using map function on an empty array because the accessed fields like vertical.name/vertical.desc will not be present, so make a check
 //! make handleAddView Courses/Verticals/Units functions non async

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import pimalogo from "../../assets/images/lnct-logo-transparent.png";
 
 const navLinks = [
     { name: "Home", path: "/" },
@@ -10,12 +9,14 @@ const navLinks = [
 
 const Footer = () => {
     return (
-        <div className="bg-pima-gray text-white flex flex-col">
+        <div className="bg-pima-gray text-white flex flex-col mt-auto">
             <div className="px-pima-x py-pima-y flex flex-col items-center">
                 <ul className="flex gap-4">
                     {navLinks.map((link) => (
                         <li>
-                            <Link to={link.path} className="">{link.name}</Link>
+                            <Link to={link.path} className="">
+                                {link.name}
+                            </Link>
                         </li>
                     ))}
                     <li>

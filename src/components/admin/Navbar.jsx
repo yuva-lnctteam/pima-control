@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import img from "../../assets/images/yi_logo.png";
 import hamburgerImg from "../../assets/images/hamburger.png";
-// My css
-import css from "../../css/admin/navbar.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "../../assets/images/LOGO.png";
 import { SERVER_ORIGIN } from "../../utilities/constants";

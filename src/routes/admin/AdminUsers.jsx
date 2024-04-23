@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import Loader from "../../components/common/Loader";
 
-import { SERVER_ORIGIN, validation } from "../../utilities/constants";
-import HeaderCard from "../../components/common/HeaderCard";
+import { SERVER_ORIGIN } from "../../utilities/constants";
 // import { refreshScreen } from "../../utilities/helper_functions";
-
-import css from "../../css/admin/users-page.module.css";
 
 // localhost:800/users/all?page=1&limit=10&search=abhishek&sortBy=fName&sortType=desc
 
@@ -18,25 +15,12 @@ function capitalizeFirstLetter(str) {
 
 const AdminUsers = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [allUsers, setAllUsers] = useState([
-        {
-            _id: "24324",
-            fName: "Abhishek",
-            lName: "Kumar",
-            email: "abc@gmail.com",
-            phone: "1234567890",
-            userId: "PULKITJI",
-        },
-    ]);
+    const [allUsers, setAllUsers] = useState([]);
 
     const [page, setPage] = useState(1);
     const [sortType, setSortType] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
     const [totalPages, setTotalPages] = useState(0);
-    const [colleges, setColleges] = useState([]);
-    const [searchCollege, setSearchCollege] = useState("");
-    const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-    const [rerender, setRerender] = useState(true);
 
     const navigate = useNavigate();
 
@@ -51,49 +35,6 @@ const AdminUsers = () => {
     };
 
     useEffect(() => {
-        async function getCollegeName() {
-            setIsLoading(true);
-
-            try {
-                const adminId = process.env.REACT_APP_ADMIN_ID;
-                const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-                const basicAuth = btoa(`${adminId}:${adminPassword}`);
-                const response = await fetch(
-                    `${SERVER_ORIGIN}/api/admin/auth/users/college-names`,
-                    {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Basic ${basicAuth}`, // Include Basic Authentication
-                            "auth-token": localStorage.getItem("token"),
-                        },
-                    }
-                );
-
-                const result = await response.json();
-
-                setIsLoading(false);
-
-                if (response.status >= 400 && response.status < 600) {
-                    if (response.status === 401) {
-                        navigate("/admin/login");
-                    } else if (response.status === 500) {
-                        toast.error(result.statusText);
-                    }
-                } else if (response.ok && response.status === 200) {
-                    setColleges(result.collegeNames);
-                } else {
-                    // for future
-                }
-            } catch (err) {
-                setIsLoading(false);
-            }
-        }
-
-        getCollegeName();
-    }, [navigate]);
-
-    useEffect(() => {
         async function getAllUsers() {
             setIsLoading(true);
 
@@ -104,7 +45,7 @@ const AdminUsers = () => {
                 const response = await fetch(
                     `${SERVER_ORIGIN}/api/admin/auth/users/all?page=${page}&limit=20&search=${searchQuery}&sortBy=fName&sortType=${
                         sortType === true ? "asc" : "desc"
-                    }&collegeName=${searchCollege}`,
+                    }`,
                     {
                         method: "GET",
                         headers: {
@@ -137,7 +78,7 @@ const AdminUsers = () => {
         }
 
         getAllUsers();
-    }, [page, sortType, searchQuery, rerender, navigate]);
+    }, [page, sortType, searchQuery, navigate]);
 
     return (
         <div className="px-pima-x py-pima-y flex flex-col gap-8 max-md:px-10">

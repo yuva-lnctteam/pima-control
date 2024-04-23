@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Spinloader from "./Spinloader";
 
 // My css
-import css from "../../css/common/login-form.module.css";
 // ! Disable login button when loading by creating isLoading state, so user cannot press it again and again
 
 import { validation } from "../../utilities/constants";
@@ -55,117 +54,70 @@ export const LoginForm = (props) => {
     return (
         <div className="flex-1 justify-center flex">
             <div className="w-full justify-center flex">
-                {/* {modal && <Modal isOpen={modal} style={modalStyles} />} */}
-                {modal ? (
-                    <div className={css.loginModal}>
-                        <p className={css.passHeading}>Recover Password</p>
-                        {/* <label htmlFor="newPassEmail"> */}
+                <form className="w-full max-w-[500px]">
+                    <h1
+                        className={`font-inter font-extrabold text-5xl text-center`}
+                    >
+                        {props.role === "user" ? "User" : "Admin"} Login
+                    </h1>
+                    <div className="mt-12 flex flex-col gap-6">
                         <input
-                            type="email"
-                            name=""
-                            id="newPassEmail"
-                            placeholder="Recovery E-mail"
-                            className={css.forgotPassInput}
+                            className={
+                                "w-full px-5 py-3.5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                            }
+                            type="text"
+                            placeholder={
+                                props.role === "user"
+                                    ? "UserId / Email"
+                                    : "Admin Id"
+                            }
+                            name={props.role === "user" ? "userId" : "adminId"}
+                            value={
+                                props.role === "user"
+                                    ? props.userId
+                                    : props.adminId
+                            }
+                            onChange={handleChange}
+                            maxLength={validation.authForm.userId.maxLen}
+                            autoComplete="off"
                         />
-                        {emailSuccess && (
-                            <p className={css.EmailSuccessText}>
-                                A mail has been sent to your e-mail address.
-                            </p>
-                        )}
-                        {/* </label> */}
-                        <div className={css.forgotPassBtnWrapper}>
-                            <button
-                                className={css.forgotPassCancelBtn}
-                                onClick={handleModalClose}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className={css.forgotPassBtn}
-                                onClick={handleSubmitClick}
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-                    <form className="w-full max-w-[500px]">
-                        <h1
-                            className={`font-inter font-extrabold text-5xl text-center`}
+
+                        <input
+                            className={
+                                "w-full px-5 py-3.5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
+                            }
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                            value={props.password}
+                            onChange={handleChange}
+                            maxLength={validation.authForm.password.maxLen}
+                            autoComplete="off"
+                        />
+                        <button
+                            className={`w-full text-center py-3.5 border-2 bg-pima-red hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all duration-150 text-white rounded font-medium`}
+                            onClick={handleLogInClick}
+                            disabled={props.isBtnDisabled}
                         >
-                            {props.role === "user" ? "User" : "Admin"} Login
-                        </h1>
-                        <div className="mt-12 flex flex-col gap-6">
-                            <input
-                                className={
-                                    "w-full px-5 py-3.5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
-                                }
-                                type="text"
-                                placeholder={
-                                    props.role === "user"
-                                        ? "UserId / Email"
-                                        : "Admin Id"
-                                }
-                                name={
-                                    props.role === "user" ? "userId" : "adminId"
-                                }
-                                value={
-                                    props.role === "user"
-                                        ? props.userId
-                                        : props.adminId
-                                }
-                                onChange={handleChange}
-                                maxLength={validation.authForm.userId.maxLen}
-                                autoComplete="off"
-                            />
-
-                            <input
-                                className={
-                                    "w-full px-5 py-3.5 bg-[#efefef] rounded placeholder:text-[#5a5a5a]"
-                                }
-                                type="password"
-                                placeholder="Password"
-                                name="password"
-                                value={props.password}
-                                onChange={handleChange}
-                                maxLength={validation.authForm.password.maxLen}
-                                autoComplete="off"
-                            />
-
-                            {loader && (
-                                <div className={css.forgotPassLoaderWrapper}>
-                                    <div className={css.forgotPassLoader}>
-                                        <Spinloader />
-                                    </div>
-                                </div>
-                            )}
-                            <button
-                                className={`w-full text-center py-3.5 border-2 bg-pima-red hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all duration-150 text-white rounded font-medium`}
-                                onClick={handleLogInClick}
-                                disabled={props.isBtnDisabled}
-                            >
-                                {props.isBtnDisabled
-                                    ? "Logging in..."
-                                    : "LOGIN"}
-                            </button>
+                            {props.isBtnDisabled ? "Logging in..." : "LOGIN"}
+                        </button>
+                    </div>
+                    {props.role === "user" ? (
+                        <div className="flex items-center w-full gap-2 justify-center mt-3.5 text-sm">
+                            <p className={"text-center"}>Is Admin?</p>
+                            <Link className={`font-bold`} to="/admin/login">
+                                Login
+                            </Link>
                         </div>
-                        {props.role === "user" ? (
-                            <div className="flex items-center w-full gap-2 justify-center mt-3.5 text-sm">
-                                <p className={"text-center"}>Is Admin?</p>
-                                <Link className={`font-bold`} to="/admin/login">
-                                    Login
-                                </Link>
-                            </div>
-                        ) : (
-                            <div className="flex items-center w-full gap-2 justify-center mt-3.5 text-sm">
-                                <p className={"text-sm"}>Is User?</p>
-                                <Link className={`font-bold`} to="/user/login">
-                                    Login
-                                </Link>
-                            </div>
-                        )}
-                    </form>
-                )}
+                    ) : (
+                        <div className="flex items-center w-full gap-2 justify-center mt-3.5 text-sm">
+                            <p className={"text-sm"}>Is User?</p>
+                            <Link className={`font-bold`} to="/user/login">
+                                Login
+                            </Link>
+                        </div>
+                    )}
+                </form>
             </div>
         </div>
     );

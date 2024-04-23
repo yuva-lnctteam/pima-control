@@ -12,3 +12,46 @@
     -moz-box-shadow: 2px 2px 23px -8px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 2px 23px -8px rgba(36, 36, 36, 0.365);
 }
+\table {
+    border-spacing: 1;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 5px;
+    border: 2px solid var(--pima-red);
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    font-family: var(--font-family-2);
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    cursor: pointer;
+    background-color: rgb(230, 230, 230);
+}
+
+thead tr {
+    height: 60px;
+    background: var(--pima-red);
+    font-size: 1.2rem;
+    color: #ffff;
+}
+
+tbody tr {
+    height: 48px;
+    border-bottom: 1px solid #e3f1d5;
+}
+
+tbody tr:last-child {
+    border: 0;
+}

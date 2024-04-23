@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 // My components
 import { LoginForm } from "../../components/common/LoginForm";
-
-// My css
-import loginCss from "../../css/common/login-page.module.css";
 
 import loginImg from "../../assets/images/loginImg.jpg";
 import { SERVER_ORIGIN } from "../../utilities/constants";
@@ -15,7 +12,6 @@ import { SERVER_ORIGIN } from "../../utilities/constants";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 const LoginPage = () => {
-    const params = useLocation();
     const [creds, setCreds] = useState({ userId: "", password: "" });
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
@@ -91,7 +87,7 @@ const LoginPage = () => {
             <img
                 src={loginImg}
                 alt="login"
-                className={`${loginCss.loginImg} hidden lg:block w-1/2`}
+                className={`hidden lg:block w-1/2`}
             />
         </div>
     );

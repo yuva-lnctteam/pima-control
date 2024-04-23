@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CheckmarkIcon, toast } from "react-hot-toast";
 import ReactPlayer from "react-player/youtube";
 
-// My components
-import SecCard from "../../components/common/SecCard";
-import VideoInput from "../../components/admin/VideoInput";
-import Loader from "../../components/common/Loader";
-
 import { SERVER_ORIGIN } from "../../utilities/constants";
-import { XMarkIcon, TicketIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 // TODO: VALIDATION
 // ! check response codes
 
 const AdminAddUnit = () => {
-    const [isLoading, setIsLoading] = useState(false);
     const [isAddUnitBtnDisabled, setIsAddUnitBtnDisabled] = useState(true);
 
     const navigate = useNavigate();

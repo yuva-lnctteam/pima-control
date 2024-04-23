@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -6,11 +6,6 @@ import toast from "react-hot-toast";
 import Loader from "../../components/common/Loader";
 import Card from "../../components/user/Card";
 import { CardGrid } from "../../components/common/CardGrid";
-import HeaderCard from "../../components/common/HeaderCard";
-
-// My css
-import css from "../../css/user/verticals-page.module.css";
-import vCss from "../../css/user/verticals-page.module.css";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
 

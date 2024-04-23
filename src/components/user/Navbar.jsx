@@ -55,17 +55,6 @@ const Navbar = () => {
         toast.success("Logged out successfully");
     };
 
-    const handleRegisterClick = (e) => {
-        localStorage.removeItem("token");
-        navigate("/user/register");
-    };
-
-    const handleProfileClick = () => {
-        navigate("/user/profile");
-    };
-
-    const listItemStyle = { fontSize: "0.9rem", fontWeight: "400" };
-
     return (
         <nav className="flex w-full flex-col md:flex-row justify-between px-10 md:px-pima-x py-4 items-center sticky top-0 bg-[#ffffff]">
             <div className="flex items-center justify-between max-md:w-full">

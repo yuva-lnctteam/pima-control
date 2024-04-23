@@ -1,14 +1,10 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 // My components
 import { LoginForm } from "../../components/common/LoginForm";
 
-// My css
-import loginCss from "../../css/common/login-page.module.css";
-
-import logo from "../../assets/images/yuva_logo.png";
 import loginImg from "../../assets/images/loginImg.jpg";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
@@ -79,7 +75,11 @@ const LoginPage = () => {
     };
 
     return (
-        <div className={"flex items-center w-full justify-between px-14 lg:px-pima-x flex-1"}>
+        <div
+            className={
+                "flex items-center w-full justify-between px-14 lg:px-pima-x flex-1"
+            }
+        >
             <LoginForm
                 role="admin"
                 adminId={creds.adminId}
@@ -91,7 +91,7 @@ const LoginPage = () => {
             <img
                 src={loginImg}
                 alt="login"
-                className={`${loginCss.loginImg} hidden lg:block w-1/2`}
+                className={`hidden lg:block w-1/2`}
             />
         </div>
     );
