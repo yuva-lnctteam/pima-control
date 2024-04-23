@@ -2,17 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .underline-red {
-    text-decoration-color: #ed3237;
-    text-decoration: underline;
-} */
+@media print {
+    html,
+    body {
+        display: none;
+    }
+}
+
+body {
+    user-select: none;
+}
 
 .card-shadow {
     -webkit-box-shadow: 2px 2px 23px -8px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 23px -8px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 2px 23px -8px rgba(36, 36, 36, 0.365);
 }
-\table {
+
+table {
     border-spacing: 1;
     border-collapse: collapse;
     background: white;

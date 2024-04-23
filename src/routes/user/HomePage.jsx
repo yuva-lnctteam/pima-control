@@ -118,8 +118,8 @@ const HomePage = () => {
             <section className="flex flex-col">
                 <div className="flex flex-col md:flex-row px-pima-x max-sm:px-8 w-full items-center">
                     <div className="basis-1/2 md:w-2/5 flex flex-col gap-10 flex-1 mb-12">
-                        <p className="font-black  text-6xl pr-[100px] max-lg:text-5xl max-md:text-4xl max-lg:pr-0">
-                            Data driven career planning for every student
+                        <p className="font-black  text-6xl pr-[80px] max-lg:text-5xl max-md:text-4xl max-lg:pr-0">
+                            Building the Factory of Tomorrow
                         </p>
                         <p className="pr-[140px] max-lg:pr-0">
                             Pima's 40-year experience working with numerous
@@ -232,7 +232,7 @@ const HomePage = () => {
                         ))}
                     </div>
                     <button className="text-sm text-pima-red font-semibold self-start mt-6 flex items-center gap-1 border-b-[2px] border-pima-red uppercase group transition-all">
-                        All Policies{" "}
+                        All Courses{" "}
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
