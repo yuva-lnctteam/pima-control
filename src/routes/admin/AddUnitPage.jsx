@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { CheckmarkIcon, toast } from "react-hot-toast";
 import ReactPlayer from "react-player/youtube";
 
 // My components
@@ -9,6 +9,7 @@ import VideoInput from "../../components/admin/VideoInput";
 import Loader from "../../components/common/Loader";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
+import { XMarkIcon, TicketIcon } from "@heroicons/react/24/outline";
 
 // TODO: VALIDATION
 // ! check response codes
@@ -95,25 +96,12 @@ const AdminAddUnit = () => {
         // To display only the options which have text in an orderly manner
         const filteredOptions = options.filter((op) => op.text.trim() !== "");
 
-        // setValidQuiz(
-        //     filteredOptions.map(function (op) {
-        //         if (op.isChecked === true) {
-        //             return true;
-        //         }
-        //         return false;
-        //     })
-        // );
-
-        // console.log(validQuiz);
-
         const quizDet = {
             question: question,
             opArr: filteredOptions,
         };
 
         setQuizArr([...quizArr, quizDet]);
-
-        // options.map(op => if(op.isChecked!==true){})
 
         setQuestion("");
         setOptions([
@@ -124,23 +112,38 @@ const AdminAddUnit = () => {
         ]);
     }
 
+    function handleCheck(index, option) {
+        const updatedOptions = [...options];
+        updatedOptions[index].isChecked = !option.isChecked;
+        setOptions(updatedOptions);
+
+        setValidQuiz(
+            options.map(function (op) {
+                if (op.isChecked === true) {
+                    return true;
+                }
+                return false;
+            })
+        );
+    }
+
     return (
         <>
-            <div className=" py-pima-y px-pima-x">
-                <h1 className="text-4xl">Add Unit Here</h1>
+            <div className="py-pima-y px-pima-x">
+                <h1 className="text-4xl font-bold">Add Unit Here</h1>
                 <div className="flex py-pima-y">
                     <form
-                        className="flex flex-col gap-6 w-[50%] pr-pima-x"
+                        className="flex flex-col gap-6 w-1/2 pr-pima-x"
                         action=""
                         onChange={() => setIsAddUnitBtnDisabled(false)}
                     >
                         <label
-                            className="text-sm font-light"
+                            className="text-sm text-stone-500"
                             htmlFor="unitTitle"
                         >
-                            Unit Title:
+                            Unit Title
                             <input
-                                className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
+                                className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
                                 type="text"
                                 id="unitTitle"
                                 placeholder="Enter The Unit Title"
@@ -157,12 +160,12 @@ const AdminAddUnit = () => {
                         </label>
 
                         <label
-                            className="text-sm font-light"
+                            className="text-sm text-stone-500"
                             htmlFor="videoUrl"
                         >
-                            Video URL:
+                            Video URL
                             <input
-                                className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
+                                className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
                                 type="url"
                                 id="videoUrl"
                                 placeholder="Paste the related video url"
@@ -179,12 +182,12 @@ const AdminAddUnit = () => {
                         </label>
 
                         <label
-                            className="text-sm font-light"
+                            className="text-sm text-stone-500"
                             htmlFor="unitDescription"
                         >
-                            Unit Text-to-Read:
+                            Unit Text-to-Read
                             <textarea
-                                className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem] "
+                                className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
                                 type="text"
                                 id="unitDescription"
                                 placeholder="Enter The Unit Description"
@@ -204,7 +207,7 @@ const AdminAddUnit = () => {
 
                     {/* --------------------- INPUT VIDEO PREVIEW -------------------- */}
 
-                    <div className="flex-1 h-screen/2 bg-red-200 justify-center items-center rounded">
+                    <div className="bg-pima-gray rounded flex justify-center items-center">
                         {unitDet.vdoSrc ? (
                             <ReactPlayer
                                 width="100%"
@@ -212,7 +215,7 @@ const AdminAddUnit = () => {
                                 url={unitDet.vdoSrc}
                             />
                         ) : (
-                            <p className=" text-center text-white ">
+                            <p className="text-center text-lg text-white">
                                 Video Preview Appears Here
                             </p>
                         )}
@@ -221,20 +224,21 @@ const AdminAddUnit = () => {
 
                 <hr />
 
-                <div className="py-pima-y">
+                <div className="py-pima-y flex flex-col">
                     {/* -------------------------------QUIZ QUESTION------------------------------- */}
 
-                    <h1 className="text-4xl">Edit Quiz Here</h1>
-                    <div className="flex py-pima-y">
+                    <h1 className="text-4xl font-bold">Edit Quiz Here</h1>
+                    <div className="flex py-pima-y w-full gap-8">
                         <form
-                            className="flex flex-col gap-6 w-[50%] pr-pima-x"
+                            className="flex flex-col gap-6 w-1/2"
                             action=""
                             onSubmit={handleQuizSubmit}
                         >
-                            <label className="text-sm font-light">
-                                Question:
+                            <label className="text-sm text-stone-500">
+                                Question
                                 <input
-                                    className="border-2 w-full px-2 py-3 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
+                                    className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
+                                    placeholder="Enter The Question"
                                     type="text"
                                     value={question}
                                     onChange={(e) =>
@@ -243,45 +247,29 @@ const AdminAddUnit = () => {
                                     required
                                 />
                             </label>
-                            <br />
-                            <div className="grid grid-cols-2 gap-y-6">
+                            <div className="grid grid-cols-2 gap-6 w-full">
                                 {options.map((option, index) => (
-                                    <div className="flex" key={index}>
-                                        <input
-                                            className=" w-4 mr-4"
-                                            type="checkbox"
-                                            checked={option.isChecked}
-                                            onChange={() => {
-                                                const updatedOptions = [
-                                                    ...options,
-                                                ];
-                                                updatedOptions[
-                                                    index
-                                                ].isChecked = !option.isChecked;
-                                                setOptions(updatedOptions);
-
-                                                setValidQuiz(
-                                                    options.map(function (op) {
-                                                        if (
-                                                            op.isChecked ===
-                                                            true
-                                                        ) {
-                                                            return true;
-                                                        }
-                                                        return false;
-                                                    })
-                                                );
-
-                                                console.log(validQuiz);
-                                            }}
-                                        />
-                                        <label
-                                            className="text-sm font-light"
-                                            htmlFor=""
-                                        >
-                                            Option {index + 1}:
+                                    <div className="flex flex-col" key={index}>
+                                        <div className="flex">
+                                            <div className="w-4 mr-3"></div>
+                                            <label
+                                                className="text-sm self-start text-stone-500"
+                                                htmlFor=""
+                                            >
+                                                Option {index + 1}
+                                            </label>
+                                        </div>
+                                        <div className="flex w-full">
                                             <input
-                                                className="border-2 w-full px-2 py-2 rounded border-none bg-[#ededed] text-[0.8rem] placeholder:text-[#828282] placeholder:text-[0.8rem]"
+                                                className=" w-4 mr-3"
+                                                type="checkbox"
+                                                checked={option.isChecked}
+                                                onChange={() =>
+                                                    handleCheck(index, option)
+                                                }
+                                            />
+                                            <input
+                                                className="border-2 w-full py-2 px-4 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
                                                 type="text"
                                                 value={option.text}
                                                 onChange={(e) => {
@@ -293,7 +281,7 @@ const AdminAddUnit = () => {
                                                     setOptions(updatedOptions);
                                                 }}
                                             />
-                                        </label>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -309,43 +297,63 @@ const AdminAddUnit = () => {
 
                         {/* ------------------------- ALL QUESTIONS DISPLAY ------------------------- */}
 
-                        <div className="flex-1 max-h-[70vh] overflow-y-auto">
+                        <div className="max-h-[70vh] overflow-y-auto w-1/2">
                             {quizArr.map((item, index) => (
-                                <div className="mb-6 flex gap-2" key={index}>
-                                    <p
-                                        className="border-1 bg-red-200 rounded px-1 py-0 text-red-500 text-sm h-fit hover:cursor-pointer"
-                                        onClick={() => {
-                                            setQuizArr((prevVal) => {
-                                                return prevVal.filter(
-                                                    (_, idx) => idx !== index
-                                                );
-                                            });
-                                        }}
-                                        key={index}
-                                        value={index}
-                                    >
-                                        x
-                                    </p>
-
-                                    <div>
-                                        <p className="font-semibold mb-4">
-                                            Q. {item.question}
-                                        </p>
-
-                                        {item.opArr.map((op, opIndex) => {
-                                            if (op.text === "") {
-                                                return null;
-                                            }
-                                            return (
-                                                <p
-                                                    className="text-sm"
-                                                    key={opIndex}
-                                                >
-                                                    {opIndex + 1}.{"\u0029"}{" "}
-                                                    {op.text}{" "}
-                                                </p>
-                                            );
-                                        })}
+                                <div
+                                    className="mb-8 flex gap-2 w-full"
+                                    key={index}
+                                >
+                                    <div className="flex gap-4">
+                                        <span className="font-bold mt-1">
+                                            {index + 1}.
+                                        </span>
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex justify-between">
+                                                <span className="text-lg font-normal">
+                                                    {item.question}
+                                                </span>
+                                                <XMarkIcon
+                                                    className="w-7 h-7 border-1 bg-red-200 rounded px-1 text-red-500 hover:cursor-pointer stroke-2"
+                                                    onClick={() => {
+                                                        setQuizArr(
+                                                            (prevVal) => {
+                                                                return prevVal.filter(
+                                                                    (_, idx) =>
+                                                                        idx !==
+                                                                        index
+                                                                );
+                                                            }
+                                                        );
+                                                    }}
+                                                    key={index}
+                                                    value={index}
+                                                />
+                                            </div>
+                                            <div className="flex flex-col gap-4 overflow-hidden">
+                                                {item.opArr.map(
+                                                    (op, opIndex) => {
+                                                        if (op.text === "") {
+                                                            return null;
+                                                        }
+                                                        return (
+                                                            <p
+                                                                className={`px-4 py-2 rounded-[5px] h-auto justify-between break-words items-center flex-1  ${
+                                                                    op.isChecked
+                                                                        ? "bg-green-100 border-[1px] border-green-500"
+                                                                        : "border-[1px]"
+                                                                }`}
+                                                                key={opIndex}
+                                                            >
+                                                                {op.text}
+                                                                {op.isChecked && (
+                                                                    <CheckmarkIcon className="w-5 h-5 bg-green-600" />
+                                                                )}
+                                                            </p>
+                                                        );
+                                                    }
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -353,11 +361,10 @@ const AdminAddUnit = () => {
                     </div>
                     <button
                         onClick={handleAddUnit}
-                        className={
-                            isAddUnitBtnDisabled
-                                ? "px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center cursor-not-allowed"
-                                : "px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center"
-                        }
+                        className={` px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded mx-auto
+                            ${
+                                isAddUnitBtnDisabled ? "cursor-not-allowed" : ""
+                            }`}
                         disabled={isAddUnitBtnDisabled}
                     >
                         Upload Unit

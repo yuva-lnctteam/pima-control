@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { SERVER_ORIGIN, validation } from "../../utilities/constants";
+import { useEffect, useState } from "react";
+import { SERVER_ORIGIN } from "../../utilities/constants";
 import { toast } from "react-hot-toast";
 
-import css from "../../css/admin/user-single-page.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/common/Loader";
+import { NewspaperIcon } from "@heroicons/react/24/outline";
+import userPP from "../../assets/images/user.png";
 
 function capitalizeFirstLetter(str) {
     return str?.charAt(0).toUpperCase() + str?.substr(1);
@@ -70,134 +71,50 @@ const AdminUserPage = () => {
             {isLoading ? (
                 <Loader />
             ) : (
-                <div className={css.outerDiv}>
-                    <div className={css.userDetailsDiv}>
-                        <div className={css.userHeading}>
-                            <h1>
+                <div className="px-pima-x py-pima-y flex gap-10">
+                    <div className="w-full border p-6 rounded-[5px] text-center relative">
+                        {/* <img
+                            src={userPP}
+                            alt=""
+                            className="w-[60px] absolute top-0 -translate-y-1/2 right-1/2 translate-x-1/2 bg-white  rounded-full p-2"
+                        /> */}
+                        <div className="mb-6">
+                            <h1 className="text-3xl font-bold">
                                 {capitalizeFirstLetter(user?.fName)}{" "}
                                 {capitalizeFirstLetter(user?.lName)}
                             </h1>
                         </div>
-                        <div className={css.allUserInfo}>
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
-                                    User Id
-                                </span>
-                                <span className={css.userInfoDesc}>
+                        <div className="flex flex-col gap-3">
+                            <div className="flex justify-between">
+                                <span className="font-semibold">User Id</span>
+                                <span className="text-right text-[#696969]">
                                     #{user?.userId}
                                 </span>
                             </div>
-                            <div className={css.hr}></div>
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
-                                    Email
-                                </span>
-                                <span className={css.userInfoDesc}>
+                            <div className="bg-[#e4e4e4] w-full h-[1px]"></div>
+                            <div className="flex justify-between">
+                                <span className="font-semibold">Email</span>
+                                <span className="text-right text-[#696969]">
                                     {user?.email}
                                 </span>
                             </div>
-                            <div className={css.hr}></div>
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
+                            <div className="bg-[#e4e4e4] w-full h-[1px]"></div>
+                            <div className="flex justify-between">
+                                <span className="font-semibold">Password</span>
+                                <span className="text-right text-[#696969]">
+                                    {user?.password}
+                                </span>
+                            </div>
+                            <div className="bg-[#e4e4e4] w-full h-[1px]"></div>
+                            <div className="flex justify-between">
+                                <span className="font-semibold">
                                     Mobile No.
                                 </span>
-                                <span className={css.userInfoDesc}>
+                                <span className="text-right text-[#696969]">
                                     {user?.phone}
                                 </span>
                             </div>
-                            <div className={css.hr}></div>
-
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
-                                    Branch
-                                </span>
-                                <span className={css.userInfoDesc}>
-                                    {user?.branch}
-                                </span>
-                            </div>
-                            <div className={css.hr}></div>
-
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
-                                    College Name
-                                </span>
-                                <span className={css.userInfoDesc}>
-                                    {user?.collegeName}
-                                </span>
-                            </div>
-                            <div className={css.hr}></div>
-
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
-                                    Address
-                                </span>
-                                <span className={css.userInfoDesc}>
-                                    <span>{user?.addLine1}</span>
-                                    <span>{user?.addLine2}</span>
-                                </span>
-                            </div>
-                            <div className={css.hr}></div>
-
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
-                                    City
-                                </span>
-                                <span className={css.userInfoDesc}>
-                                    {user?.city}
-                                </span>
-                            </div>
-                            <div className={css.hr}></div>
-
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
-                                    Pincode
-                                </span>
-                                <span className={css.userInfoDesc}>
-                                    {user?.pincode}
-                                </span>
-                            </div>
-                            <div className={css.hr}></div>
-
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
-                                    Region
-                                </span>
-                                <span className={css.userInfoDesc}>
-                                    {user?.region}
-                                </span>
-                            </div>
-                            <div className={css.hr}></div>
-
-                            <div className={css.userInfo}>
-                                <span className={css.userInfoHeading}>
-                                    Country
-                                </span>
-                                <span className={css.userInfoDesc}>
-                                    {user?.country}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={css.userCertDiv}>
-                        <div className={css.userCertHeading}>
-                            <h1>Certifications Unlocked</h1>
-                        </div>
-                        <div className={css.userCertCount}>
-                            {keys.map((k) => (
-                                <>
-                                    <div className={css.userCertItem}>
-                                        <span
-                                            className={css.userCertItemHeading}
-                                        >
-                                            {k}
-                                        </span>
-                                        <span className={css.userCertDesc}>
-                                            {user?.activity[k]}
-                                        </span>
-                                    </div>
-                                    <div className={css.hr}></div>
-                                </>
-                            ))}
+                            <div className="bg-[#e4e4e4] w-full h-[1px]"></div>
                         </div>
                     </div>
                 </div>

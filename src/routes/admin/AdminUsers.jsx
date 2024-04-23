@@ -158,7 +158,7 @@ const AdminUsers = () => {
                 </button>
             </div>
             <div className="flex flex-col gap-8">
-                <div className="flex justify-between flex-wrap gap-4">
+                <div className="flex justify-between flex-wrap gap-4 mt-6">
                     <button
                         className="bg-pima-gray py-2 px-6 rounded-[5px] text-white"
                         onClick={() => setSortType(!sortType)}
@@ -176,55 +176,6 @@ const AdminUsers = () => {
                             }}
                             className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]"
                         />
-                        <div className="">
-                            <form
-                                onSubmit={(e) => {
-                                    e.preventDefault();
-                                    setRerender((p) => !p);
-                                }}
-                            >
-                                <input
-                                    type="text"
-                                    value={searchCollege}
-                                    className="border-[1px] border-[#202020] placeholder:text-sm  rounded-[5px] px-[10px] py-2 w-[220px]"
-                                    onChange={(e) => {
-                                        setSearchCollege(e.target.value);
-                                        setIsDropDownOpen(true);
-                                    }}
-                                    placeholder="Search Colleges"
-                                />
-                            </form>
-                            {isDropDownOpen && (
-                                <div className="">
-                                    {colleges
-                                        ?.filter((item) => {
-                                            const searchTerm =
-                                                searchCollege.toLowerCase();
-                                            const college = item.toLowerCase();
-
-                                            return (
-                                                searchTerm &&
-                                                college.startsWith(searchTerm)
-                                            );
-                                        })
-                                        .slice(0, 10)
-                                        .map((college) => (
-                                            <div
-                                                value={college}
-                                                className=""
-                                                onClick={() => {
-                                                    setSearchCollege(college);
-                                                    setRerender((p) => !p);
-                                                    setIsDropDownOpen(false);
-                                                }}
-                                                key={college}
-                                            >
-                                                {college}
-                                            </div>
-                                        ))}
-                                </div>
-                            )}
-                        </div>
                     </div>
                 </div>
                 {isLoading ? (
@@ -237,7 +188,6 @@ const AdminUsers = () => {
                                     <th>Sr no.</th>
                                     <th>Full Name</th>
                                     <th>Email</th>
-                                    <th>Password</th>
                                     <th>Mobile no.</th>
                                     <th></th>
                                 </tr>
@@ -255,9 +205,6 @@ const AdminUsers = () => {
                                             {capitalizeFirstLetter(user?.lName)}
                                         </td>
                                         <td>{user?.email}</td>
-                                        <td>
-                                            {user?.password || "password here"}
-                                        </td>
                                         <td>{user?.phone}</td>
                                         <td>
                                             <button
