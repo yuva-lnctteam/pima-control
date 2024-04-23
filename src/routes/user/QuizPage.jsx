@@ -258,32 +258,8 @@ const UserQuiz = () => {
         setShowQuiz(true);
     }
 
-    // const handleGetCertificate = async () => {
-    //     ("Get certificate");
-    //     const userId = process.env.REACT_APP_USER_ID;
-    //     const userPassword = process.env.REACT_APP_USER_PASSWORD;
-    //     const basicAuth = btoa(`${userId}:${userPassword}`);
-    //     const { verticalId, courseId, unitId } = params;
-    //     const response = await fetch(
-    //         `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/get-cert-id`,
-    //         {
-    //             method: "GET",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 "auth-token": localStorage.getItem("token"),
-    //                 Authorization: `Basic ${basicAuth}`,
-    //             },
-    //         }
-    //     );
-    //     const result = await response.json();
-    //     const certId = result.certId;
-    //     if (result.success === true) {
-    //         navigate(`/user/certificate/${certId}`);
-    //     }
-    // };
-
     const instructionsElement = (
-        <div className="px-pima-x py-pima-y fixed right-0 w-[40%] flex flex-col gap-4">
+        <div className="fixed right-0 px-pima-x pb-pima-y w-[40%] flex flex-col gap-10">
             <div className="">
                 <div className="">
                     <div className="flex justify-between items-center">
@@ -314,11 +290,12 @@ const UserQuiz = () => {
                         )}
                     </div>
 
-                    <ul className="mt-8 list-disc">
+                    <ul className="mt-8 flex flex-col gap-4">
                         {generateQuizInstructions(quiz.length).map(
                             (instruction, index) => {
                                 return (
-                                    <li className="" key={index}>
+                                    <li className="font-medium " key={index}>
+                                        <span className="">{index + 1}. </span>
                                         {instruction}
                                     </li>
                                 );
@@ -327,10 +304,31 @@ const UserQuiz = () => {
                     </ul>
                 </div>
             </div>
-            <div>
+            <div className="h-[1px] w-full bg-stone-400"></div>
+            <div className="flex flex-col items-center">
+                {storedQuizScore === -1 ? (
+                    <p>You never took this quiz before</p>
+                ) : (
+                    <p>
+                        Your latest quiz score is{" "}
+                        <span className="font-bold"> {storedQuizScore}%</span>
+                    </p>
+                )}
+                {showQuiz && (
+                    <div className="flex justify-between mt-4">
+                        <div>
+                            <button
+                                className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
+                                onClick={handleSubmitQuiz}
+                            >
+                                Submit Quiz
+                            </button>
+                        </div>
+                    </div>
+                )}
                 {!showQuiz && (
                     <button
-                        className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
+                        className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2 mt-4"
                         onClick={handleStartQuizClick}
                         disabled={!isEligibleToTakeQuiz ? true : false}
                     >
@@ -339,64 +337,38 @@ const UserQuiz = () => {
                             : "Quiz Locked"}
                     </button>
                 )}
-                {storedQuizScore === -1 ? (
-                    <p>You never took this quiz before</p>
-                ) : (
-                    <p>
-                        Your latest quiz score is {" "}
-                        <span className="font-bold">{storedQuizScore}%</span>
-                    </p>
-                )}
             </div>
-            {showQuiz && (
-                <div className="flex justify-between mt-4">
-                    <div>
-                        <button
-                            className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
-                            onClick={handleSubmitQuiz}
-                        >
-                            Submit Quiz
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 
     const resultElement = (
-        <div>
-            <SecCard>
-                <h1>Your score: {currQuizScore}%</h1>
-                <h5>
-                    {hasPassedQuiz
-                        ? hasPassedQuizFirstTime
-                            ? "Congratulations! You have passed the quiz"
-                            : "You have already passed the quiz"
-                        : `Note: You need to score atleast ${vars.quiz.CUT_OFF_IN_PERCENT}% to pass the quiz`}
-                </h5>
-
-                {hasPassedQuiz && (
-                    <div>
-                        <button className="border" onClick={refreshScreen}>
-                            Retake Quiz
-                        </button>
-                        {/* <button
-                        className={css.certBtn}
-                        onClick={handleGetCertificate}
+        <div className="py-pima-y px-pima-x flex flex-col items-center justify-center gap-6 h-[80vh]">
+            <h1 className="text-4xl font-bold">Your score: {currQuizScore}%</h1>
+            <h5 className="text-xl">
+                {hasPassedQuiz
+                    ? hasPassedQuizFirstTime
+                        ? "Congratulations! You have passed the quiz!"
+                        : "You have already passed the quiz!"
+                    : `Note: You need to score atleast ${vars.quiz.CUT_OFF_IN_PERCENT}% to pass the quiz.`}
+            </h5>
+            {hasPassedQuiz && (
+                <div className="flex gap-12">
+                    <button
+                        className="px-10 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase font-semibold mx-auto text-sm"
+                        onClick={refreshScreen}
                     >
-                        Get certificate
-                    </button> */}
-                        <button
-                            className={css.btn}
-                            onClick={() => {
-                                navigate(-1);
-                            }}
-                        >
-                            Go back to Unit
-                        </button>
-                    </div>
-                )}
-            </SecCard>
+                        Retake Quiz
+                    </button>
+                    <button
+                        className="px-10 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase font-semibold mx-auto text-sm"
+                        onClick={() => {
+                            navigate(-1);
+                        }}
+                    >
+                        Go back to Unit
+                    </button>
+                </div>
+            )}
 
             {hasPassedQuizFirstTime ? <Party /> : null}
         </div>
@@ -406,140 +378,88 @@ const UserQuiz = () => {
         <div
             className={` ${
                 showQuiz ? `` : `blur-sm pointer-events-none`
-            } w-[60%]`}
+            } w-[60%] h-[700px] overflow-y-scroll`}
         >
             {responseQuiz.length === 0 ? (
                 <h1 className="nothingText">
                     There are currently no questions in this quiz.
                 </h1>
             ) : (
-                <>
-                    <div className={css.quizTimerDiv}>
-                        <SecCard>
-                            <h4
-                                style={{
-                                    fontFamily: "var(--font-family-1)",
-                                }}
-                            >
-                                All the best! Quiz has been started. Tick the
-                                correct answers before the timer runs out.
-                            </h4>
+                <div className="flex flex-col gap-12">
+                    {responseQuiz.map((quizItem, quizItemIdx) => {
+                        return (
                             <div
-                                style={{ textAlign: "right", fontSize: "3rem" }}
-                            ></div>
-                        </SecCard>
-                    </div>
-
-                    <div>
-                        <SecCard>
-                            {responseQuiz.map((quizItem, quizItemIdx) => {
-                                return (
-                                    <div
-                                        key={quizItemIdx}
-                                        className={css.quizItemDiv}
-                                    >
-                                        <p
-                                            className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
-                                            placeholder="Enter The Question"
-                                        >
-                                            {quizItemIdx + 1}.{" "}
-                                            {quizItem.question}
-                                        </p>
-
-                                        {quizItem.opArr.map(
-                                            (option, optIdx) => {
-                                                return (
-                                                    <div
-                                                        key={
-                                                            quizItemIdx * 11 +
-                                                            optIdx +
-                                                            1
-                                                        }
-                                                        // style={{ display: "block" }}
-                                                    >
-                                                        <p
-                                                            className={`px-4 py-2 hover:cursor-pointer flex rounded-[5px] h-auto gap-2 justify-between break-words items-center flex-1 hover:border-green-500 hover:border-2  ${
-                                                                option.isChecked
-                                                                    ? "bg-green-100 border-2 border-green-500"
-                                                                    : "border-2"
-                                                            }`}
-                                                            type="text"
-                                                            id={
-                                                                quizItemIdx *
-                                                                    11 +
-                                                                optIdx +
-                                                                1
-                                                            }
-                                                            // defaultChecked={response[quizItemIdx][optIdx]}
-                                                            // checked={response[quizItemIdx][optIdx]}
-                                                            value={
-                                                                response[
-                                                                    quizItemIdx
-                                                                ][optIdx]
-                                                            }
-                                                            // checked={true}
-                                                            onClick={(e) => {
-                                                                handleResponseChange(
-                                                                    e,
-                                                                    quizItemIdx,
-                                                                    optIdx
-                                                                );
-                                                            }}
-                                                        >
-                                                            {optIdx}{" "}
-                                                            {option.isChecked}
-                                                            {option.text}
-                                                        </p>
-                                                        {/* <label style={{ border: "2px solid red" }}>
-                            {option.text}
-                          </label> */}
-                                                        {/* <p
-                                                        // style={{
-                                                        //     border: "2px solid white",
-                                                        //     display: "inline",
-                                                        //     marginLeft: "0.7rem",
-                                                        // }}
-                                                        >
-                                                            {option.text}
-                                                        </p> */}
-                                                    </div>
-                                                );
-                                            }
-                                        )}
-
-                                        <hr />
-                                    </div>
-                                );
-                            })}
-                        </SecCard>
-                    </div>
-                </>
+                                key={quizItemIdx}
+                                className="flex flex-col gap-6"
+                            >
+                                <p
+                                    className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
+                                    placeholder="Enter The Question"
+                                >
+                                    {quizItemIdx + 1}. {quizItem.question}
+                                </p>
+                                <div className="flex flex-col gap-3">
+                                    {quizItem.opArr.map((option, optIdx) => {
+                                        return (
+                                            <p
+                                                className={`px-4 py-2 hover:cursor-pointer flex rounded-[5px] h-auto gap-2 justify-between break-words items-center flex-1 hover:border-green-500 hover:border-2  ${
+                                                    option.isChecked
+                                                        ? "bg-green-100 border-2 border-green-500"
+                                                        : "border-2"
+                                                }`}
+                                                key={
+                                                    quizItemIdx * 11 +
+                                                    optIdx +
+                                                    1
+                                                }
+                                                type="text"
+                                                id={
+                                                    quizItemIdx * 11 +
+                                                    optIdx +
+                                                    1
+                                                }
+                                                // defaultChecked={response[quizItemIdx][optIdx]}
+                                                // checked={response[quizItemIdx][optIdx]}
+                                                value={
+                                                    response[quizItemIdx][
+                                                        optIdx
+                                                    ]
+                                                }
+                                                // checked={true}
+                                                onClick={(e) => {
+                                                    handleResponseChange(
+                                                        e,
+                                                        quizItemIdx,
+                                                        optIdx
+                                                    );
+                                                }}
+                                            >
+                                                {option.isChecked}
+                                                {option.text}
+                                            </p>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
             )}
         </div>
     );
 
     return (
         <>
-            {/* {isLoading && <Loader />} */}
-            {/* {instructionsElement}
-            {quizElement} */}
-            {/* {isLoading ? (
-                <Loader />
-            ) : showQuiz ? (
-                quizElement
-            ) : showQuizScore ? (
-                resultElement
-            ) : (
-                instructionsElement
-            )} */}
-
             {isLoading && <Loader />}
             {showResult ? (
                 <div>{resultElement}</div>
             ) : (
-                <div className="flex px-pima-x py-pima-y">
-                    {quizElement}
-                    {instructionsElement}
+                <div className="relative min-h-screen flex flex-col px-pima-x py-pima-y gap-6">
+                    <h1 className="text-4xl font-extrabold">Quiz</h1>
+                    <div className="flex">
+                        {quizElement}
+                        {instructionsElement}
+                    </div>
                 </div>
             )}
 

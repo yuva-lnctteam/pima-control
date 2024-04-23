@@ -1,11 +1,16 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 // My components
 import VideoPlayer from "../../components/user/VideoPlayer";
+// import UnitText from "../../components/user/UnitText";
+// import SecCard from "../../components/common/SecCard";
+// import UnitActivity from "../../components/user/UnitActivity";
+// import HeaderCard from "../../components/common/HeaderCard";
 import Loader from "../../components/common/Loader";
 
-import { SERVER_ORIGIN } from "../../utilities/constants";
+import { SERVER_ORIGIN, vars } from "../../utilities/constants";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -61,7 +66,7 @@ const UserSingleUnit = () => {
                     } else if (response.status === 404) {
                         navigate("/user/resource-not-found");
                     } else {
-                        // toast.error(result.statusText);
+                        toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
                     console.log("*************", result);
@@ -114,50 +119,46 @@ const UserSingleUnit = () => {
 
     const element = (
         <div>
-            <div className="flex px-pima-x py-pima-y h-[80vh]">
-                <div className="flex w-[50%] flex-col justify-between pt-16 pr-16">
-                    {/* <h1 className=" text-5xl">{videoInfo.title}</h1> */}
-                    {/* <p>{videoInfo.desc}</p> */}
+            <div className="flex px-pima-x py-pima-y min-h-[80vh] max-lg:flex-col-reverse">
+                <div className="flex w-[50%] max-lg:w-full flex-col justify-between pt-16 pr-16">
                     <div>
-                        <h1 className="text-5xl font-extrabold capitalize">
-                            Lorem ipsum dolor sit amet, consectetur
+                        <h1 className="text-4xl font-extrabold capitalize">
+                            {videoInfo.title}
                         </h1>
-                        <p className="text-justify mt-10">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Viverra tellus in hac habitasse
-                            platea dictumst vestibulum. Sed egestas egestas
-                            fringilla phasellus faucibus scelerisque eleifend
-                            donec. Sapien pellentesque habitant morbi tristique
-                            senectus et netus et malesuada. Eget gravida cum
-                            sociis natoque penatibus et magnis dis.
-                            <br />
-                            <br />
-                            Sed ullamcorper morbi tincidunt ornare massa eget.
-                            Sem fringilla ut morbi tincidunt. Semper quis lectus
-                            nulla at volutpat diam. Amet mattis vulputate enim
-                            nulla aliquet porttitor lacus. Diam donec adipiscing
-                            tristique risus nec feugiat in fermentum.
+                        <p className="font-light text-justify text-sm mt-10 lg:h-[65%] border-b-2 lg:overflow-y-scroll">
+                            {videoInfo.desc} Lorem ipsum dolor sit amet
+                            consectetur adipisicing elit. Atque itaque optio
+                            iure id, exercitationem ea asperiores adipisci
+                            officiis necessitatibus nihil quae iste,
+                            consequuntur voluptatem vero aliquam? Voluptatum ab
+                            omnis sapiente. Lorem ipsum dolor, sit amet
+                            consectetur adipisicing elit. Incidunt iste mollitia
+                            sunt quibusdam recusandae omnis, itaque fugit
+                            voluptatibus dolorum quia delectus nulla voluptatum
+                            eum dicta earum repellat culpa consequatur. Magnam.
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Ipsam, corporis culpa mollitia, sunt fugit
+                            reiciendis dolor, expedita et porro repudiandae
+                            totam dolore quas iusto assumenda delectus debitis
+                            sapiente distinctio consequatur.
                         </p>
                     </div>
+
                     <div className="relative">
                         <button
                             onClick={handleOpenQuizClick}
-                            className={`absolute bottom-0 right-0 underline underline-offset-4 font-medium
-                                ${
-                                    isQuizBtnDisabled
-                                        ? "text-gray-500 cursor-not-allowed"
-                                        : ""
-                                }
-                            `}
+                            className={
+                                isQuizBtnDisabled
+                                    ? " text-gray-500 absolute bottom-0 right-0 underline underline-offset-2 cursor-not-allowed"
+                                    : "absolute bottom-0 right-0 underline underline-offset-2"
+                            }
                             disabled={isQuizBtnDisabled}
                         >
                             Take Quiz →
                         </button>
                     </div>
                 </div>
-
-                <div className="flex-1 pl-10">
+                <div className="flex-1 lg:pl-10">
                     <VideoPlayer
                         url={videoInfo.vdoSrc}
                         storedWatchPercentage={storedWatchPercentage}
