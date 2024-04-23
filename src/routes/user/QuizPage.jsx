@@ -24,7 +24,7 @@ const UserQuiz = () => {
     const [quiz, setQuiz] = useState([]);
     const [storedQuizScore, setStoredQuizScore] = useState(-1);
     const [isEligibleToTakeQuiz, setIsEligibleToTakeQuiz] = useState(false);
-
+    const [responseQuiz, setResponseQuiz] = useState([]);
     const [response, setResponse] = useState([]);
     const [currQuizScore, setCurrQuizScore] = useState(0);
     const [showQuiz, setShowQuiz] = useState(false);
@@ -32,7 +32,7 @@ const UserQuiz = () => {
     const [showQuizScore, setShowQuizScore] = useState(false);
     const [hasPassedQuiz, setHasPassedQuiz] = useState(false);
     const [hasPassedQuizFirstTime, setHasPassedQuizFirstTime] = useState(false);
-
+    const [rerender, setRerender] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -99,7 +99,19 @@ const UserQuiz = () => {
                         navigate("/user/resource-not-found");
                     }
 
+                    console.log(result.quiz);
                     setQuiz(result.quiz);
+                    setResponseQuiz(
+                        result.quiz.map((question) => {
+                            return {
+                                question: question.question,
+                                opArr: question.opArr.map((op) => ({
+                                    text: op.text,
+                                    isChecked: false,
+                                })),
+                            };
+                        })
+                    );
                     setStoredQuizScore(result.quizScoreInPercent);
                     setIsEligibleToTakeQuiz(result.isEligibleToTakeQuiz);
 
@@ -125,6 +137,9 @@ const UserQuiz = () => {
         console.log(quiz);
     }, []);
 
+    useEffect(() => {}, [rerender]);
+
+    console.log(response);
     async function handleSubmitQuiz() {
         // calculating the result
         let correctRespCnt = 0; // count of correct responses
@@ -222,13 +237,21 @@ const UserQuiz = () => {
     function handleResponseChange(e, quizItemIdx, optIdx) {
         setResponse((prevResponse) => {
             let newResponse = prevResponse;
-            const isChecked = e.target.checked;
-            newResponse[quizItemIdx][optIdx] = isChecked;
+            newResponse[quizItemIdx][optIdx] =
+                !responseQuiz[quizItemIdx].opArr[optIdx].isChecked;
             // (newResponse);
             // (isChecked, quizItemIdx, optIdx);
 
             return newResponse;
         });
+
+        setResponseQuiz((prev) => {
+            prev[quizItemIdx].opArr[optIdx].isChecked =
+                !prev[quizItemIdx].opArr[optIdx].isChecked;
+            return prev;
+        });
+
+        setRerender(!rerender);
     }
 
     function handleStartQuizClick() {
@@ -260,70 +283,83 @@ const UserQuiz = () => {
     // };
 
     const instructionsElement = (
-        <div className="pl-pima-x py-pima-y">
-            <SecCard>
-                <div className="flex justify-between">
-                    <div className="">
-                        <h2 className=" font-bold">Instructions</h2>
-
-                        <ul className="mt-8 list-disc">
-                            {generateQuizInstructions(quiz.length).map(
-                                (instruction, index) => {
-                                    return (
-                                        <li className="" key={index}>
-                                            {instruction}
-                                        </li>
-                                    );
-                                }
-                            )}
-                        </ul>
+        <div className="px-pima-x py-pima-y fixed right-0 w-[40%] flex flex-col gap-4">
+            <div className="">
+                <div className="">
+                    <div className="flex justify-between items-center">
+                        <h2 className=" font-extrabold text-3xl">
+                            Instructions
+                        </h2>
+                        {showQuiz ? (
+                            <div className=" text-2xl">
+                                <strong className="flex items-center">
+                                    <i className="fa-regular fa-clock"></i>{" "}
+                                    &nbsp;
+                                    <Countdown
+                                        date={
+                                            Date.now() +
+                                            quiz.length *
+                                                vars.quiz.TIME_PER_QUE_IN_MIN *
+                                                60 *
+                                                1000
+                                        }
+                                        renderer={renderer}
+                                    />
+                                </strong>
+                            </div>
+                        ) : (
+                            <p className="">
+                                Duration: {quiz.length * 2} minutes
+                            </p>
+                        )}
                     </div>
-                    <p className="">Duration: {quiz.length * 2} minutes</p>
+
+                    <ul className="mt-8 list-disc">
+                        {generateQuizInstructions(quiz.length).map(
+                            (instruction, index) => {
+                                return (
+                                    <li className="" key={index}>
+                                        {instruction}
+                                    </li>
+                                );
+                            }
+                        )}
+                    </ul>
                 </div>
-                <div>
+            </div>
+            <div>
+                {!showQuiz && (
                     <button
                         className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
                         onClick={handleStartQuizClick}
                         disabled={!isEligibleToTakeQuiz ? true : false}
                     >
-                        Click to start
-                        {isEligibleToTakeQuiz ? "Start Quiz" : "Quiz Locked"}
+                        {isEligibleToTakeQuiz
+                            ? "Click to start quiz"
+                            : "Quiz Locked"}
                     </button>
-                    <p className="">
-                        {storedQuizScore === -1
-                            ? "You never took this quiz before"
-                            : `Your latest quiz score is ${storedQuizScore}%`}
-                    </p>
-                </div>
-                {showQuiz && (
-                    <div className="flex justify-between mt-4">
-                        <div className=" text-2xl">
-                            <strong>
-                                <i className="fa-regular fa-clock"></i> &nbsp;
-                                <Countdown
-                                    date={
-                                        Date.now() +
-                                        quiz.length *
-                                            vars.quiz.TIME_PER_QUE_IN_MIN *
-                                            60 *
-                                            1000
-                                    }
-                                    renderer={renderer}
-                                />
-                            </strong>
-                        </div>
-
-                        <div>
-                            <button
-                                className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
-                                onClick={handleSubmitQuiz}
-                            >
-                                Submit Quiz
-                            </button>
-                        </div>
-                    </div>
                 )}
-            </SecCard>
+                {storedQuizScore === -1 ? (
+                    <p>You never took this quiz before</p>
+                ) : (
+                    <p>
+                        Your latest quiz score is {" "}
+                        <span className="font-bold">{storedQuizScore}%</span>
+                    </p>
+                )}
+            </div>
+            {showQuiz && (
+                <div className="flex justify-between mt-4">
+                    <div>
+                        <button
+                            className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
+                            onClick={handleSubmitQuiz}
+                        >
+                            Submit Quiz
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 
@@ -367,8 +403,12 @@ const UserQuiz = () => {
     );
 
     const quizElement = (
-        <div className={` ${showQuiz ? `` : `blur-sm`}`}>
-            {quiz.length === 0 ? (
+        <div
+            className={` ${
+                showQuiz ? `` : `blur-sm pointer-events-none`
+            } w-[60%]`}
+        >
+            {responseQuiz.length === 0 ? (
                 <h1 className="nothingText">
                     There are currently no questions in this quiz.
                 </h1>
@@ -392,13 +432,16 @@ const UserQuiz = () => {
 
                     <div>
                         <SecCard>
-                            {quiz.map((quizItem, quizItemIdx) => {
+                            {responseQuiz.map((quizItem, quizItemIdx) => {
                                 return (
                                     <div
                                         key={quizItemIdx}
                                         className={css.quizItemDiv}
                                     >
-                                        <p>
+                                        <p
+                                            className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
+                                            placeholder="Enter The Question"
+                                        >
                                             {quizItemIdx + 1}.{" "}
                                             {quizItem.question}
                                         </p>
@@ -414,13 +457,13 @@ const UserQuiz = () => {
                                                         }
                                                         // style={{ display: "block" }}
                                                     >
-                                                        <input
-                                                            className="form-check-input"
-                                                            style={{
-                                                                marginLeft:
-                                                                    "0.5rem",
-                                                            }}
-                                                            type="checkbox"
+                                                        <p
+                                                            className={`px-4 py-2 hover:cursor-pointer flex rounded-[5px] h-auto gap-2 justify-between break-words items-center flex-1 hover:border-green-500 hover:border-2  ${
+                                                                option.isChecked
+                                                                    ? "bg-green-100 border-2 border-green-500"
+                                                                    : "border-2"
+                                                            }`}
+                                                            type="text"
                                                             id={
                                                                 quizItemIdx *
                                                                     11 +
@@ -435,18 +478,22 @@ const UserQuiz = () => {
                                                                 ][optIdx]
                                                             }
                                                             // checked={true}
-                                                            onChange={(e) => {
+                                                            onClick={(e) => {
                                                                 handleResponseChange(
                                                                     e,
                                                                     quizItemIdx,
                                                                     optIdx
                                                                 );
                                                             }}
-                                                        />
+                                                        >
+                                                            {optIdx}{" "}
+                                                            {option.isChecked}
+                                                            {option.text}
+                                                        </p>
                                                         {/* <label style={{ border: "2px solid red" }}>
                             {option.text}
                           </label> */}
-                                                        <p
+                                                        {/* <p
                                                         // style={{
                                                         //     border: "2px solid white",
                                                         //     display: "inline",
@@ -454,7 +501,7 @@ const UserQuiz = () => {
                                                         // }}
                                                         >
                                                             {option.text}
-                                                        </p>
+                                                        </p> */}
                                                     </div>
                                                 );
                                             }
