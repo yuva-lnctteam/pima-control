@@ -64,7 +64,9 @@ const LoginPage = () => {
             } else {
                 // for future
             }
-        } catch (error) {}
+        } catch (error) {
+            setIsLoading(false);
+        }
     };
 
     const updateCreds = (e) => {

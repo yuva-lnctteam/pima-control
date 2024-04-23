@@ -230,7 +230,7 @@ const VerticalsPage = () => {
                             Add a Vertical
                         </h3>
 
-                        <div className="flex flex-col gap-5 w-full">
+                        <div className="flex flex-col gap-5 w-full items-center">
                             <input
                                 type="text"
                                 id="name"
@@ -242,18 +242,6 @@ const VerticalsPage = () => {
                                 autoComplete="off"
                                 className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
                                 placeholder="Title of the Vertical"
-                            />
-                            <input
-                                type="text"
-                                id="Image Source URL"
-                                name="imgSrc"
-                                minLength={1}
-                                maxLength={validation.verticalModal.name.maxLen}
-                                onChange={onAddChange}
-                                value={newVertical.imgSrc}
-                                autoComplete="off"
-                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
-                                placeholder="Image Source URL"
                             />
                             <textarea
                                 type="text"
@@ -270,7 +258,7 @@ const VerticalsPage = () => {
                             <button
                                 onClick={handleAddVertical}
                                 type="button"
-                                className="w-fit px-10 text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded-[5px] uppercase font-medium self-center"
+                                className="px-8 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase font-semibold text-sm"
                             >
                                 Add Vertical
                             </button>
@@ -344,7 +332,7 @@ const VerticalsPage = () => {
                 </div>
                 <button
                     onClick={() => setIsAddModalOpen(!isAddModalOpen)}
-                    className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
+                    className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
                 >
                     Create a Vertical
                 </button>

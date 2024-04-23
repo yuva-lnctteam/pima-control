@@ -7,7 +7,7 @@ function Card(props) {
                 <span className="uppercase text-[10px] underline underline-offset-[3px] font-semibold">
                     {props.type}
                 </span>
-                <span className="text-xl font-semibold max-sm:text-2xl">
+                <span className="text-xl font-semibold max-sm:text-2xl line-clamp-3">
                     {props.type === "unit"
                         ? props.data.video.title
                         : props.data?.name}
@@ -30,7 +30,7 @@ function Card(props) {
                         : props.data?.desc}
                 </p>
                 <button
-                    className="text-[10px] uppercase text-pima-red underline underline-offset-[3px] font-semibold"
+                    className="text-pima-red text-[11px] font-semibold flex items-center gap-1 border-b-[1px] border-pima-red uppercase group transition-all"
                     id={props.data?._id}
                     onClick={(e) => props.onClick(e)}
                 >
@@ -40,7 +40,20 @@ function Card(props) {
                         : props.type === "course"
                         ? "units"
                         : "unit"}{" "}
-                    →
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4 stroke-[2px] transition-all group-hover:translate-x-1"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                        />
+                    </svg>
                 </button>
             </div>
         </div>

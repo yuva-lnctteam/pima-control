@@ -101,11 +101,11 @@ const AdminCreateUser = () => {
     };
 
     return (
-        <div className="create-user flex flex-col gap-6 w-full justify-center mt-14 px-14 lg:px-pima-x">
+        <div className="py-pima-y create-user flex flex-col gap-6 w-full justify-center mt-14 px-14 lg:px-pima-x">
             <h3 className="text-5xl font-extrabold text-center">Create User</h3>
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-8 justify-center text-sm"
+                className="flex flex-col gap-6 justify-center"
             >
                 <div className="flex gap-8 justify-center flex-col md:flex-row mt-8">
                     <input
@@ -183,7 +183,7 @@ const AdminCreateUser = () => {
                 <button
                     disabled={isLoading}
                     type="submit"
-                    className={`w-full max-w-[300px] self-center text-center py-2.5 bg-pima-red hover:bg-[#f14c52] transition-all duration-150 text-white rounded mt-2 uppercase font-medium`}
+                    className={`px-10 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase font-semibold mx-auto text-sm`}
                 >
                     {isLoading ? "Registering User" : "Register User"}
                     {isLoading && (
