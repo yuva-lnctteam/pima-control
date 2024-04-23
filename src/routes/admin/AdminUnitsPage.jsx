@@ -25,6 +25,7 @@ const UnitsPage = () => {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
+    const { verticalId, courseId } = params;
 
     useEffect(() => {
         async function getAllUnits() {
