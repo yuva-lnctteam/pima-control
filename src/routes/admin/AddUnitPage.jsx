@@ -203,7 +203,7 @@ const AdminAddUnit = () => {
 
                     {/* --------------------- INPUT VIDEO PREVIEW -------------------- */}
 
-                    <div className="bg-pima-gray w-full min-h-[400px] md:w-1/2 rounded flex justify-center items-center">
+                    <div className="bg-pima-gray w-full min-h-[400px] h-[400px] md:w-1/2 rounded flex justify-center items-center">
                         {unitDet.vdoSrc ? (
                             <ReactPlayer
                                 width="100%"

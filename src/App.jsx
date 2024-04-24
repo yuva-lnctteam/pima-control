@@ -57,6 +57,7 @@ function App() {
                             <>
                                 <UserNavbar />
                                 <UserHome />
+                                <Footer />
                             </>
                         }
                     />
@@ -67,6 +68,7 @@ function App() {
                             <>
                                 <UserNavbar />
                                 <UserVerticals />
+                                <Footer />
                             </>
                         }
                     />
@@ -77,6 +79,7 @@ function App() {
                             <>
                                 <UserNavbar />
                                 <UserCourses />
+                                <Footer />
                             </>
                         }
                     />
@@ -87,6 +90,7 @@ function App() {
                             <>
                                 <UserNavbar />
                                 <UserUnits />
+                                <Footer />
                             </>
                         }
                     />
@@ -97,6 +101,7 @@ function App() {
                             <>
                                 <UserNavbar />
                                 <UserSingleUnit />
+                                <Footer />
                             </>
                         }
                     />
@@ -224,7 +229,6 @@ function App() {
                     />
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
-                <Footer />
             </div>
 
             <Toaster
