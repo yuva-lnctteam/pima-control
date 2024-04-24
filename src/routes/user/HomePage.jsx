@@ -182,7 +182,7 @@ const HomePage = () => {
                             Learn Policies
                         </h2>
                     </div>
-                    <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:grid-cols-1">
+                    <div className="grid grid-cols-2 gap-6 max-lg:grid-cols-2 max-md:grid-cols-1">
                         {projectVerticals.map((vertical, index) => (
                             <Card
                                 key={index}
@@ -221,7 +221,7 @@ const HomePage = () => {
                             Learn Terms & Conditions
                         </h2>
                     </div>
-                    <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:grid-cols-1">
+                    <div className="grid grid-cols-2 gap-6 max-lg:grid-cols-2 max-md:grid-cols-1">
                         {initiativeVerticals.map((vertical, index) => (
                             <Card
                                 key={index}

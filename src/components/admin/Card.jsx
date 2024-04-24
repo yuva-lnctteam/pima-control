@@ -1,29 +1,33 @@
 function Card(props) {
+    console.log(props);
     return (
-        <div className="admin-card rounded-[5px] border flex flex-col">
-            <div className="flex flex-col gap-5 bg-pima-red text-white p-6 pb-[100px] rounded-t-[5px]">
-                <div className="flex justify-between">
-                    <p className="text-xs uppercase underline underline-offset-4">
-                        {props.type}
-                    </p>
-                    <p className="text-xs uppercase text-right">
-                        {props.type === "vertical"
-                            ? props.data.courseCount + " Courses"
-                            : props.type === "course"
-                            ? props.data.unitCount + " Units"
-                            : props.data.activityCount +
-                              " Activities • " +
-                              props.data.quizCount +
-                              " Questions"}
-                    </p>
-                </div>
-                <p className="text-3xl font-bold">
+        <div className="admin-card rounded-[5px] border flex flex-col relative">
+            <div className="flex flex-col gap-5 bg-pima-red text-white rounded-t-[5px] h-[200px]">
+                <span className="absolute uppercase text-[10px] underline underline-offset-[3px] font-semibold top-3 left-3">
+                    {props.type}
+                </span>
+                <p className="absolute uppercase text-[10px] underline underline-offset-[3px] font-semibold text-right top-3 right-3">
+                    {props.type === "vertical"
+                        ? props.data.courseCount + " Courses"
+                        : props.type === "course"
+                        ? props.data.unitCount + " Units"
+                        : props.data.activityCount +
+                          " Activities • " +
+                          props.data.quizCount +
+                          " Questions"}
+                </p>
+                <img
+                    src={props.data.image?.src}
+                    alt=""
+                    className="w-full h-full object-cover rounded-t-[5px]"
+                />
+            </div>
+            <div className="flex flex-col gap-14 rounded-b-[5px] p-6 flex-grow justify-between">
+                <p className="text-2xl font-bold">
                     {props.type === "unit"
                         ? props.data.video.title
                         : props.data.name}
                 </p>
-            </div>
-            <div className="flex flex-col gap-14 rounded-b-[5px] p-6 flex-grow justify-between">
                 <p className="text-stone-600 line-clamp-[4] text-sm text-justify ">
                     {props.type === "unit"
                         ? props.data.video.desc

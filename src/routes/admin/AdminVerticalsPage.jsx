@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 
 // My components
 import Card from "../../components/admin/Card";
-import { CardGrid } from "../../components/common/CardGrid";
+import { CardGrid } from "../../components/admin/CardGrid";
 import Loader from "../../components/common/Loader";
 
 import { SERVER_ORIGIN, validation } from "../../utilities/constants";
@@ -92,8 +92,13 @@ const VerticalsPage = () => {
     }
 
     async function handleAddVertical() {
-        console.log("-------------------", newVertical);
         // todo: validate input
+
+        let formData = new FormData();
+        formData.append("name", newVertical.name);
+        formData.append("desc", newVertical.desc);
+        formData.append("verticalImg", newVertical.verticalImg);
+
         try {
             setAddVerticalLoading(true);
             const adminId = process.env.REACT_APP_ADMIN_ID;
@@ -104,11 +109,10 @@ const VerticalsPage = () => {
                 {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json",
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
-                    body: JSON.stringify(newVertical),
+                    body: formData,
                 }
             );
 

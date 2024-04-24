@@ -62,3 +62,26 @@ tbody tr {
 tbody tr:last-child {
     border: 0;
 }
+
+.cardDiv {
+    -webkit-box-shadow: 0px 0px 6px -8px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 6px -8px rgba(0, 0, 0, 1);
+    box-shadow: 0px 0px 6px -8px rgba(0, 0, 0, 1);
+}
+
+.cardDiv:hover {
+    -webkit-box-shadow: 10px 10px 30px -15px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 10px 10px 30px -15px rgba(0, 0, 0, 0.2);
+    box-shadow: 10px 10px 30px -15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.grad:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.534) 100%);
+}

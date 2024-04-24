@@ -28,6 +28,7 @@ const AdminAddUnit = () => {
                 video: unitDet,
                 quiz: quizArr,
             };
+            
 
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/add`,
@@ -164,7 +165,7 @@ const AdminAddUnit = () => {
                                 className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
                                 type="url"
                                 id="videoUrl"
-                                placeholder="Paste the related video url w-full"
+                                placeholder="Paste the related video URL"
                                 onChange={(e) => {
                                     setUnitDet((prevVal) => {
                                         return {

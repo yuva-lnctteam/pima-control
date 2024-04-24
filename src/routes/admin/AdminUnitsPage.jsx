@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 
 // My components
 import Card from "../../components/admin/Card";
-import { CardGrid } from "../../components/common/CardGrid";
+import { CardGrid } from "../../components/admin/CardGrid";
 import Loader from "../../components/common/Loader";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
