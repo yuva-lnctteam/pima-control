@@ -21,14 +21,9 @@ const AdminUserPage = () => {
     const { userId } = params;
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState(null);
+    const [verticalData, setVerticalData] = useState([]);
     const [confirmText, setConfirmText] = useState("");
     const [deleteLoading, setDeleteLoading] = useState(false);
-
-    let keys = [];
-
-    if (!isLoading && user) {
-        keys = Object.keys(user?.activity);
-    }
 
     async function handleDeleteUser() {
         try {
@@ -86,7 +81,7 @@ const AdminUserPage = () => {
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
-                    body: { password: resetPassword },
+                    body: JSON.stringify({ password: resetPassword }),
                 }
             );
 
@@ -113,13 +108,13 @@ const AdminUserPage = () => {
     }
 
     useEffect(() => {
-        async function getAllUsers() {
+        async function getUser() {
             try {
                 const adminId = process.env.REACT_APP_ADMIN_ID;
                 const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
                 const basicAuth = btoa(`${adminId}:${adminPassword}`);
                 const response = await fetch(
-                    `${SERVER_ORIGIN}/api/admin/auth/users/${userId}`,
+                    `${SERVER_ORIGIN}/api/admin/auth/users/profile/${userId}`,
                     {
                         method: "GET",
                         headers: {
@@ -139,7 +134,8 @@ const AdminUserPage = () => {
                         toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
-                    setUser(result.user);
+                    setUser(result.data.user);
+                    setVerticalData(result.data.allVerticalsData);
                     setIsLoading(false);
                 } else {
                     // for future
@@ -149,11 +145,10 @@ const AdminUserPage = () => {
                 setIsLoading(false);
             }
         }
-
-        getAllUsers();
+        getUser();
     }, [userId, navigate]);
 
-    console.log(resetPassword, confirmResetPassword);
+    console.log(user);
 
     return (
         <>
@@ -287,14 +282,24 @@ const AdminUserPage = () => {
                             alt=""
                             className="w-[60px] absolute top-0 -translate-y-1/2 right-1/2 translate-x-1/2 bg-white  rounded-full p-2"
                         /> */}
-                            <div className="mb-6">
+                            <div className="flex gap-4 mb-6 items-center">
+                                <img
+                                    src="https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+                                    className="w-[60px] border rounded-full p-2"
+                                    alt=""
+                                />
                                 <h1 className="text-3xl font-extrabold">
                                     {capitalizeFirstLetter(user?.fName)}{" "}
+                                    {user?.mName &&
+                                        capitalizeFirstLetter(user?.mName)}{" "}
                                     {capitalizeFirstLetter(user?.lName)}
                                 </h1>
                             </div>
                             <div className="flex flex-col gap-6">
                                 <div className="flex flex-col gap-3 border p-6 rounded-[5px]">
+                                    <h1 className="text-2xl font-bold text-center mb-4">
+                                        User Details
+                                    </h1>
                                     <div className="flex justify-between gap-4">
                                         <span className="font-semibold">
                                             User Id
@@ -321,8 +326,21 @@ const AdminUserPage = () => {
                                             {user?.phone}
                                         </span>
                                     </div>
+                                    <div className="bg-[#e4e4e4] w-full h-[1px]"></div>
+                                    <div className="flex justify-between">
+                                        <span className="font-semibold">
+                                            Job Position
+                                        </span>
+                                        <span className="text-right text-[#434343]">
+                                            {user?.jobPosition}
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col gap-3 border p-6 rounded-[5px]"></div>
+                                <div className="flex flex-col gap-3 border p-6 rounded-[5px]">
+                                    <h1 className="text-2xl font-bold text-center mb-4">
+                                        Vertical Details
+                                    </h1>
+                                </div>
                             </div>
                         </div>
                         {/* Buttons */}

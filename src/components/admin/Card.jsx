@@ -17,13 +17,13 @@ function Card(props) {
                           " Questions"}
                 </p>
                 <img
-                    src={props.data.image?.src}
+                    src={props?.data?.image?.src || props.data.vdoThumbnail}
                     alt=""
-                    className="w-full h-full object-cover rounded-t-[5px]"
+                    className="w-full h-full object-cover rounded-t-[5px] grad"
                 />
             </div>
             <div className="flex flex-col gap-14 rounded-b-[5px] p-6 flex-grow justify-between">
-                <p className="text-2xl font-bold">
+                <p className="text-2xl font-bold break-words">
                     {props.type === "unit"
                         ? props.data.video.title
                         : props.data.name}

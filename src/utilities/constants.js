@@ -18,7 +18,7 @@ const vars = {
 
   quiz: {
     TIME_PER_QUE_IN_MIN: 2,
-    CUT_OFF_IN_PERCENT: 60,
+    CUT_OFF_IN_PERCENT: 70,
   },
   video: {
     MIN_WATCH_TIME_IN_PERCENT: 40,

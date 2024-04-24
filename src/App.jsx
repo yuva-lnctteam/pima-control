@@ -34,6 +34,7 @@ import Footer from "./routes/user/Footer";
 import "./App.css";
 import AdminUserPage from "./routes/admin/AdminUserPage.jsx";
 import AdminCreateUser from "./routes/admin/AdminCreateUser.jsx";
+import UserProfile from "./routes/user/UserProfile.jsx";
 
 function App() {
     return (
@@ -115,7 +116,16 @@ function App() {
                             </>
                         }
                     />
-
+                    <Route
+                        exact
+                        path="/user/profile"
+                        element={
+                            <>
+                                <UserNavbar />
+                                <UserProfile />
+                            </>
+                        }
+                    />
                     <Route
                         path="/admin/manage-users"
                         element={
@@ -152,15 +162,6 @@ function App() {
                             </>
                         }
                     />
-                    {/* <Route
-                        path="/admin/users/all"
-                        element={
-                            <>
-                                <AdminNavbar />
-                                <AdminUsers />
-                            </>
-                        }
-                    /> */}
                     <Route
                         path="/admin/users/register-user"
                         element={
