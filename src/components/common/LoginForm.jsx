@@ -104,15 +104,15 @@ export const LoginForm = (props) => {
                     </div>
                     {props.role === "user" ? (
                         <div className="flex items-center w-full gap-2 justify-center mt-3.5 text-sm">
-                            <p className={"text-center"}>Is Admin?</p>
-                            <Link className={`font-bold`} to="/admin/login">
+                            <p className={"text-center"}>Are you an Admin?</p>
+                            <Link className={`text-pima-red underline font-semibold`} to="/admin/login">
                                 Login
                             </Link>
                         </div>
                     ) : (
                         <div className="flex items-center w-full gap-2 justify-center mt-3.5 text-sm">
-                            <p className={"text-sm"}>Is User?</p>
-                            <Link className={`font-bold`} to="/user/login">
+                            <p className={"text-sm"}>Are you a User?</p>
+                            <Link className={`text-pima-red underline font-semibold`} to="/user/login">
                                 Login
                             </Link>
                         </div>
