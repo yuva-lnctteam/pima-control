@@ -6,6 +6,8 @@ import hamburgerImg from "../../assets/images/hamburger.png";
 import { motion, AnimatePresence } from "framer-motion";
 // My css
 import { SERVER_ORIGIN } from "../../utilities/constants";
+import { LuUserCircle } from "react-icons/lu";
+
 
 const navLinks = [
     { name: "Home", path: "/" },
@@ -91,6 +93,8 @@ const Navbar = () => {
                                 </Link>
                             </li>
                         ))}
+                                        
+
                         <li className="flex">
                             {localStorage.getItem("token") ? (
                                 <>
@@ -105,8 +109,11 @@ const Navbar = () => {
                                 {"   "}
                                 My Profile
                             </button> */}
+                            <li>
+                               <LuUserCircle className="w-7 h-7 cursor-pointer transition-all" />
+                            </li> 
                                     <button
-                                        className="rounded font-medium w-32 ml-8 transition-all duration-150 bg-pima-red py-1.5 text-center text-white hover:bg-white hover:text-pima-red border-2 text-sm hover:border-2 border-pima-red"
+                                        className="rounded font-medium w-32 ml-1 transition-all duration-150 bg-pima-red py-1.5 text-center text-white hover:bg-white hover:text-pima-red border-2 text-sm hover:border-2 border-pima-red"
                                         onClick={handleLogoutClick}
                                     >
                                         Logout
@@ -161,9 +168,11 @@ const Navbar = () => {
                                         </Link>
                                     </li>
                                 ))}
+                                 
                                 <li className="flex mt-2 flex-col gap-4">
                                     {localStorage.getItem("token") ? (
                                         <>
+                                        
                                             <button
                                                 className="rounded w-32 transition-all duration-150 bg-pima-red text-center text-white hover:bg-white hover:text-pima-red hover:border py-2 text-base hover:border-pima-red"
                                                 onClick={handleLogoutClick}
