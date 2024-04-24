@@ -23,7 +23,7 @@ const VerticalsPage = () => {
     const [newVertical, setNewVertical] = useState({
         name: "",
         desc: "",
-        imgSrc: "",
+        verticalImg: null,
     });
     const [toDeleteVerticalId, setToDeleteVerticalId] = useState("");
     const [confirmText, setConfirmText] = useState("");
@@ -84,7 +84,15 @@ const VerticalsPage = () => {
         setNewVertical(updatedVertical);
     }
 
+    function handleImgChange(e) {
+        setNewVertical((prevVal) => ({
+            ...prevVal,
+            verticalImg: e.target.files[0],
+        }));
+    }
+
     async function handleAddVertical() {
+        console.log("-------------------", newVertical);
         // todo: validate input
         try {
             setAddVerticalLoading(true);
@@ -254,6 +262,15 @@ const VerticalsPage = () => {
                                 className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] resize-none placeholder:text-sm h-[200px]"
                                 placeholder="Description of the Vertical"
                                 cols={10}
+                            />
+
+                            <input
+                                className="border"
+                                onChange={handleImgChange}
+                                type="file"
+                                src=""
+                                alt=""
+                                accept="image/png, image/jpeg, image/jpg, image/webp"
                             />
                             <button
                                 onClick={handleAddVertical}
