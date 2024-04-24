@@ -70,7 +70,7 @@ const AdminUserPage = () => {
             {isLoading ? (
                 <Loader />
             ) : (
-                <div className="px-pima-x py-pima-y flex gap-10">
+                <div className="px-pima-x py-pima-y flex flex-col gap-10">
                     <div className="w-full border p-6 rounded-[5px] text-center relative">
                         {/* <img
                             src={userPP}
@@ -116,7 +116,14 @@ const AdminUserPage = () => {
                             <div className="bg-[#e4e4e4] w-full h-[1px]"></div>
                         </div>
                     </div>
+                    <div className="flex justify-between">
+                        <button className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
+                          >Reset Password</button>
+                        <button className="px-8 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
+                          >Delete Account</button>
+                    </div>
                 </div>
+                
             )}
         </>
     );
