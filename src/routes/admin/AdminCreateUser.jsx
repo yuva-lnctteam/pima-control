@@ -4,6 +4,8 @@ import { SERVER_ORIGIN } from "../../utilities/constants";
 import toast from "react-hot-toast";
 
 const AdminCreateUser = () => {
+    const navigate = useNavigate();
+
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState({
         fullName: "",
@@ -12,9 +14,15 @@ const AdminCreateUser = () => {
         phone: "",
         jobPosition: "",
         userId: "",
+        userImg: null,
     });
 
-    const navigate = useNavigate();
+    function handleUserImgChange(e) {
+        setUser((prevState) => ({
+            ...prevState,
+            userImg: e.target.files[0],
+        }));
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -66,6 +74,16 @@ const AdminCreateUser = () => {
                 lName: user.fullName.split(" ")?.[1] || "",
             };
 
+            let formData = new FormData();
+            formData.append("email", user.email.toLowerCase());
+            formData.append("password", user.password);
+            formData.append("phone", user.phone);
+            formData.append("jobPosition", user.jobPosition);
+            formData.append("userId", user.userId);
+            formData.append("fName", user.fullName.split(" ")[0]);
+            formData.append("lName", user.fullName.split(" ")?.[1] || "");
+            formData.append("userImg", user.userImg);
+
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/admin/auth/register-user`,
                 {
@@ -75,7 +93,7 @@ const AdminCreateUser = () => {
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
-                    body: JSON.stringify(modifiedUser),
+                    body: formData,
                 }
             );
 
@@ -179,6 +197,14 @@ const AdminCreateUser = () => {
                         }
                     />
                 </div>
+
+                <input
+                    className="border"
+                    onChange={handleUserImgChange}
+                    type="file"
+                    name=""
+                    id=""
+                />
 
                 <button
                     disabled={isLoading}

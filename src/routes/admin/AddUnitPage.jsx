@@ -20,6 +20,9 @@ const AdminAddUnit = () => {
         const { verticalId, courseId } = params;
         // (params);
 
+        let formData = new FormData();
+        formData.append("userImg", unitImg);
+
         try {
             const adminId = process.env.REACT_APP_ADMIN_ID;
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
@@ -28,7 +31,6 @@ const AdminAddUnit = () => {
                 video: unitDet,
                 quiz: quizArr,
             };
-            
 
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/add`,
@@ -39,7 +41,7 @@ const AdminAddUnit = () => {
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
-                    body: JSON.stringify(unit),
+                    body: JSON.stringify(unit, formData),
                 }
             );
 
@@ -77,6 +79,7 @@ const AdminAddUnit = () => {
         vdoSrc: null,
         desc: String,
     });
+    const [unitImg, setUnitImg] = useState(null);
 
     const [quizArr, setQuizArr] = useState([]);
     const [question, setQuestion] = useState("");
@@ -98,6 +101,10 @@ const AdminAddUnit = () => {
                 return prev | op.isChecked;
             }, 0)
         );
+    }
+
+    function handleUnitImgChange(e) {
+        setUnitImg(e.target.files[0]);
     }
 
     function handleQuizSubmit(e) {
@@ -200,6 +207,14 @@ const AdminAddUnit = () => {
                                 }}
                             />
                         </label>
+
+                        <input
+                            onChange={handleUnitImgChange}
+                            className="border"
+                            type="file"
+                            name=""
+                            id=""
+                        />
                     </form>
 
                     {/* --------------------- INPUT VIDEO PREVIEW -------------------- */}

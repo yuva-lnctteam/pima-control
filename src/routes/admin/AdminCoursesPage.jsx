@@ -17,7 +17,11 @@ const CoursesPage = () => {
     const [verticalInfo, setverticalInfo] = useState({ name: "", desc: "" });
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [allCourses, setAllCourses] = useState([]);
-    const [newCourse, setNewCourse] = useState({ name: "", desc: "" });
+    const [newCourse, setNewCourse] = useState({
+        name: "",
+        desc: "",
+        courseImg: null,
+    });
     const [isLoading, setIsLoading] = useState(false);
     const [addCourseLoading, setAddCourseLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
@@ -121,8 +125,20 @@ const CoursesPage = () => {
         // (updatedCourse);
     }
 
+    function handleCourseImgChange(e) {
+        setNewCourse((prevVal) => ({
+            ...prevVal,
+            courseImg: e.target.files[0],
+        }));
+    }
+
     async function handleAddCourse() {
         const { verticalId } = params;
+
+        let formData = new FormData();
+        formData.append("name", newCourse.name);
+        formData.append("desc", newCourse.desc);
+        formData.append("courseImg", newCourse.courseImg);
 
         // todo: validate input
         setAddCourseLoading(true);
@@ -139,7 +155,7 @@ const CoursesPage = () => {
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
-                    body: JSON.stringify(newCourse),
+                    body: formData,
                 }
             );
 
@@ -314,6 +330,15 @@ const CoursesPage = () => {
                                 autoComplete="off"
                                 className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] resize-none placeholder:text-sm h-[200px]"
                                 placeholder="Description of the Course"
+                            />
+
+                            <input
+                                onChange={handleCourseImgChange}
+                                className="border rounded "
+                                placeholder="Upload Image"
+                                type="file"
+                                name=""
+                                id=" "
                             />
                             <button
                                 onClick={handleAddCourse}
