@@ -93,7 +93,9 @@ const Navbar = () => {
                                 </Link>
                             </li>
                         ))}
-                                        
+                        <li>
+                               <LuUserCircle className="w-7 h-7 cursor-pointer transition-all" />
+                        </li>                        
 
                         <li className="flex">
                             {localStorage.getItem("token") ? (
@@ -109,9 +111,7 @@ const Navbar = () => {
                                 {"   "}
                                 My Profile
                             </button> */}
-                            <li>
-                               <LuUserCircle className="w-7 h-7 cursor-pointer transition-all" />
-                            </li> 
+                             
                                     <button
                                         className="rounded font-medium w-32 ml-1 transition-all duration-150 bg-pima-red py-1.5 text-center text-white hover:bg-white hover:text-pima-red border-2 text-sm hover:border-2 border-pima-red"
                                         onClick={handleLogoutClick}
