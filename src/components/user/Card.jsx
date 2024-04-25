@@ -8,11 +8,17 @@ function Card(props) {
                 <span className="absolute uppercase text-[10px] underline underline-offset-[3px] font-semibold mt-2 ml-2 z-[900]">
                     {props.type}
                 </span>
-                <img
-                    src={props?.data.image?.src || props.data.vdoThumbnail}
-                    alt=""
-                    className="w-full h-full object-cover rounded-l-[5px]"
-                />
+                {(props?.data?.image?.src ||
+                    props?.data?.vdoThumbnail !==
+                        "https://img.youtube.com/vi/false/hqdefault.jpg") && (
+                    <img
+                        src={
+                            props?.data?.image?.src || props?.data?.vdoThumbnail
+                        }
+                        alt=""
+                        className="w-full h-full object-cover rounded-t-[5px]"
+                    />
+                )}
             </div>
             <div className="flex flex-col p-4 rounded-r-[5px] flex-1 items-end justify-between max-sm:gap-4 bg-[#fcfcfc]">
                 <span className="text-[10px] uppercase font-medium">

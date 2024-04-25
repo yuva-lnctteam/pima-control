@@ -42,22 +42,36 @@ const AdminAddUnit = () => {
 
             let pdfResponse;
             let unit;
+            let unitDetails;
+
+            if (unitDet.vdoSrc === null || unitDet.vdoSrc === "") {
+                unitDetails = {
+                    title: unitDet.title,
+                    desc: unitDet.desc,
+                };
+            } else {
+                unitDetails = {
+                    title: unitDet.title,
+                    vdoSrc: unitDet.vdoSrc,
+                    desc: unitDet.desc,
+                };
+            }
+
+            console.log(unitDetails)
 
             if (unitPdf) {
                 pdfResponse = await handlePdfUpload();
                 unit = {
-                    video: unitDet,
+                    video: unitDetails,
                     quiz: quizArr,
                     pdf: pdfResponse?.pdf,
                 };
             } else {
                 unit = {
-                    video: unitDet,
+                    video: unitDetails,
                     quiz: quizArr,
                 };
             }
-
-            console.log(pdfResponse);
 
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/add`,
@@ -91,7 +105,7 @@ const AdminAddUnit = () => {
                     vdoSrc: null,
                     desc: "",
                 });
-                // navigate(-1); 
+                // navigate(-1);
                 setUnitDet({
                     title: "",
                     vdoSrc: null,
@@ -139,8 +153,7 @@ const AdminAddUnit = () => {
                     toast.error(result.statusText);
                 }
             } else if (response.ok && response.status === 200) {
-                console.log(response)
-                return response;
+                return result;
             } else {
                 // for future
             }

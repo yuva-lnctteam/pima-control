@@ -131,7 +131,7 @@ const VideoPlayer = (props) => {
         <ReactPlayer
             url={props.url}
             controls={true}
-            height={"300px"}
+            height={"400px"}
             width={"100%"}
             onDuration={handleDuration}
             onProgress={handleProgress}

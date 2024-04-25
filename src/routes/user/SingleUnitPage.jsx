@@ -21,7 +21,7 @@ const UserSingleUnit = () => {
         activities: [],
     });
     const [isQuizBtnDisabled, setIsQuizBtnDisabled] = useState(true);
-    const [isPdfAvailable, setIsPdfAvailable] = useState(false);
+    const [pdf, setPdf] = useState(null);
     // const [courseInfo, setCourseInfo] = useState(null);
     // const [userInfo, setUserInfo] = useState(null);
     // const [certId, setCertId] = useState("");
@@ -78,6 +78,7 @@ const UserSingleUnit = () => {
                     setVideoWatchTimeCutoffPercentage(
                         result.videoWatchTimeCutoffPercentage
                     );
+                    setPdf(result.unit.pdf.url);
                     // setCourseInfo(result.courseInfo);
                     // setUserInfo(result.userInfo);
 
@@ -132,27 +133,34 @@ const UserSingleUnit = () => {
                         onClick={handleOpenQuizClick}
                         className={`rounded-[5px] flex uppercase  font-medium self-end underline underline-offset-2
                         ${
-                            isQuizBtnDisabled
+                            videoInfo.vdoSrc && isQuizBtnDisabled
                                 ? " text-gray-500  cursor-not-allowed"
                                 : ""
                         }`}
-                        disabled={isQuizBtnDisabled}
+                        disabled={videoInfo.vdoSrc && isQuizBtnDisabled}
                     >
                         Take Quiz →
                     </button>
                 </div>
                 <div className="flex flex-col w-1/2 max-lg:w-full gap-8">
-                    <VideoPlayer
-                        url={videoInfo.vdoSrc}
-                        storedWatchPercentage={storedWatchPercentage}
-                        handleChangeQuizState={handleChangeQuizState}
-                        videoWatchTimeCutoffPercentage={
-                            videoWatchTimeCutoffPercentage
-                        }
-                    />
-                    {isPdfAvailable && (
+                    {videoInfo.vdoSrc ? (
+                        <VideoPlayer
+                            url={videoInfo.vdoSrc}
+                            storedWatchPercentage={storedWatchPercentage}
+                            handleChangeQuizState={handleChangeQuizState}
+                            videoWatchTimeCutoffPercentage={
+                                videoWatchTimeCutoffPercentage
+                            }
+                        />
+                    ) : (
+                        <div className="bg-pima-gray h-[300px] w-full flex text-white justify-center items-center rounded-[5px]">
+                            No Video available for this Unit
+                        </div>
+                    )}
+
+                    {pdf !== null && (
                         <a
-                            href="https://triagelogic.com/wp-content/uploads/2018/06/Company-Policy-and-Procedure-June-1.18-V6.0.pdf"
+                            href={pdf}
                             className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
                             target="_blank"
                         >

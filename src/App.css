@@ -89,3 +89,11 @@ tbody tr:last-child {
         rgba(0, 0, 0, 0.534) 100%
     );
 }
+
+/* ::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    display: none;
+} */

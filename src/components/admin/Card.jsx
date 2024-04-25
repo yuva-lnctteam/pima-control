@@ -16,11 +16,17 @@ function Card(props) {
                           props.data.quizCount +
                           " Questions"}
                 </p>
-                <img
-                    src={props?.data?.image?.src || props.data.vdoThumbnail}
-                    alt=""
-                    className="w-full h-full object-cover rounded-t-[5px] grad"
-                />
+                {(props?.data?.image?.src ||
+                    props?.data?.vdoThumbnail !==
+                        "https://img.youtube.com/vi/false/hqdefault.jpg") && (
+                    <img
+                        src={
+                            props?.data?.image?.src || props?.data?.vdoThumbnail
+                        }
+                        alt=""
+                        className="w-full h-full object-cover rounded-t-[5px] grad"
+                    />
+                )}
             </div>
             <div className="flex flex-col gap-14 rounded-b-[5px] p-6 flex-grow justify-between">
                 <p className="text-2xl font-bold break-words">
@@ -65,7 +71,7 @@ function Card(props) {
                         </button>
                     )}
                     <button
-                        className="bg-pima-red text-white p-1.5 rounded-[5px] flex uppercase text-xs items-center px-2.5 gap-1 font-medium"
+                        className="bg-pima-red text-white p-1.5 rounded-[5px] flex uppercase text-xs items-center px-2.5 gap-1 font-medium border-2 border-pima-red hover:bg-white hover:text-pima-red transition-all"
                         id={props.data._id}
                         onClick={props.onDeleteClick}
                     >
