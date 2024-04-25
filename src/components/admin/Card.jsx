@@ -67,7 +67,7 @@ function Card(props) {
                     <button
                         className="bg-pima-red text-white p-1.5 rounded-[5px] flex uppercase text-xs items-center px-2.5 gap-1 font-medium"
                         id={props.data._id}
-                        onClick={() => props.onDeleteClick((prev) => !prev)}
+                        onClick={props.onDeleteClick}
                     >
                         Delete
                     </button>

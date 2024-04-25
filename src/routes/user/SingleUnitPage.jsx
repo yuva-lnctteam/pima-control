@@ -21,6 +21,7 @@ const UserSingleUnit = () => {
         activities: [],
     });
     const [isQuizBtnDisabled, setIsQuizBtnDisabled] = useState(true);
+    const [isPdfAvailable, setIsPdfAvailable] = useState(false);
     // const [courseInfo, setCourseInfo] = useState(null);
     // const [userInfo, setUserInfo] = useState(null);
     // const [certId, setCertId] = useState("");
@@ -125,85 +126,7 @@ const UserSingleUnit = () => {
             <div className="flex max-lg:flex-col-reverse w-full justify-between gap-10">
                 <div className="flex w-1/2 max-lg:w-full flex-col gap-10">
                     <p className="font-light text-justify overflow-y-scroll h-[500px] overflow-hidden">
-                        {videoInfo.desc} Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Atque itaque optio iure id,
-                        exercitationem ea asperiores adipisci officiis
-                        necessitatibus nihil quae iste, consequuntur voluptatem
-                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt
-                        iste mollitia sunt quibusdam recusandae omnis, itaque
-                        fugit voluptatibus dolorum quia delectus nulla
-                        voluptatum eum dicta earum repellat culpa consequatur.
-                        Magnam. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
-                        fugit reiciendis dolor, expedita et porro repudiandae
-                        totam dolore quas iusto assumenda delectus debitis
-                        sapiente distinctio consequatur.Lorem ipsum dolor sit
-                        amet consectetur adipisicing elit. Atque itaque optio
-                        iure id, exercitationem ea asperiores adipisci officiis
-                        necessitatibus nihil quae iste, consequuntur voluptatem
-                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt
-                        iste mollitia sunt quibusdam recusandae omnis, itaque
-                        fugit voluptatibus dolorum quia delectus nulla
-                        voluptatum eum dicta earum repellat culpa consequatur.
-                        Magnam. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
-                        fugit reiciendis dolor, expedita et porro repudiandae
-                        totam dolore quas iusto assumenda delectus debitis
-                        sapiente distinctio consequatur.Lorem ipsum dolor sit
-                        amet consectetur adipisicing elit. Atque itaque optio
-                        iure id, exercitationem ea asperiores adipisci officiis
-                        necessitatibus nihil quae iste, consequuntur voluptatem
-                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt
-                        iste mollitia sunt quibusdam recusandae omnis, itaque
-                        fugit voluptatibus dolorum quia delectus nulla
-                        voluptatum eum dicta earum repellat culpa consequatur.
-                        Magnam. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
-                        fugit reiciendis dolor, expedita et porro repudiandae
-                        totam dolore quas iusto assumenda delectus debitis
-                        sapiente distinctio consequatur.Lorem ipsum dolor sit
-                        amet consectetur adipisicing elit. Atque itaque optio
-                        iure id, exercitationem ea asperiores adipisci officiis
-                        necessitatibus nihil quae iste, consequuntur voluptatem
-                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt
-                        iste mollitia sunt quibusdam recusandae omnis, itaque
-                        fugit voluptatibus dolorum quia delectus nulla
-                        voluptatum eum dicta earum repellat culpa consequatur.
-                        Magnam. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
-                        fugit reiciendis dolor, expedita et porro repudiandae
-                        totam dolore quas iusto assumenda delectus debitis
-                        sapiente distinctio consequatur.Lorem ipsum dolor sit
-                        amet consectetur adipisicing elit. Atque itaque optio
-                        iure id, exercitationem ea asperiores adipisci officiis
-                        necessitatibus nihil quae iste, consequuntur voluptatem
-                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt
-                        iste mollitia sunt quibusdam recusandae omnis, itaque
-                        fugit voluptatibus dolorum quia delectus nulla
-                        voluptatum eum dicta earum repellat culpa consequatur.
-                        Magnam. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
-                        fugit reiciendis dolor, expedita et porro repudiandae
-                        totam dolore quas iusto assumenda delectus debitis
-                        sapiente distinctio consequatur.Lorem ipsum dolor sit
-                        amet consectetur adipisicing elit. Atque itaque optio
-                        iure id, exercitationem ea asperiores adipisci officiis
-                        necessitatibus nihil quae iste, consequuntur voluptatem
-                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
-                        dolor, sit amet consectetur adipisicing elit. Incidunt
-                        iste mollitia sunt quibusdam recusandae omnis, itaque
-                        fugit voluptatibus dolorum quia delectus nulla
-                        voluptatum eum dicta earum repellat culpa consequatur.
-                        Magnam. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
-                        fugit reiciendis dolor, expedita et porro repudiandae
-                        totam dolore quas iusto assumenda delectus debitis
-                        sapiente distinctio consequatur.
+                        {videoInfo.desc}
                     </p>
                     <button
                         onClick={handleOpenQuizClick}
@@ -227,13 +150,15 @@ const UserSingleUnit = () => {
                             videoWatchTimeCutoffPercentage
                         }
                     />
-                    <a
-                        href="https://triagelogic.com/wp-content/uploads/2018/06/Company-Policy-and-Procedure-June-1.18-V6.0.pdf"
-                        className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
-                        target="_blank"
-                    >
-                        Open PDF
-                    </a>
+                    {isPdfAvailable && (
+                        <a
+                            href="https://triagelogic.com/wp-content/uploads/2018/06/Company-Policy-and-Procedure-June-1.18-V6.0.pdf"
+                            className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
+                            target="_blank"
+                        >
+                            Open PDF
+                        </a>
+                    )}
                 </div>
             </div>
         </div>

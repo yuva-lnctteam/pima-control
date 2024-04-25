@@ -63,6 +63,7 @@ const UnitsPage = () => {
                     }
                 } else if (response.ok && response.status === 200) {
                     setAllUnits(result.allUnits);
+                    console.log(result);
                 } else {
                     // for future
                 }
@@ -98,9 +99,11 @@ const UnitsPage = () => {
 
     function openDeleteModal(e) {
         // (e.target);
-        ref.current.click();
         setToDeleteUnitId(e.target.id);
+        setIsDeleteModalOpen(true);
     }
+
+    console.log(toDeleteUnitId);
 
     async function handleDeleteUnit() {
         const { verticalId, courseId } = params;
@@ -149,7 +152,7 @@ const UnitsPage = () => {
             setConfirmText("");
         }
 
-        refClose.current.click();
+        refClose.current?.click();
     }
 
     function handleCreateUnit() {
@@ -176,10 +179,7 @@ const UnitsPage = () => {
                                 data={unit}
                                 key={unit._id}
                                 type="unit"
-                                onDeleteClick={() => {
-                                    setIsDeleteModalOpen(true);
-                                    // setToDeleteVerticalId(vertical._id);
-                                }}
+                                onDeleteClick={openDeleteModal}
                             />
                         );
                     })}

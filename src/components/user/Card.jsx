@@ -9,7 +9,7 @@ function Card(props) {
                     {props.type}
                 </span>
                 <img
-                    src={props?.data.image?.src}
+                    src={props?.data.image?.src || props.data.vdoThumbnail}
                     alt=""
                     className="w-full h-full object-cover rounded-l-[5px]"
                 />
@@ -40,12 +40,11 @@ function Card(props) {
                     id={props.data?._id}
                     onClick={(e) => props.onClick(e)}
                 >
-                    Explore{" "}
                     {props.type === "vertical"
-                        ? "courses"
+                        ? "Explore courses"
                         : props.type === "course"
-                        ? "units"
-                        : "unit"}{" "}
+                        ? "Explore units"
+                        : "Study unit"}{" "}
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

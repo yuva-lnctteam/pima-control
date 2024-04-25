@@ -17,6 +17,10 @@ const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [verticalData, setVerticalData] = useState([]);
 
+    for (let i = 0; i < verticalData.length; i++) {
+        for (let j = 0; j < verticalData[i].coursesData.length; j++) {}
+    }
+
     useEffect(() => {
         async function getUser() {
             try {
@@ -66,8 +70,11 @@ const UserProfile = () => {
                     <div className="w-full relative">
                         <div className="flex gap-4 mb-6 items-center">
                             <img
-                                src="https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
-                                className="w-[60px] border rounded-full p-2"
+                                src={
+                                    user?.image?.src ||
+                                    "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+                                }
+                                className="w-[60px] h-[60x] border rounded-full"
                                 alt=""
                             />
                             <h1 className="text-3xl font-extrabold">
@@ -123,18 +130,26 @@ const UserProfile = () => {
                                         (each) => each.verticalData !== null
                                     )
                                     .map((vertical, index) => (
-                                        <div className="flex flex-col">
+                                        <div
+                                            className="flex flex-col"
+                                            key={index}
+                                        >
                                             <h1>
                                                 <span className="uppercase font-bold">
                                                     Vertical:
                                                 </span>{" "}
                                                 {vertical?.verticalData?.name}
                                             </h1>
-                                            
+
                                             <div className="ml-8">
-                                                {vertical?.coursesData.map(
-                                                    (course, index) => (
-                                                        <div>
+                                                {vertical?.coursesData
+                                                    .filter(
+                                                        (each) =>
+                                                            each.courseData !==
+                                                            null
+                                                    )
+                                                    .map((course, index) => (
+                                                        <div key={index}>
                                                             <h1>
                                                                 {" "}
                                                                 <span className="uppercase font-bold">
@@ -147,24 +162,35 @@ const UserProfile = () => {
                                                                 }
                                                             </h1>
                                                             <div className="ml-8">
-                                                                {course?.unitsData.map(
-                                                                    (
-                                                                        unit,
-                                                                        index
-                                                                    ) => (
-                                                                        <div>
-                                                                            <span className="uppercase font-bold">
-                                                                                Unit:
-                                                                            </span>{" "}
-                                                                            {index +
-                                                                                1}
-                                                                        </div>
+                                                                {course?.unitsData
+                                                                    .filter(
+                                                                        (
+                                                                            each
+                                                                        ) =>
+                                                                            each.unitsData !==
+                                                                            null
                                                                     )
-                                                                )}
+                                                                    .map(
+                                                                        (
+                                                                            unit,
+                                                                            index
+                                                                        ) => (
+                                                                            <div
+                                                                                key={
+                                                                                    index
+                                                                                }
+                                                                            >
+                                                                                <span className="uppercase font-bold">
+                                                                                    Unit:
+                                                                                </span>{" "}
+                                                                                {index +
+                                                                                    1}
+                                                                            </div>
+                                                                        )
+                                                                    )}
                                                             </div>
                                                         </div>
-                                                    )
-                                                )}
+                                                    ))}
                                             </div>
                                         </div>
                                     ))}
