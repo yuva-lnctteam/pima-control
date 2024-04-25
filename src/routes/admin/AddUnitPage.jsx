@@ -20,9 +20,6 @@ const AdminAddUnit = () => {
         const { verticalId, courseId } = params;
         // (params);
 
-        let formData = new FormData();
-        formData.append("userImg", unitImg);
-
         try {
             const adminId = process.env.REACT_APP_ADMIN_ID;
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
@@ -31,17 +28,19 @@ const AdminAddUnit = () => {
                 video: unitDet,
                 quiz: quizArr,
             };
+            let formData = new FormData();
+            formData.append("userImg", unitImg);
+            formData.append("unit", JSON.stringify(unit));
 
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/add`,
                 {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json",
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
-                    body: JSON.stringify(unit, formData),
+                    body: formData,
                 }
             );
 

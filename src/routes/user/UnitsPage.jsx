@@ -44,6 +44,7 @@ const UserUnits = () => {
 
                 // (response);
                 const result = await response.json();
+                console.log(">>>>>>>>>>", result);
                 // (result);
 
                 if (response.status >= 400 && response.status < 600) {

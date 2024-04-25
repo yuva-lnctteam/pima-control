@@ -5,7 +5,7 @@ import { vars } from "./constants";
 function youtubeParser(vdoSrc) {
     var regExp =
         /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-    var match = vdoSrc.match(regExp);
+    var match = vdoSrc?.match(regExp);
     return match && match[7].length == 11 ? match[7] : false;
 }
 
@@ -25,7 +25,6 @@ function roundOffDecimalPlaces(num, places) {
 
     return Math.round(num * power) / power;
 }
-
 
 const generateQuizInstructions = (quizLength) => {
     return [
