@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 // My components
@@ -118,47 +118,107 @@ const UserSingleUnit = () => {
     // }
 
     const element = (
-        <div>
-            <div className="flex px-pima-x py-pima-y min-h-[80vh] max-lg:flex-col-reverse">
-                <div className="flex w-[50%] max-lg:w-full flex-col justify-between pt-16 pr-16">
-                    <div>
-                        <h1 className="text-4xl font-extrabold capitalize">
-                            {videoInfo.title}
-                        </h1>
-                        <p className="font-light text-justify text-sm mt-10 lg:h-[65%] border-b-2 lg:overflow-y-scroll">
-                            {videoInfo.desc} Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Atque itaque optio
-                            iure id, exercitationem ea asperiores adipisci
-                            officiis necessitatibus nihil quae iste,
-                            consequuntur voluptatem vero aliquam? Voluptatum ab
-                            omnis sapiente. Lorem ipsum dolor, sit amet
-                            consectetur adipisicing elit. Incidunt iste mollitia
-                            sunt quibusdam recusandae omnis, itaque fugit
-                            voluptatibus dolorum quia delectus nulla voluptatum
-                            eum dicta earum repellat culpa consequatur. Magnam.
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Ipsam, corporis culpa mollitia, sunt fugit
-                            reiciendis dolor, expedita et porro repudiandae
-                            totam dolore quas iusto assumenda delectus debitis
-                            sapiente distinctio consequatur.
-                        </p>
-                    </div>
-
-                    <div className="relative">
-                        <button
-                            onClick={handleOpenQuizClick}
-                            className={
-                                isQuizBtnDisabled
-                                    ? " text-gray-500 absolute bottom-0 right-0 underline underline-offset-2 cursor-not-allowed"
-                                    : "absolute bottom-0 right-0 underline underline-offset-2"
-                            }
-                            disabled={isQuizBtnDisabled}
-                        >
-                            Take Quiz →
-                        </button>
-                    </div>
+        <div className="flex px-10 md:px-pima-x py-pima-y flex-col mb-[75px] gap-12">
+            <h1 className="text-3xl font-extrabold capitalize break-words">
+                {videoInfo.title}
+            </h1>
+            <div className="flex max-lg:flex-col-reverse w-full justify-between gap-10">
+                <div className="flex w-1/2 max-lg:w-full flex-col gap-10">
+                    <p className="font-light text-justify overflow-y-scroll h-[500px] overflow-hidden">
+                        {videoInfo.desc} Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Atque itaque optio iure id,
+                        exercitationem ea asperiores adipisci officiis
+                        necessitatibus nihil quae iste, consequuntur voluptatem
+                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
+                        dolor, sit amet consectetur adipisicing elit. Incidunt
+                        iste mollitia sunt quibusdam recusandae omnis, itaque
+                        fugit voluptatibus dolorum quia delectus nulla
+                        voluptatum eum dicta earum repellat culpa consequatur.
+                        Magnam. Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
+                        fugit reiciendis dolor, expedita et porro repudiandae
+                        totam dolore quas iusto assumenda delectus debitis
+                        sapiente distinctio consequatur.Lorem ipsum dolor sit
+                        amet consectetur adipisicing elit. Atque itaque optio
+                        iure id, exercitationem ea asperiores adipisci officiis
+                        necessitatibus nihil quae iste, consequuntur voluptatem
+                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
+                        dolor, sit amet consectetur adipisicing elit. Incidunt
+                        iste mollitia sunt quibusdam recusandae omnis, itaque
+                        fugit voluptatibus dolorum quia delectus nulla
+                        voluptatum eum dicta earum repellat culpa consequatur.
+                        Magnam. Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
+                        fugit reiciendis dolor, expedita et porro repudiandae
+                        totam dolore quas iusto assumenda delectus debitis
+                        sapiente distinctio consequatur.Lorem ipsum dolor sit
+                        amet consectetur adipisicing elit. Atque itaque optio
+                        iure id, exercitationem ea asperiores adipisci officiis
+                        necessitatibus nihil quae iste, consequuntur voluptatem
+                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
+                        dolor, sit amet consectetur adipisicing elit. Incidunt
+                        iste mollitia sunt quibusdam recusandae omnis, itaque
+                        fugit voluptatibus dolorum quia delectus nulla
+                        voluptatum eum dicta earum repellat culpa consequatur.
+                        Magnam. Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
+                        fugit reiciendis dolor, expedita et porro repudiandae
+                        totam dolore quas iusto assumenda delectus debitis
+                        sapiente distinctio consequatur.Lorem ipsum dolor sit
+                        amet consectetur adipisicing elit. Atque itaque optio
+                        iure id, exercitationem ea asperiores adipisci officiis
+                        necessitatibus nihil quae iste, consequuntur voluptatem
+                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
+                        dolor, sit amet consectetur adipisicing elit. Incidunt
+                        iste mollitia sunt quibusdam recusandae omnis, itaque
+                        fugit voluptatibus dolorum quia delectus nulla
+                        voluptatum eum dicta earum repellat culpa consequatur.
+                        Magnam. Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
+                        fugit reiciendis dolor, expedita et porro repudiandae
+                        totam dolore quas iusto assumenda delectus debitis
+                        sapiente distinctio consequatur.Lorem ipsum dolor sit
+                        amet consectetur adipisicing elit. Atque itaque optio
+                        iure id, exercitationem ea asperiores adipisci officiis
+                        necessitatibus nihil quae iste, consequuntur voluptatem
+                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
+                        dolor, sit amet consectetur adipisicing elit. Incidunt
+                        iste mollitia sunt quibusdam recusandae omnis, itaque
+                        fugit voluptatibus dolorum quia delectus nulla
+                        voluptatum eum dicta earum repellat culpa consequatur.
+                        Magnam. Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
+                        fugit reiciendis dolor, expedita et porro repudiandae
+                        totam dolore quas iusto assumenda delectus debitis
+                        sapiente distinctio consequatur.Lorem ipsum dolor sit
+                        amet consectetur adipisicing elit. Atque itaque optio
+                        iure id, exercitationem ea asperiores adipisci officiis
+                        necessitatibus nihil quae iste, consequuntur voluptatem
+                        vero aliquam? Voluptatum ab omnis sapiente. Lorem ipsum
+                        dolor, sit amet consectetur adipisicing elit. Incidunt
+                        iste mollitia sunt quibusdam recusandae omnis, itaque
+                        fugit voluptatibus dolorum quia delectus nulla
+                        voluptatum eum dicta earum repellat culpa consequatur.
+                        Magnam. Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Ipsam, corporis culpa mollitia, sunt
+                        fugit reiciendis dolor, expedita et porro repudiandae
+                        totam dolore quas iusto assumenda delectus debitis
+                        sapiente distinctio consequatur.
+                    </p>
+                    <button
+                        onClick={handleOpenQuizClick}
+                        className={`rounded-[5px] flex uppercase  font-medium self-end underline underline-offset-2
+                        ${
+                            isQuizBtnDisabled
+                                ? " text-gray-500  cursor-not-allowed"
+                                : ""
+                        }`}
+                        disabled={isQuizBtnDisabled}
+                    >
+                        Take Quiz →
+                    </button>
                 </div>
-                <div className="flex-1 lg:pl-10">
+                <div className="flex flex-col w-1/2 max-lg:w-full gap-8">
                     <VideoPlayer
                         url={videoInfo.vdoSrc}
                         storedWatchPercentage={storedWatchPercentage}
@@ -167,6 +227,13 @@ const UserSingleUnit = () => {
                             videoWatchTimeCutoffPercentage
                         }
                     />
+                    <a
+                        href="https://triagelogic.com/wp-content/uploads/2018/06/Company-Policy-and-Procedure-June-1.18-V6.0.pdf"
+                        className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
+                        target="_blank"
+                    >
+                        Open PDF
+                    </a>
                 </div>
             </div>
         </div>

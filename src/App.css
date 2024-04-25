@@ -83,5 +83,9 @@ tbody tr:last-child {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.534) 100%);
+    background: linear-gradient(
+        to top,
+        transparent 0%,
+        rgba(0, 0, 0, 0.534) 100%
+    );
 }

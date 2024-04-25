@@ -259,50 +259,43 @@ const UserQuiz = () => {
     }
 
     const instructionsElement = (
-        <div className="fixed right-0 px-pima-x pb-pima-y w-[40%] flex flex-col gap-10">
+        <div className="max-md:relative fixed right-0 md:px-pima-x pb-pima-y md:w-[40%] flex flex-col gap-10">
             <div className="">
-                <div className="">
-                    <div className="flex justify-between items-center">
-                        <h2 className=" font-extrabold text-3xl">
-                            Instructions
-                        </h2>
-                        {showQuiz ? (
-                            <div className=" text-2xl">
-                                <strong className="flex items-center">
-                                    <i className="fa-regular fa-clock"></i>{" "}
-                                    &nbsp;
-                                    <Countdown
-                                        date={
-                                            Date.now() +
-                                            quiz.length *
-                                                vars.quiz.TIME_PER_QUE_IN_MIN *
-                                                60 *
-                                                1000
-                                        }
-                                        renderer={renderer}
-                                    />
-                                </strong>
-                            </div>
-                        ) : (
-                            <p className="">
-                                Duration: {quiz.length * 2} minutes
-                            </p>
-                        )}
-                    </div>
-
-                    <ul className="mt-8 flex flex-col gap-4">
-                        {generateQuizInstructions(quiz.length).map(
-                            (instruction, index) => {
-                                return (
-                                    <li className="font-medium " key={index}>
-                                        <span className="">{index + 1}. </span>
-                                        {instruction}
-                                    </li>
-                                );
-                            }
-                        )}
-                    </ul>
+                <div className="flex justify-between items-center gap-6">
+                    <h2 className=" font-extrabold text-3xl">Instructions</h2>
+                    {showQuiz ? (
+                        <div className=" text-2xl">
+                            <strong className="flex items-center">
+                                <i className="fa-regular fa-clock"></i> &nbsp;
+                                <Countdown
+                                    date={
+                                        Date.now() +
+                                        quiz.length *
+                                            vars.quiz.TIME_PER_QUE_IN_MIN *
+                                            60 *
+                                            1000
+                                    }
+                                    renderer={renderer}
+                                />
+                            </strong>
+                        </div>
+                    ) : (
+                        <p className="">Duration: {quiz.length * 2} mins</p>
+                    )}
                 </div>
+
+                <ul className="mt-8 flex flex-col gap-4">
+                    {generateQuizInstructions(quiz.length).map(
+                        (instruction, index) => {
+                            return (
+                                <li className="font-medium " key={index}>
+                                    <span className="">{index + 1}. </span>
+                                    {instruction}
+                                </li>
+                            );
+                        }
+                    )}
+                </ul>
             </div>
             <div className="h-[1px] w-full bg-stone-400"></div>
             <div className="flex flex-col items-center">
@@ -313,18 +306,6 @@ const UserQuiz = () => {
                         Your latest quiz score is{" "}
                         <span className="font-bold"> {storedQuizScore}%</span>
                     </p>
-                )}
-                {showQuiz && (
-                    <div className="flex justify-between mt-4">
-                        <div>
-                            <button
-                                className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
-                                onClick={handleSubmitQuiz}
-                            >
-                                Submit Quiz
-                            </button>
-                        </div>
-                    </div>
                 )}
                 {!showQuiz && (
                     <button
@@ -378,7 +359,7 @@ const UserQuiz = () => {
         <div
             className={` ${
                 showQuiz ? `` : `blur-sm pointer-events-none`
-            } w-[60%] h-[700px] overflow-y-scroll`}
+            } md:w-[60%] md:h-[700px] md:overflow-y-scroll`}
         >
             {responseQuiz.length === 0 ? (
                 <h1 className="nothingText">
@@ -454,11 +435,21 @@ const UserQuiz = () => {
             {showResult ? (
                 <div>{resultElement}</div>
             ) : (
-                <div className="relative min-h-screen flex flex-col px-pima-x py-pima-y gap-6">
+                <div className="relative min-h-screen flex flex-col px-10 md:px-pima-x py-pima-y gap-6">
                     <h1 className="text-4xl font-extrabold">Quiz</h1>
-                    <div className="flex">
-                        {quizElement}
+                    <div className="flex flex-col max-md:flex-col">
                         {instructionsElement}
+                        {quizElement}
+                        {showQuiz && (
+                            <div className="md:w-[53%] mt-6">
+                                <button
+                                    className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2 mx-auto "
+                                    onClick={handleSubmitQuiz}
+                                >
+                                    Submit Quiz
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

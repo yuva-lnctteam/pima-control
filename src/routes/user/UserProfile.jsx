@@ -44,7 +44,7 @@ const UserProfile = () => {
                 } else if (response.ok && response.status === 200) {
                     setUser(result?.data?.user);
                     setVerticalData(result?.data.allVerticalsData);
-                    console.log(result);
+                    console.log(result?.data.allVerticalsData);
                     setIsLoading(false);
                 } else {
                     // for future
@@ -77,6 +77,9 @@ const UserProfile = () => {
                         </div>
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col gap-3 border p-6 rounded-[5px]">
+                                <h1 className="text-2xl font-bold text-center mb-4">
+                                    User Details
+                                </h1>
                                 <div className="flex justify-between gap-4">
                                     <span className="font-semibold">
                                         User Id
@@ -112,9 +115,59 @@ const UserProfile = () => {
                                 </div>
                             </div>
                             <div className="flex flex-col gap-3 border p-6 rounded-[5px]">
-                                {verticalData.map((vertical, index) => (
-                                    <div></div>
-                                ))}
+                                <h1 className="text-2xl font-bold text-center mb-4">
+                                    User Progress
+                                </h1>
+                                {verticalData
+                                    .filter(
+                                        (each) => each.verticalData !== null
+                                    )
+                                    .map((vertical, index) => (
+                                        <div className="flex flex-col">
+                                            <h1>
+                                                <span className="uppercase font-bold">
+                                                    Vertical:
+                                                </span>{" "}
+                                                {vertical?.verticalData?.name}
+                                            </h1>
+                                            
+                                            <div className="ml-8">
+                                                {vertical?.coursesData.map(
+                                                    (course, index) => (
+                                                        <div>
+                                                            <h1>
+                                                                {" "}
+                                                                <span className="uppercase font-bold">
+                                                                    Course:
+                                                                </span>{" "}
+                                                                {
+                                                                    course
+                                                                        ?.courseData
+                                                                        ?.name
+                                                                }
+                                                            </h1>
+                                                            <div className="ml-8">
+                                                                {course?.unitsData.map(
+                                                                    (
+                                                                        unit,
+                                                                        index
+                                                                    ) => (
+                                                                        <div>
+                                                                            <span className="uppercase font-bold">
+                                                                                Unit:
+                                                                            </span>{" "}
+                                                                            {index +
+                                                                                1}
+                                                                        </div>
+                                                                    )
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     </div>

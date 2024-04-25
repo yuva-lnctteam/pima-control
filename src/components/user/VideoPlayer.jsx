@@ -128,19 +128,16 @@ const VideoPlayer = (props) => {
     }
 
     return (
-        <div className="w-full h-full">
-            <ReactPlayer
-                url={props.url}
-                controls={true}
-                // className="react-player"
-                width="100%"
-                height="100%"
-                onDuration={handleDuration}
-                onProgress={handleProgress}
-                // onPlay={handlePlay}
-                onPause={handlePause}
-            />
-        </div>
+        <ReactPlayer
+            url={props.url}
+            controls={true}
+            height={"300px"}
+            width={"100%"}
+            onDuration={handleDuration}
+            onProgress={handleProgress}
+            // onPlay={handlePlay}
+            onPause={handlePause}
+        />
     );
 };
 
