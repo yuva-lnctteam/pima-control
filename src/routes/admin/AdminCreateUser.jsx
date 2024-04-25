@@ -196,15 +196,14 @@ const AdminCreateUser = () => {
                         }
                     />
                 </div>
-
                 <input
-                    className="border"
+                    className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-[5px] file:border-0 file:text-sm file:font-semibold file:bg-[#efefef] file:text-black hover:file:bg-stone-200 transition-all"
                     onChange={handleUserImgChange}
                     type="file"
                     name=""
                     id=""
+                    placeholder="Upload Image"
                 />
-
                 <button
                     disabled={isLoading}
                     type="submit"

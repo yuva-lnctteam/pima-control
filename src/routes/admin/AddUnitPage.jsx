@@ -11,6 +11,22 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const AdminAddUnit = () => {
     const [isAddUnitBtnDisabled, setIsAddUnitBtnDisabled] = useState(true);
+    const [unitDet, setUnitDet] = useState({
+        title: String,
+        vdoSrc: null,
+        desc: String,
+    });
+    const [unitPdf, setUnitPdf] = useState(null);
+
+    const [quizArr, setQuizArr] = useState([]);
+    const [question, setQuestion] = useState("");
+    const [options, setOptions] = useState([
+        { text: "", isChecked: false },
+        { text: "", isChecked: false },
+        { text: "", isChecked: false },
+        { text: "", isChecked: false },
+    ]);
+    const [validQuiz, setValidQuiz] = useState(false);
 
     const navigate = useNavigate();
     const params = useParams();
@@ -18,16 +34,30 @@ const AdminAddUnit = () => {
     async function handleAddUnit() {
         setIsAddUnitBtnDisabled(true);
         const { verticalId, courseId } = params;
-        // (params);
 
         try {
             const adminId = process.env.REACT_APP_ADMIN_ID;
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
             const basicAuth = btoa(`${adminId}:${adminPassword}`);
-            const unit = {
-                video: unitDet,
-                quiz: quizArr,
-            };
+
+            let pdfResponse;
+            let unit;
+
+            if (unitPdf) {
+                pdfResponse = await handlePdfUpload();
+                unit = {
+                    video: unitDet,
+                    quiz: quizArr,
+                    pdf: pdfResponse?.pdf,
+                };
+            } else {
+                unit = {
+                    video: unitDet,
+                    quiz: quizArr,
+                };
+            }
+
+            console.log(pdfResponse);
 
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/add`,
@@ -61,7 +91,7 @@ const AdminAddUnit = () => {
                     vdoSrc: null,
                     desc: "",
                 });
-                navigate(-1); // go back to all units page
+                // navigate(-1); 
                 setUnitDet({
                     title: "",
                     vdoSrc: null,
@@ -75,22 +105,47 @@ const AdminAddUnit = () => {
         } catch (err) {}
     }
 
-    const [unitDet, setUnitDet] = useState({
-        title: String,
-        vdoSrc: null,
-        desc: String,
-    });
-    const [unitImg, setUnitImg] = useState(null);
+    async function handlePdfUpload() {
+        try {
+            const adminId = process.env.REACT_APP_ADMIN_ID;
+            const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+            const basicAuth = btoa(`${adminId}:${adminPassword}`);
 
-    const [quizArr, setQuizArr] = useState([]);
-    const [question, setQuestion] = useState("");
-    const [options, setOptions] = useState([
-        { text: "", isChecked: false },
-        { text: "", isChecked: false },
-        { text: "", isChecked: false },
-        { text: "", isChecked: false },
-    ]);
-    const [validQuiz, setValidQuiz] = useState(false);
+            const formData = new FormData();
+            formData.append("pdf", unitPdf);
+
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/admin/auth/upload-pdf`,
+                {
+                    method: "POST",
+                    headers: {
+                        "auth-token": localStorage.getItem("token"),
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                    body: formData,
+                }
+            );
+
+            setIsAddUnitBtnDisabled(false);
+
+            const result = await response.json();
+
+            if (response.status >= 400 && response.status < 600) {
+                if (response.status === 401) {
+                    navigate("/admin/login"); // login or role issue
+                } else if (response.status === 404) {
+                    toast.error(result.statusText);
+                } else if (response.status === 500) {
+                    toast.error(result.statusText);
+                }
+            } else if (response.ok && response.status === 200) {
+                console.log(response)
+                return response;
+            } else {
+                // for future
+            }
+        } catch (err) {}
+    }
 
     function handleCheck(index, option) {
         const updatedOptions = [...options];
@@ -104,8 +159,8 @@ const AdminAddUnit = () => {
         );
     }
 
-    function handleUnitImgChange(e) {
-        setUnitImg(e.target.files[0]);
+    function handlePdfChange(e) {
+        setUnitPdf(e.target.files[0]);
     }
 
     function handleQuizSubmit(e) {
@@ -208,14 +263,19 @@ const AdminAddUnit = () => {
                                 }}
                             />
                         </label>
-
-                        {/* <input
-                            onChange={handleUnitImgChange}
-                            className="border"
-                            type="file"
-                            name="unitImg"
-                            id=""
-                        /> */}
+                        <label
+                            htmlFor="pdfFile"
+                            className="text-sm text-stone-500 w-full"
+                        >
+                            Import PDF
+                            <input
+                                onChange={handlePdfChange}
+                                className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-[5px] file:border-0 file:text-sm file:font-semibold file:bg-[#efefef] file:text-black hover:file:bg-stone-200 transition-all mt-1 cursor-pointer"
+                                type="file"
+                                name="unitImg"
+                                id="pdfFile"
+                            />
+                        </label>
                     </form>
 
                     {/* --------------------- INPUT VIDEO PREVIEW -------------------- */}
@@ -305,7 +365,7 @@ const AdminAddUnit = () => {
                                 type="submit"
                                 className={` px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center ${
                                     validQuiz && !(question.trim() === "")
-                                        ? ``
+                                        ? `cursor-pointer`
                                         : "cursor-not-allowed bg-[#565656]"
                                 }`}
                                 disabled={!validQuiz || question.trim() === ""}
@@ -390,9 +450,11 @@ const AdminAddUnit = () => {
             <div className="py-2 w-full bg-white  sticky bottom-0 flex justify-center shadow-xl border-t inset-3">
                 <button
                     onClick={handleAddUnit}
-                    className={` px-10 text-center self-center py-1.5 text-sm bg-pima-gray text-white rounded mx-auto
+                    className={` px-10 text-center self-center py-1.5 text-sm bg-pima-gray text-white rounded mx-auto 
                             ${
-                                isAddUnitBtnDisabled ? "cursor-not-allowed" : ""
+                                isAddUnitBtnDisabled
+                                    ? "cursor-not-allowed"
+                                    : "cursor-pointer"
                             }`}
                     disabled={isAddUnitBtnDisabled}
                 >
