@@ -63,6 +63,7 @@ const UnitsPage = () => {
                     }
                 } else if (response.ok && response.status === 200) {
                     setAllUnits(result.allUnits);
+                    console.log(result);
                 } else {
                     // for future
                 }
@@ -102,7 +103,7 @@ const UnitsPage = () => {
         setIsDeleteModalOpen(true);
     }
 
-    console.log(toDeleteUnitId)
+    console.log(toDeleteUnitId);
 
     async function handleDeleteUnit() {
         const { verticalId, courseId } = params;

@@ -21,6 +21,7 @@ const UserSingleUnit = () => {
         activities: [],
     });
     const [isQuizBtnDisabled, setIsQuizBtnDisabled] = useState(true);
+    const [isPdfAvailable, setIsPdfAvailable] = useState(false);
     // const [courseInfo, setCourseInfo] = useState(null);
     // const [userInfo, setUserInfo] = useState(null);
     // const [certId, setCertId] = useState("");
@@ -149,13 +150,15 @@ const UserSingleUnit = () => {
                             videoWatchTimeCutoffPercentage
                         }
                     />
-                    <a
-                        href="https://triagelogic.com/wp-content/uploads/2018/06/Company-Policy-and-Procedure-June-1.18-V6.0.pdf"
-                        className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
-                        target="_blank"
-                    >
-                        Open PDF
-                    </a>
+                    {isPdfAvailable && (
+                        <a
+                            href="https://triagelogic.com/wp-content/uploads/2018/06/Company-Policy-and-Procedure-June-1.18-V6.0.pdf"
+                            className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
+                            target="_blank"
+                        >
+                            Open PDF
+                        </a>
+                    )}
                 </div>
             </div>
         </div>
