@@ -46,12 +46,6 @@ const AdminAddUnit = () => {
 
             setIsAddUnitBtnDisabled(false);
 
-            setUnitDet({
-                title: "",
-                vdoSrc: null,
-                desc: "",
-            });
-
             const result = await response.json();
 
             if (response.status >= 400 && response.status < 600) {
@@ -64,6 +58,11 @@ const AdminAddUnit = () => {
                 }
             } else if (response.ok && response.status === 200) {
                 toast.success(result.statusText);
+                setUnitDet({
+                    title: "",
+                    vdoSrc: null,
+                    desc: "",
+                });
                 navigate(-1); // go back to all units page
             } else {
                 // for future
