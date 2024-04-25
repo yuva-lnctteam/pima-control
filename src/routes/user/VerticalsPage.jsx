@@ -68,7 +68,7 @@ const VerticalsPage = () => {
     const loader = <Loader />;
 
     const element = (
-        <div className="px-pima-x py-pima-y flex flex-col gap-10 mt-8">
+        <div className="px-10 md:px-pima-x py-pima-y flex flex-col gap-10 mt-8">
             <h2
                 className="text-4xl font-extrabold underline-offset-[10px] underline leading-relaxed"
                 style={{
