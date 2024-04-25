@@ -18,9 +18,7 @@ const UserProfile = () => {
     const [verticalData, setVerticalData] = useState([]);
 
     for (let i = 0; i < verticalData.length; i++) {
-        for (let j = 0; j < verticalData[i].coursesData.length; j++) {
-            
-        }
+        for (let j = 0; j < verticalData[i].coursesData.length; j++) {}
     }
 
     useEffect(() => {
@@ -72,8 +70,11 @@ const UserProfile = () => {
                     <div className="w-full relative">
                         <div className="flex gap-4 mb-6 items-center">
                             <img
-                                src="https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
-                                className="w-[60px] border rounded-full p-2"
+                                src={
+                                    user?.image?.src ||
+                                    "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+                                }
+                                className="w-[60px] h-[60x] border rounded-full"
                                 alt=""
                             />
                             <h1 className="text-3xl font-extrabold">

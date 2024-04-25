@@ -259,7 +259,7 @@ const UserQuiz = () => {
     }
 
     const instructionsElement = (
-        <div className="max-md:relative fixed right-0 md:px-pima-x pb-pima-y md:w-[40%] flex flex-col gap-10 overflow-y-scroll max-md:h-[80vh]">
+        <div className="max-md:relative fixed right-0 md:px-pima-x pb-pima-y md:w-[40%] flex flex-col gap-10 max-md:overflow-y-scroll max-lg:h-[80vh] max-md:h-fit">
             <div className="">
                 <div className="flex justify-between items-center gap-6">
                     <h2 className=" font-extrabold text-3xl">Instructions</h2>

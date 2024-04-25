@@ -205,13 +205,13 @@ const AdminAddUnit = () => {
                             />
                         </label>
 
-                        <input
+                        {/* <input
                             onChange={handleUnitImgChange}
                             className="border"
                             type="file"
                             name="unitImg"
                             id=""
-                        />
+                        /> */}
                     </form>
 
                     {/* --------------------- INPUT VIDEO PREVIEW -------------------- */}
