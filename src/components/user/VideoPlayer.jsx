@@ -39,7 +39,7 @@ const VideoPlayer = (props) => {
     const [totalWatchPercentage, setTotalWatchPercentage] = useState(
         props.storedWatchPercentage
     );
-    const videoWatchTimeCutoffPercentage = props.videoWatchTimeCutoffPercentage;
+    const videoWatchTimeCutoffPercentage = 60;
     const oneSecWatchPercentage = 100 / totalDurationInSec;
 
     // get the total duration of the video
