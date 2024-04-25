@@ -332,7 +332,7 @@ const UserQuiz = () => {
                     : `Note: You need to score atleast ${vars.quiz.CUT_OFF_IN_PERCENT}% to pass the quiz.`}
             </h5>
             {hasPassedQuiz && (
-                <div className="flex gap-12">
+                <div className="flex gap-12 max-md:flex-col">
                     <button
                         className="px-10 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase font-semibold mx-auto text-sm"
                         onClick={refreshScreen}
