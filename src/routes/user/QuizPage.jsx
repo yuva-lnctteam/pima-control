@@ -259,7 +259,7 @@ const UserQuiz = () => {
     }
 
     const instructionsElement = (
-        <div className="max-md:relative fixed right-0 md:px-pima-x pb-pima-y md:w-[40%] flex flex-col gap-10">
+        <div className="max-md:relative fixed right-0 md:px-pima-x pb-pima-y md:w-[40%] flex flex-col gap-10 overflow-y-scroll max-md:h-[80vh]">
             <div className="">
                 <div className="flex justify-between items-center gap-6">
                     <h2 className=" font-extrabold text-3xl">Instructions</h2>
@@ -283,12 +283,11 @@ const UserQuiz = () => {
                         <p className="">Duration: {quiz.length * 2} mins</p>
                     )}
                 </div>
-
                 <ul className="mt-8 flex flex-col gap-4">
                     {generateQuizInstructions(quiz.length).map(
                         (instruction, index) => {
                             return (
-                                <li className="font-medium " key={index}>
+                                <li className="font-medium" key={index}>
                                     <span className="">{index + 1}. </span>
                                     {instruction}
                                 </li>

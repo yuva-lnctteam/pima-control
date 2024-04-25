@@ -102,6 +102,8 @@ const UnitsPage = () => {
         setToDeleteUnitId(e.target.id);
     }
 
+    console.log(toDeleteUnitId)
+
     async function handleDeleteUnit() {
         const { verticalId, courseId } = params;
         const unitId = toDeleteUnitId;
