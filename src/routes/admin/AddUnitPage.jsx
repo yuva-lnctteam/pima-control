@@ -29,7 +29,7 @@ const AdminAddUnit = () => {
                 quiz: quizArr,
             };
             let formData = new FormData();
-            formData.append("userImg", unitImg);
+            formData.append("unitImg", unitImg);
             formData.append("unit", JSON.stringify(unit));
 
             const response = await fetch(
@@ -211,7 +211,7 @@ const AdminAddUnit = () => {
                             onChange={handleUnitImgChange}
                             className="border"
                             type="file"
-                            name=""
+                            name="unitImg"
                             id=""
                         />
                     </form>
