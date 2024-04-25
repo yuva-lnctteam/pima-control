@@ -28,19 +28,17 @@ const AdminAddUnit = () => {
                 video: unitDet,
                 quiz: quizArr,
             };
-            let formData = new FormData();
-            formData.append("unitImg", unitImg);
-            formData.append("unit", JSON.stringify(unit));
 
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/add`,
                 {
                     method: "POST",
                     headers: {
+                        "Content-Type": "application/json",
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
-                    body: formData,
+                    body: JSON.stringify(unit),
                 }
             );
 
