@@ -153,6 +153,7 @@ const AdminAddUnit = () => {
                     toast.error(result.statusText);
                 }
             } else if (response.ok && response.status === 200) {
+                console.log(response);
                 return result;
             } else {
                 // for future

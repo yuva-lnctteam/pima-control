@@ -31,6 +31,7 @@ const UserSingleUnit = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [videoInfo, setVideoInfo] = useState({});
+    const [quizAvailable, setQuizAvailable] = useState(false);
 
     const navigate = useNavigate();
     const params = useParams();
@@ -73,12 +74,22 @@ const UserSingleUnit = () => {
                     console.log("*************", result);
                     setUnit(result.unit);
                     setVideoInfo(result.unit.video);
+                    setQuizAvailable((result.unit.quiz?.length > 0));
                     setIsQuizBtnDisabled(!result.isEligibleToTakeQuiz);
                     setStoredWatchPercentage(result.storedWatchPercentage);
                     setVideoWatchTimeCutoffPercentage(
                         result.videoWatchTimeCutoffPercentage
                     );
                     setPdf(result.unit.pdf.url);
+
+                    if (
+                        result.storedWatchPercentage >=
+                        result.videoWatchTimeCutoffPercentage
+                    ) {
+                        setIsQuizBtnDisabled((prev) => false);
+                    } else {
+                        setIsQuizBtnDisabled((prev) => true);
+                    }
                     // setCourseInfo(result.courseInfo);
                     // setUserInfo(result.userInfo);
 
@@ -100,7 +111,9 @@ const UserSingleUnit = () => {
     }, []);
 
     function handleChangeQuizState() {
-        setIsQuizBtnDisabled((prev) => !prev);
+        if (storedWatchPercentage < videoWatchTimeCutoffPercentage) {
+            setIsQuizBtnDisabled((prev) => false);
+        }
     }
 
     function handleOpenQuizClick() {
@@ -129,7 +142,7 @@ const UserSingleUnit = () => {
                     <p className="font-light text-justify overflow-y-scroll h-[500px] max-md:max-h-[500px] overflow-hidden">
                         {videoInfo.desc}
                     </p>
-                    <button
+                    {quizAvailable && <button
                         onClick={handleOpenQuizClick}
                         className={`rounded-[5px] flex uppercase  font-medium self-end underline underline-offset-2
                         ${
@@ -140,7 +153,7 @@ const UserSingleUnit = () => {
                         disabled={videoInfo.vdoSrc && isQuizBtnDisabled}
                     >
                         Take Quiz →
-                    </button>
+                    </button>}
                 </div>
                 <div className="flex flex-col w-1/2 max-lg:w-full gap-8">
                     {videoInfo.vdoSrc ? (
@@ -160,6 +173,7 @@ const UserSingleUnit = () => {
 
                     {pdf !== null && (
                         <a
+                            rel="noreferrer"
                             href={pdf}
                             className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
                             target="_blank"
