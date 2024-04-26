@@ -139,7 +139,7 @@ const UserSingleUnit = () => {
             </h1>
             <div className="flex max-lg:flex-col-reverse w-full justify-between gap-10">
                 <div className="flex w-1/2 max-lg:w-full flex-col gap-10">
-                    <p className="font-light text-justify overflow-y-scroll h-[500px] max-md:max-h-[500px] overflow-hidden">
+                    <p className="font-light text-justify overflow-y-scroll h-[500px] max-md:max-h-[500px] overflow-hidden pr-4">
                         {videoInfo.desc}
                     </p>
                     {quizAvailable && <button

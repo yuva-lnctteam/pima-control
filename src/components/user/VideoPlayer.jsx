@@ -22,14 +22,10 @@ import "../../css/user/react-player.css";
 
 const VideoPlayer = (props) => {
     useEffect(() => {
-        toast('Please "pause" the video frequently to "save your progress"');
         toast(
-            `Note: You need to watch atleast ${vars.video.MIN_WATCH_TIME_IN_PERCENT}% of the video to unlock the quiz. (Kindly refresh the page after watching video to unlock the quiz.)`,
+            `Note: You need to watch atleast ${vars.video.MIN_WATCH_TIME_IN_PERCENT}% of the video to unlock the quiz. \n\nPlease "pause" the video frequently to "save your progress"`,
             { duration: 6000 }
         );
-        //  return () => {
-        //     ();
-        //  }
     }, []);
 
     const params = useParams();
