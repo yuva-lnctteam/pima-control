@@ -105,7 +105,7 @@ const AdminAddUnit = () => {
                     vdoSrc: null,
                     desc: "",
                 });
-                // navigate(-1);
+                navigate(-1);
                 setUnitDet({
                     title: "",
                     vdoSrc: null,
