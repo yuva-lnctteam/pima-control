@@ -259,7 +259,7 @@ const UserQuiz = () => {
     }
 
     const instructionsElement = (
-        <div className="max-md:relative fixed right-0 px-4 lg:px-pima-x pb-pima-y md:w-[40%] flex flex-col gap-10 max-lg:overflow-y-scroll max-lg:h-[80vh] max-md:h-fit max-md:overflow-auto">
+        <div className="max-md:relative fixed right-0 md:px-pima-x pb-pima-y md:w-[40%] flex flex-col gap-6 max-md:overflow-y-scroll max-lg:h-[80vh] max-md:h-fit">
             <div className="">
                 <div className="flex justify-between items-center gap-6">
                     <h2 className=" font-extrabold text-3xl">Instructions</h2>
@@ -280,10 +280,12 @@ const UserQuiz = () => {
                             </strong>
                         </div>
                     ) : (
-                        <p className="">Duration: {quiz.length * 2} mins</p>
+                        <p className="texxt-sm">
+                            Duration: {quiz.length * 2} mins
+                        </p>
                     )}
                 </div>
-                <ul className="mt-8 flex flex-col gap-4">
+                <ul className="mt-4 flex flex-col gap-2 text-sm">
                     {generateQuizInstructions(quiz.length).map(
                         (instruction, index) => {
                             return (
@@ -296,8 +298,8 @@ const UserQuiz = () => {
                     )}
                 </ul>
             </div>
-            <div className="h-[1px] w-full bg-stone-400"></div>
-            <div className="flex flex-col items-center">
+            <div className="h-[1px] w-full bg-stone-400 -mt-2"></div>
+            <div className="flex flex-col items-center gap-2 -mt-4">
                 {storedQuizScore === -1 ? (
                     <p>You never took this quiz before</p>
                 ) : (
@@ -308,7 +310,7 @@ const UserQuiz = () => {
                 )}
                 {!showQuiz && (
                     <button
-                        className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2 mt-4"
+                        className="px-10 bg-pima-gray text-white rounded-[5px] flex w-fit py-2"
                         onClick={handleStartQuizClick}
                         disabled={!isEligibleToTakeQuiz ? true : false}
                     >
