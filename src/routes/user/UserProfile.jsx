@@ -131,78 +131,57 @@ const UserProfile = () => {
                                 <h1 className="text-2xl font-bold text-center mb-4">
                                     User Progress
                                 </h1>
-                                {verticalData
-                                    .filter(
-                                        (each) => each.verticalData !== null
-                                    )
-                                    .map((vertical, index) => (
-                                        <div
-                                            className="flex flex-col"
-                                            key={index}
-                                        >
-                                            <h1>
-                                                <span className="uppercase font-bold">
-                                                    Vertical:
-                                                </span>{" "}
-                                                {vertical?.verticalData?.name}
-                                            </h1>
+                                {verticalData.map((vertical, index) => (
+                                    <div className="flex flex-col" key={index}>
+                                        <h1>
+                                            <span className="uppercase font-bold">
+                                                Vertical:
+                                            </span>{" "}
+                                            {vertical?.verticalData?.name}
+                                        </h1>
 
-                                            <div className="ml-8">
-                                                {vertical?.coursesData
-                                                    .filter(
-                                                        (each) =>
-                                                            each.courseData !==
-                                                            null
-                                                    )
-                                                    .map((course, index) => (
-                                                        <div key={index}>
-                                                            <h1>
-                                                                {" "}
-                                                                <span className="uppercase font-bold">
-                                                                    Course:
-                                                                </span>{" "}
-                                                                {
-                                                                    course
-                                                                        ?.courseData
-                                                                        ?.name
-                                                                }
-                                                            </h1>
-                                                            <div className="ml-8">
-                                                                {course?.courseData?.unitArr
-                                                                    .filter(
-                                                                        (
-                                                                            each
-                                                                        ) =>
-                                                                            each.unitsData !==
-                                                                            null
-                                                                    )
-                                                                    .map(
-                                                                        (
-                                                                            unit,
+                                        <div className="ml-8">
+                                            {vertical?.coursesData.map(
+                                                (course, index) => (
+                                                    <div key={index}>
+                                                        <h1>
+                                                            {" "}
+                                                            <span className="uppercase font-bold">
+                                                                Course:
+                                                            </span>{" "}
+                                                            {
+                                                                course
+                                                                    ?.courseData
+                                                                    ?.name
+                                                            }
+                                                        </h1>
+                                                        <div className="ml-8">
+                                                            {course?.unitsData?.map(
+                                                                (
+                                                                    unit,
+                                                                    index
+                                                                ) => (
+                                                                    <div
+                                                                        key={
                                                                             index
-                                                                        ) => (
-                                                                            <div
-                                                                                key={
-                                                                                    index
-                                                                                }
-                                                                            >
-                                                                                <span className="uppercase font-bold">
-                                                                                    Unit:
-                                                                                </span>{" "}
-                                                                                {
-                                                                                    unit
-                                                                                        .video
-                                                                                        .title
-                                                                                }
-                                                                            </div>
-                                                                        )
-                                                                    )}
-                                                            </div>
+                                                                        }
+                                                                    >
+                                                                        <span className="uppercase font-bold">
+                                                                            Unit:
+                                                                        </span>{" "}
+                                                                        {
+                                                                            unit.name
+                                                                        }
+                                                                    </div>
+                                                                )
+                                                            )}
                                                         </div>
-                                                    ))}
-                                            </div>
+                                                    </div>
+                                                )
+                                            )}
                                         </div>
-                                    ))}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

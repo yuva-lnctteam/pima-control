@@ -343,11 +343,7 @@ const AdminUserPage = () => {
                                     <h1 className="text-2xl font-bold text-center mb-4">
                                         Vertical Details
                                     </h1>
-                                    {verticalData
-                                        .filter(
-                                            (each) => each.verticalData !== null
-                                        )
-                                        .map((vertical, index) => (
+                                    {verticalData.map((vertical, index) => (
                                             <div
                                                 className="flex flex-col"
                                                 key={index}
@@ -363,13 +359,7 @@ const AdminUserPage = () => {
                                                 </h1>
 
                                                 <div className="ml-8">
-                                                    {vertical?.coursesData
-                                                        .filter(
-                                                            (each) =>
-                                                                each.courseData !==
-                                                                null
-                                                        )
-                                                        .map(
+                                                    {vertical?.coursesData.map(
                                                             (course, index) => (
                                                                 <div
                                                                     key={index}
@@ -386,15 +376,7 @@ const AdminUserPage = () => {
                                                                         }
                                                                     </h1>
                                                                     <div className="ml-8">
-                                                                        {course?.courseData?.unitArr
-                                                                            .filter(
-                                                                                (
-                                                                                    each
-                                                                                ) =>
-                                                                                    each.unitsData !==
-                                                                                    null
-                                                                            )
-                                                                            .map(
+                                                                        {course?.unitsData?.map(
                                                                                 (
                                                                                     unit,
                                                                                     index
@@ -409,8 +391,7 @@ const AdminUserPage = () => {
                                                                                         </span>{" "}
                                                                                         {
                                                                                             unit
-                                                                                                .video
-                                                                                                .title
+                                                                                                .name
                                                                                         }
                                                                                     </div>
                                                                                 )
