@@ -74,7 +74,7 @@ const UserSingleUnit = () => {
                     console.log("*************", result);
                     setUnit(result.unit);
                     setVideoInfo(result.unit.video);
-                    setQuizAvailable((result.unit.quiz?.length > 0));
+                    setQuizAvailable(result.unit.quiz?.length > 0);
                     setIsQuizBtnDisabled(!result.isEligibleToTakeQuiz);
                     setStoredWatchPercentage(result.storedWatchPercentage);
                     setVideoWatchTimeCutoffPercentage(
@@ -142,18 +142,20 @@ const UserSingleUnit = () => {
                     <p className="font-light text-justify overflow-y-scroll h-[500px] max-md:max-h-[500px] overflow-hidden pr-4">
                         {videoInfo.desc}
                     </p>
-                    {quizAvailable && <button
-                        onClick={handleOpenQuizClick}
-                        className={`rounded-[5px] flex uppercase  font-medium self-end underline underline-offset-2
+                    {quizAvailable && (
+                        <button
+                            onClick={handleOpenQuizClick}
+                            className={`rounded-[5px] flex uppercase  font-medium self-end underline underline-offset-2
                         ${
                             videoInfo.vdoSrc && isQuizBtnDisabled
                                 ? " text-gray-500  cursor-not-allowed"
                                 : ""
                         }`}
-                        disabled={videoInfo.vdoSrc && isQuizBtnDisabled}
-                    >
-                        Take Quiz →
-                    </button>}
+                            disabled={videoInfo.vdoSrc && isQuizBtnDisabled}
+                        >
+                            Take Quiz →
+                        </button>
+                    )}
                 </div>
                 <div className="flex flex-col w-1/2 max-lg:w-full gap-8">
                     {videoInfo.vdoSrc ? (
@@ -178,7 +180,7 @@ const UserSingleUnit = () => {
                             className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
                             target="_blank"
                         >
-                            Open PDF
+                            Open Attached File
                         </a>
                     )}
                 </div>

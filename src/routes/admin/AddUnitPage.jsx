@@ -57,7 +57,8 @@ const AdminAddUnit = () => {
                 };
             }
 
-            console.log(unitDetails)
+            // console.log(unitDetails)
+            console.log("---------------", unitPdf);
 
             if (unitPdf) {
                 pdfResponse = await handlePdfUpload();
@@ -126,13 +127,16 @@ const AdminAddUnit = () => {
             const basicAuth = btoa(`${adminId}:${adminPassword}`);
 
             const formData = new FormData();
-            formData.append("pdf", unitPdf);
+            formData.append("file", unitPdf);
 
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/admin/auth/upload-pdf`,
                 {
                     method: "POST",
                     headers: {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                          },
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
@@ -277,11 +281,12 @@ const AdminAddUnit = () => {
                                 }}
                             />
                         </label>
+
                         <label
                             htmlFor="pdfFile"
                             className="text-sm text-stone-500 w-full"
                         >
-                            Import PDF
+                            Import File
                             <input
                                 onChange={handlePdfChange}
                                 className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-[5px] file:border-0 file:text-sm file:font-semibold file:bg-[#efefef] file:text-black hover:file:bg-stone-200 transition-all mt-1 cursor-pointer"
