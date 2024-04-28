@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 // My components
@@ -68,7 +68,7 @@ const HomePage = () => {
                         toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
-                    setProjectVerticals(result.allVerticals?.slice(0, 3));
+                    setProjectVerticals(result.allVerticals?.slice(0, 4));
                     setInitiativeVerticals(result.allVerticals?.slice(3));
                     // setAllVerticals(result.allVerticals);
                 } else {
@@ -112,9 +112,13 @@ const HomePage = () => {
             }
         } catch (error) {}
     }
+    function scrolldiv() {
+        var elem = document.getElementById("learn-policies");
+        elem.scrollIntoView();
+    }
 
     const element = (
-        <main className="mt-10 min-h-screen">
+        <main className="py-pima-y min-h-screen">
             <section className="flex flex-col">
                 <div className="flex flex-col md:flex-row px-pima-x max-sm:px-8 w-full items-center">
                     <div className="basis-1/2 md:w-2/5 flex flex-col gap-10 flex-1 mb-12">
@@ -128,7 +132,10 @@ const HomePage = () => {
                             problems, what Automation and Electrical solutions
                             can solve.
                         </p>
-                        <button className="px-10 bg-pima-red text-white rounded flex w-fit py-2">
+                        <button
+                            className="px-10 bg-pima-red text-white rounded flex w-fit py-2"
+                            onClick={scrolldiv}
+                        >
                             Explore Policies
                         </button>
                     </div>
@@ -170,7 +177,10 @@ const HomePage = () => {
                 </div>
             </section>
             {/* Verticals */}
-            <section className="px-pima-x max-sm:px-8 py-20 flex flex-col gap-14">
+            <section
+                id="learn-policies"
+                className="px-pima-x max-sm:px-8 py-20 flex flex-col gap-14"
+            >
                 <div className="flex flex-col">
                     <div className="mb-12">
                         <h2
@@ -193,8 +203,11 @@ const HomePage = () => {
                         ))}
                     </div>
                     {projectVerticals.length !== 0 && (
-                        <button className="text-sm text-pima-red font-semibold self-start mt-6 flex items-center gap-1 border-b-[2px] border-pima-red uppercase group transition-all">
-                            All Courses{" "}
+                        <Link
+                            to={"/user/verticals/all"}
+                            className="text-sm text-pima-red font-semibold self-start mt-6 flex items-center gap-1 border-b-[2px] border-pima-red uppercase group transition-all"
+                        >
+                            All Verticals{" "}
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -209,7 +222,7 @@ const HomePage = () => {
                                     d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
                                 />
                             </svg>
-                        </button>
+                        </Link>
                     )}
                 </div>
                 {/* <div className="flex flex-col">
