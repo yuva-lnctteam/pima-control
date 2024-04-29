@@ -79,7 +79,7 @@ const UserQuiz = () => {
                 );
 
                 const result = await response.json();
-                console.log(result);
+                // console.log(result);
                 // (result);
 
                 setIsLoading(false);
@@ -99,7 +99,7 @@ const UserQuiz = () => {
                         navigate("/user/resource-not-found");
                     }
 
-                    console.log(result.quiz);
+                    // console.log(result.quiz);
                     setQuiz(result.quiz);
                     setResponseQuiz(
                         result.quiz.map((question) => {
@@ -134,12 +134,12 @@ const UserQuiz = () => {
         }
 
         getQuiz();
-        console.log(quiz);
+        // console.log(quiz);
     }, []);
 
     useEffect(() => {}, [rerender]);
 
-    console.log(response);
+    // console.log(response);
     async function handleSubmitQuiz() {
         // calculating the result
         let correctRespCnt = 0; // count of correct responses
@@ -155,10 +155,10 @@ const UserQuiz = () => {
                 optIdx < quiz[quizItemIdx].opArr.length;
                 optIdx++
             ) {
-                console.log(
-                    ">>>>>>>>>>>>>",
-                    quiz[quizItemIdx].opArr[optIdx].isChecked
-                );
+                // console.log(
+                //     ">>>>>>>>>>>>>",
+                //     quiz[quizItemIdx].opArr[optIdx].isChecked
+                // );
                 isRespCorrect =
                     isRespCorrect &&
                     quiz[quizItemIdx].opArr[optIdx].isChecked ===

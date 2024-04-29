@@ -58,7 +58,7 @@ const AdminAddUnit = () => {
             }
 
             // console.log(unitDetails)
-            console.log("---------------", unitPdf);
+            // console.log("---------------", unitPdf);
 
             if (unitPdf) {
                 pdfResponse = await handlePdfUpload();
@@ -157,7 +157,7 @@ const AdminAddUnit = () => {
                     toast.error(result.statusText);
                 }
             } else if (response.ok && response.status === 200) {
-                console.log(response);
+                // console.log(response);
                 return result;
             } else {
                 // for future

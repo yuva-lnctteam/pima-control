@@ -1,5 +1,4 @@
 function Card(props) {
-    console.log(props);
     return (
         <div className="admin-card rounded-[5px] border flex flex-col relative">
             <div className="flex flex-col gap-5 bg-pima-red text-white rounded-t-[5px] h-[200px]">

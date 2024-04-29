@@ -71,7 +71,7 @@ const UserSingleUnit = () => {
                         toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
-                    console.log("*************", result);
+                    // console.log("*************", result);
                     setUnit(result.unit);
                     setVideoInfo(result.unit.video);
                     setQuizAvailable(result.unit.quiz?.length > 0);

@@ -148,7 +148,7 @@ const AdminUserPage = () => {
         getUser();
     }, [userId, navigate]);
 
-    console.log(user);
+    // console.log(user);
 
     return (
         <>

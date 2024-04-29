@@ -1,7 +1,6 @@
 import React from "react";
 
 function Card(props) {
-    console.log(props);
     return (
         <div className="cardDiv flex rounded-[5px] h-[200px] card-shadow min-w-[200px] max-sm:flex-col max-sm:h-fit transition-all duration-150 border-[1px]">
             <div className="bg-pima-red text-white flex flex-col rounded-l-[5px] w-[220px] gap-4 max-sm:w-full max-sm:h-[140px] grad relative">

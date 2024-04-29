@@ -48,10 +48,10 @@ const UserProfile = () => {
                 } else if (response.ok && response.status === 200) {
                     setUser(result?.data?.user);
                     setVerticalData(result?.data.allVerticalsData);
-                    console.log(
-                        "---------------------",
-                        result?.data.allVerticalsData
-                    );
+                    // console.log(
+                    //     "---------------------",
+                    //     result?.data.allVerticalsData
+                    // );
                     setIsLoading(false);
                 } else {
                     // for future
