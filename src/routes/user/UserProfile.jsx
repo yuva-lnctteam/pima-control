@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/common/Loader";
 import { SERVER_ORIGIN, validation } from "../../utilities/constants";
 import toast from "react-hot-toast";
+import { PencilIcon } from "@heroicons/react/24/solid";
 
 function capitalizeFirstLetter(str) {
     return str?.charAt(0).toUpperCase() + str?.substr(1);
@@ -24,6 +25,7 @@ const UserProfile = () => {
     useEffect(() => {
         async function getUser() {
             try {
+                setIsLoading(true);
                 const userId = process.env.REACT_APP_USER_ID;
                 const userPassword = process.env.REACT_APP_USER_PASSWORD;
                 const basicAuth = btoa(`${userId}:${userPassword}`);
@@ -73,19 +75,32 @@ const UserProfile = () => {
                     className={`p-6 md:px-pima-x md:py-pima-y flex flex-col gap-10`}
                 >
                     <div className="w-full relative">
-                        <div className="flex gap-4 mb-6 items-center">
-                            <img
-                                src={
-                                    user?.image?.src ||
-                                    "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+                        <div className="flex gap-4 mb-6 justify-between items-center">
+                            <div className="flex gap-4 items-center">
+                                <div className="relative cursor-pointer group">
+                                    <img
+                                        src={
+                                            user?.image?.src ||
+                                            "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+                                        }
+                                        className="w-[60px] h-[60x] border rounded-full group-hover:brightness-50"
+                                        alt=""
+                                    />
+                                    <PencilIcon className="w-5 h-5 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white hidden group-hover:block" />
+                                </div>
+                                <h1 className="text-3xl font-extrabold">
+                                    {capitalizeFirstLetter(user?.fName)}{" "}
+                                    {capitalizeFirstLetter(user?.lName)}
+                                </h1>
+                            </div>
+                            <button
+                                className="px-8 border-2 bg-pima-gray text-center hover:bg-white hover:text-pima-gray hover:border-2 border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
+                                onClick={() =>
+                                    navigate("/user/profile/update-user")
                                 }
-                                className="w-[60px] h-[60x] border rounded-full"
-                                alt=""
-                            />
-                            <h1 className="text-3xl font-extrabold">
-                                {capitalizeFirstLetter(user?.fName)}{" "}
-                                {capitalizeFirstLetter(user?.lName)}
-                            </h1>
+                            >
+                                Edit Profile
+                            </button>
                         </div>
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col gap-3 border p-6 rounded-[5px]">
@@ -123,6 +138,15 @@ const UserProfile = () => {
                                     </span>
                                     <span className=" text-[#434343] break-words">
                                         {user?.phone}
+                                    </span>
+                                </div>
+                                <div className="bg-[#e4e4e4] w-full h-[1px]"></div>
+                                <div className="flex justify-between md:flex-row flex-col md:gap-4">
+                                    <span className="font-semibold">
+                                        Job Position
+                                    </span>
+                                    <span className=" text-[#434343] break-words">
+                                        {user?.jobPosition}
                                     </span>
                                 </div>
                             </div>

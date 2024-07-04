@@ -35,6 +35,7 @@ import "./App.css";
 import AdminUserPage from "./routes/admin/AdminUserPage.jsx";
 import AdminCreateUser from "./routes/admin/AdminCreateUser.jsx";
 import UserProfile from "./routes/user/UserProfile.jsx";
+import UpdateUser from "./routes/user/UpdateUser.jsx";
 
 function App() {
     return (
@@ -123,6 +124,16 @@ function App() {
                             <>
                                 <UserNavbar />
                                 <UserProfile />
+                            </>
+                        }
+                    />
+                    <Route
+                        exact
+                        path="/user/profile/update-user"
+                        element={
+                            <>
+                                <UserNavbar />
+                                <UpdateUser />
                             </>
                         }
                     />

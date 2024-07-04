@@ -1,5 +1,4 @@
-const SERVER_ORIGIN =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+const SERVER_ORIGIN = "http://localhost:4000";
 // const SERVER_ORIGIN = "https://yuva-portal-server-1.onrender.com";
 // const SERVER_ORIGIN = process.env.REACT_APP_API_URL;
 // const SERVER_ORIGIN = "https://api.yuvaportal.online";

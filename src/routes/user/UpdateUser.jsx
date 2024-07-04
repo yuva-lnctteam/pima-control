@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SERVER_ORIGIN } from "../../utilities/constants";
 import toast from "react-hot-toast";
 
-const AdminCreateUser = () => {
+const UpdateUser = () => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -14,15 +14,7 @@ const AdminCreateUser = () => {
         phone: "",
         jobPosition: "",
         userId: "",
-        userImg: null,
     });
-
-    function handleUserImgChange(e) {
-        setUser((prevState) => ({
-            ...prevState,
-            userImg: e.target.files[0],
-        }));
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -60,9 +52,10 @@ const AdminCreateUser = () => {
         setIsLoading(true);
 
         try {
-            const adminId = process.env.REACT_APP_ADMIN_ID;
-            const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
-            const basicAuth = btoa(`${adminId}:${adminPassword}`);
+            setIsLoading(true);
+            const userId = process.env.REACT_APP_USER_ID;
+            const userPassword = process.env.REACT_APP_USER_PASSWORD;
+            const basicAuth = btoa(`${userId}:${userPassword}`);
 
             let modifiedUser = {
                 email: user.email.toLowerCase(),
@@ -82,12 +75,11 @@ const AdminCreateUser = () => {
             formData.append("userId", user.userId);
             formData.append("fName", user.fullName.split(" ")[0]);
             formData.append("lName", user.fullName.split(" ")?.[1] || "");
-            formData.append("userImg", user.userImg);
 
             const response = await fetch(
-                `${SERVER_ORIGIN}/api/admin/auth/register-user`,
+                `${SERVER_ORIGIN}/api/user/auth/update-user`,
                 {
-                    method: "POST",
+                    method: "PUT",
                     headers: {
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
@@ -104,7 +96,8 @@ const AdminCreateUser = () => {
                     navigate("/admin/login");
                 }
             } else if (response.ok && response.status === 200) {
-                navigate("/admin/manage-users");
+                navigate("/user/profile");
+                toast.success("User updated successfully");
             } else {
                 // for future
             }
@@ -117,9 +110,59 @@ const AdminCreateUser = () => {
         }
     };
 
+    useEffect(() => {
+        async function getUser() {
+            try {
+                setIsLoading(true);
+                const userId = process.env.REACT_APP_USER_ID;
+                const userPassword = process.env.REACT_APP_USER_PASSWORD;
+                const basicAuth = btoa(`${userId}:${userPassword}`);
+                const response = await fetch(
+                    `${SERVER_ORIGIN}/api/user/auth/profile`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Basic ${basicAuth}`, // Include Basic Authentication
+                            "auth-token": localStorage.getItem("token"),
+                        },
+                    }
+                );
+                const result = await response.json();
+                if (response.status >= 400 && response.status < 600) {
+                    if (response.status === 401) {
+                        navigate("/admin/login");
+                    } else if (response.status === 500) {
+                        toast.error(result.statusText);
+                    }
+                } else if (response.ok && response.status === 200) {
+                    console.log(result.data.user);
+                    setUser({
+                        fullName:
+                            result?.data?.user?.fName +
+                            " " +
+                            result?.data?.user?.lName,
+                        email: result?.data?.user?.email,
+                        password: result?.data?.user?.password,
+                        phone: result?.data?.user?.phone,
+                        jobPosition: result?.data?.user?.jobPosition,
+                        userId: result?.data?.user?.userId,
+                    });
+                    setIsLoading(false);
+                } else {
+                    // for future
+                }
+            } catch (err) {
+                // (err.message);
+                setIsLoading(false);
+            }
+        }
+        getUser();
+    }, [navigate]);
+
     return (
         <div className="py-pima-y create-user flex flex-col gap-6 w-full justify-center mt-14 px-14 lg:px-pima-x">
-            <h3 className="text-5xl font-extrabold text-center">Create User</h3>
+            <h3 className="text-5xl font-extrabold text-center">Update User</h3>
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-6 justify-center"
@@ -161,7 +204,7 @@ const AdminCreateUser = () => {
                         }
                     />
                     <input
-                        type="password"
+                        type="text"
                         placeholder="Password"
                         value={user.password}
                         onChange={(e) =>
@@ -196,32 +239,21 @@ const AdminCreateUser = () => {
                         }
                     />
                 </div>
-                <div className="flex gap-4 items-center">
-                    <span className="text-[#5a5a5a]">Profile Photo</span>
-                    <input
-                        className="text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-[5px] file:border-0 file:text-sm file:font-semibold file:bg-[#efefef] file:text-black hover:file:bg-stone-200 transition-all"
-                        onChange={handleUserImgChange}
-                        type="file"
-                        name=""
-                        id=""
-                        placeholder="Upload Image"
-                    />
-                </div>
                 <button
                     disabled={isLoading}
                     type="submit"
                     className={`px-10 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase font-semibold mx-auto text-sm`}
                 >
-                    {isLoading ? "Registering User" : "Register User"}
-                    {isLoading && (
+                    {isLoading ? "Updating User" : "Update User"}
+                    {/* {isLoading && (
                         <div className="ml-2">
                             <div className="loader"></div>
                         </div>
-                    )}
+                    )} */}
                 </button>
             </form>
         </div>
     );
 };
 
-export default AdminCreateUser;
+export default UpdateUser;

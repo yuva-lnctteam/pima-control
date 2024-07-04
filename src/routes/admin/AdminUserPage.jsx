@@ -110,6 +110,7 @@ const AdminUserPage = () => {
     useEffect(() => {
         async function getUser() {
             try {
+                setIsLoading(true);
                 const adminId = process.env.REACT_APP_ADMIN_ID;
                 const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
                 const basicAuth = btoa(`${adminId}:${adminPassword}`);
@@ -344,65 +345,59 @@ const AdminUserPage = () => {
                                         Vertical Details
                                     </h1>
                                     {verticalData.map((vertical, index) => (
-                                            <div
-                                                className="flex flex-col"
-                                                key={index}
-                                            >
-                                                <h1>
-                                                    <span className="uppercase font-bold">
-                                                        Vertical:
-                                                    </span>{" "}
-                                                    {
-                                                        vertical?.verticalData
-                                                            ?.name
-                                                    }
-                                                </h1>
+                                        <div
+                                            className="flex flex-col"
+                                            key={index}
+                                        >
+                                            <h1>
+                                                <span className="uppercase font-bold">
+                                                    Vertical:
+                                                </span>{" "}
+                                                {vertical?.verticalData?.name}
+                                            </h1>
 
-                                                <div className="ml-8">
-                                                    {vertical?.coursesData.map(
-                                                            (course, index) => (
-                                                                <div
-                                                                    key={index}
-                                                                >
-                                                                    <h1>
-                                                                        {" "}
-                                                                        <span className="uppercase font-bold">
-                                                                            Course:
-                                                                        </span>{" "}
-                                                                        {
-                                                                            course
-                                                                                ?.courseData
-                                                                                ?.name
-                                                                        }
-                                                                    </h1>
-                                                                    <div className="ml-8">
-                                                                        {course?.unitsData?.map(
-                                                                                (
-                                                                                    unit,
-                                                                                    index
-                                                                                ) => (
-                                                                                    <div
-                                                                                        key={
-                                                                                            index
-                                                                                        }
-                                                                                    >
-                                                                                        <span className="uppercase font-bold">
-                                                                                            Unit:
-                                                                                        </span>{" "}
-                                                                                        {
-                                                                                            unit
-                                                                                                .name
-                                                                                        }
-                                                                                    </div>
-                                                                                )
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                            )
-                                                        )}
-                                                </div>
+                                            <div className="ml-8">
+                                                {vertical?.coursesData.map(
+                                                    (course, index) => (
+                                                        <div key={index}>
+                                                            <h1>
+                                                                {" "}
+                                                                <span className="uppercase font-bold">
+                                                                    Course:
+                                                                </span>{" "}
+                                                                {
+                                                                    course
+                                                                        ?.courseData
+                                                                        ?.name
+                                                                }
+                                                            </h1>
+                                                            <div className="ml-8">
+                                                                {course?.unitsData?.map(
+                                                                    (
+                                                                        unit,
+                                                                        index
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                        >
+                                                                            <span className="uppercase font-bold">
+                                                                                Unit:
+                                                                            </span>{" "}
+                                                                            {
+                                                                                unit.name
+                                                                            }
+                                                                        </div>
+                                                                    )
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                )}
                                             </div>
-                                        ))}
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
