@@ -16,11 +16,64 @@ const UserProfile = () => {
     const { userId } = params;
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState(null);
+    const [userImg, setUserImg] = useState(null);
     const [verticalData, setVerticalData] = useState([]);
 
     for (let i = 0; i < verticalData.length; i++) {
         for (let j = 0; j < verticalData[i].coursesData.length; j++) {}
     }
+
+    function handleUserImgChange(e) {
+        setUserImg(URL.createObjectURL(e.target.files[0]));
+        setUser((prevState) => ({
+            ...prevState,
+            userImg: e.target.files[0],
+        }));
+    }
+
+    const handleProfilePhotoChange = async (e) => {
+        e.preventDefault();
+
+        try {
+            const userId = process.env.REACT_APP_USER_ID;
+            const userPassword = process.env.REACT_APP_USER_PASSWORD;
+            const basicAuth = btoa(`${userId}:${userPassword}`);
+
+            let formData = new FormData();
+            formData.append("userImg", user.userImg);
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/user/auth/edit-profile-pic`,
+                {
+                    method: "POST",
+                    headers: {
+                        "auth-token": localStorage.getItem("token"),
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                    body: formData,
+                }
+            );
+
+            const result = await response.json();
+            // (result);
+
+            if (response.status >= 400 && response.status < 600) {
+                if (response.status === 401) {
+                    navigate("/admin/login");
+                }
+            } else if (response.ok && response.status === 200) {
+                toast.success("Profile Photo Updated Successfully");
+                window.location.reload();
+            } else {
+                // for future
+            }
+
+            setIsLoading(false);
+        } catch (err) {
+            // (err.message);
+            // console.log(err.message);
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
         async function getUser() {
@@ -77,17 +130,36 @@ const UserProfile = () => {
                     <div className="w-full relative">
                         <div className="flex gap-4 mb-6 justify-between items-center">
                             <div className="flex gap-4 items-center">
-                                <div className="relative cursor-pointer group">
-                                    <img
-                                        src={
-                                            user?.image?.src ||
-                                            "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
-                                        }
-                                        className="w-[60px] h-[60x] border rounded-full group-hover:brightness-50"
-                                        alt=""
-                                    />
-                                    <PencilIcon className="w-5 h-5 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white hidden group-hover:block" />
-                                </div>
+                                <label htmlFor="upload">
+                                    <div className="relative cursor-pointer group">
+                                        <img
+                                            src={
+                                                userImg ||
+                                                user?.image?.src ||
+                                                "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+                                            }
+                                            className="w-[60px] h-[60px] border rounded-full group-hover:brightness-50 object-cover"
+                                            alt=""
+                                        />
+                                        <PencilIcon className="w-5 h-5 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white hidden group-hover:block" />
+                                        <input
+                                            className="text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-[5px] file:border-0 file:text-sm file:font-semibold file:bg-[#efefef] file:text-black hover:file:bg-stone-200 transition-all hidden"
+                                            onChange={handleUserImgChange}
+                                            type="file"
+                                            name=""
+                                            id="upload"
+                                            placeholder="Upload Image"
+                                        />
+                                    </div>
+                                </label>
+                                {userImg && (
+                                    <button
+                                        className="px-8 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase text-sm font-medium"
+                                        onClick={handleProfilePhotoChange}
+                                    >
+                                        Save
+                                    </button>
+                                )}
                                 <h1 className="text-3xl font-extrabold">
                                     {capitalizeFirstLetter(user?.fName)}{" "}
                                     {capitalizeFirstLetter(user?.lName)}

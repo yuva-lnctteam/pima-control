@@ -57,9 +57,8 @@ const AdminCreateUser = () => {
             return;
         }
 
-        setIsLoading(true);
-
         try {
+            setIsLoading(true);
             const adminId = process.env.REACT_APP_ADMIN_ID;
             const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
             const basicAuth = btoa(`${adminId}:${adminPassword}`);
