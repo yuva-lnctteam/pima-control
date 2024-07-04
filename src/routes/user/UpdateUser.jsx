@@ -75,16 +75,19 @@ const UpdateUser = () => {
             formData.append("userId", user.userId);
             formData.append("fName", user.fullName.split(" ")[0]);
             formData.append("lName", user.fullName.split(" ")?.[1] || "");
+            
+            console.log(modifiedUser);
 
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/user/auth/update-user`,
                 {
-                    method: "PUT",
+                    method: "POST",
+                    body: JSON.stringify(modifiedUser),
                     headers: {
+                        'Content-Type': 'application/json',
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
-                    body: formData,
                 }
             );
 
