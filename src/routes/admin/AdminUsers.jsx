@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-
+import { refreshScreen } from "../../utilities/helper_functions";
 import Loader from "../../components/common/Loader";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
@@ -15,8 +15,9 @@ function capitalizeFirstLetter(str) {
 
 const AdminUsers = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [suspendLoading, setSuspendLoading] = useState(false);
+    const [suspendActiveUserId, setSuspendActiveUserId] = useState(null);
     const [allUsers, setAllUsers] = useState([]);
-
     const [page, setPage] = useState(1);
     const [sortType, setSortType] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
@@ -80,6 +81,42 @@ const AdminUsers = () => {
         getAllUsers();
     }, [page, sortType, searchQuery, navigate]);
 
+    const handleSuspendAccount = async (userId) => {
+        try {
+            setSuspendLoading(true);
+            const adminId = process.env.REACT_APP_ADMIN_ID;
+            const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+            const basicAuth = btoa(`${adminId}:${adminPassword}`);
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/admin/auth/users/${userId}/toggle-suspend-user`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Basic ${basicAuth}`, // Include Basic Authentication
+                        "auth-token": localStorage.getItem("token"),
+                    },
+                }
+            );
+
+            const result = await response.json();
+
+            if (response.status >= 400 && response.status < 600) {
+                if (response.status === 401) {
+                    navigate("/admin/login");
+                } else if (response.status === 500) {
+                    toast.error(result.statusText);
+                }
+            } else if (response.ok && response.status === 200) {
+                refreshScreen();
+            } else {
+                // for future
+            }
+        } catch (err) {
+            // for future
+        }
+    };
+
     return (
         <div className="px-pima-x py-pima-y flex flex-col gap-8 max-md:px-10">
             <h1 className="text-4xl font-extrabold">Manage Users</h1>
@@ -124,9 +161,10 @@ const AdminUsers = () => {
                                     <th>Email</th>
                                     <th>Mobile no.</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
-                            <tbody className="w-full">
+                            <tbody className="w-full ">
                                 {allUsers?.map((user, idx) => (
                                     <tr key={user?._id}>
                                         <td>
@@ -151,6 +189,47 @@ const AdminUsers = () => {
                                             >
                                                 View Details
                                             </button>
+                                        </td>
+                                        <td>
+                                            {user?.isSuspended ? (
+                                                <button
+                                                    className="border-2 border-pima-red bg-pima-red py-1.5 px-4 rounded-[5px] text-white text-xs uppercase font-medium transition-all"
+                                                    onClick={() => {
+                                                        handleSuspendAccount(
+                                                            user?.userId
+                                                        );
+                                                        setSuspendActiveUserId(
+                                                            user?.userId
+                                                        );
+                                                    }}
+                                                    name={user?.userId}
+                                                    id={user?.userId}
+                                                >
+                                                    {suspendLoading &&
+                                                    suspendActiveUserId ===
+                                                        user?.userId
+                                                        ? "UnSuspending..."
+                                                        : "Unsuspend"}
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    className="border-2 border-pima-red py-1.5 px-4 rounded-[5px] text-pima-red text-xs uppercase font-medium hover:bg-pima-red hover:text-white transition-all"
+                                                    onClick={() => {
+                                                        handleSuspendAccount(
+                                                            user?.userId
+                                                        );
+                                                        setSuspendActiveUserId(
+                                                            user?.userId
+                                                        );
+                                                    }}
+                                                >
+                                                    {suspendLoading &&
+                                                    suspendActiveUserId ===
+                                                        user?.userId
+                                                        ? "Suspending..."
+                                                        : "Suspend"}
+                                                </button>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
