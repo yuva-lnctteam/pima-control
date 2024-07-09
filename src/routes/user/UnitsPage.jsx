@@ -83,37 +83,50 @@ const UserUnits = () => {
     const loader = <Loader />;
 
     const element = (
-        <div className="px-10 md:px-pima-x py-pima-y flex flex-col gap-10 mt-8">
-            <h2
-                className="text-4xl font-extrabold underline-offset-[10px] underline leading-relaxed"
-                style={{
-                    textDecorationColor: "#ed3237",
-                }}
-            >
-                Units
-            </h2>
-            <CardGrid>
-                {allUnits.length > 0 ? (
-                    allUnits.map((unit) => {
-                        const vdoThumbnail = getVideoThumbnail(
-                            unit.video.vdoSrc
-                        );
-                        unit.vdoThumbnail = vdoThumbnail;
+        <div className="px-10 md:px-pima-x py-pima-y flex flex-col gap-14 mt-8">
+            <div className="flex flex-col gap-6">
+                <h2
+                    className="text-4xl font-extrabold underline-offset-[10px] underline leading-relaxed"
+                    style={{
+                        textDecorationColor: "#ed3237",
+                    }}
+                >
+                    {courseInfo.name}
+                </h2>
+                <p className="text-sm text-stone-600">{courseInfo.desc}</p>
+            </div>
+            <div className="flex flex-col gap-6">
+                <h3
+                    className="text-2xl font-extrabold"
+                    style={{
+                        textDecorationColor: "#ed3237",
+                    }}
+                >
+                    Units
+                </h3>
+                <CardGrid>
+                    {allUnits.length > 0 ? (
+                        allUnits.map((unit) => {
+                            const vdoThumbnail = getVideoThumbnail(
+                                unit.video.vdoSrc
+                            );
+                            unit.vdoThumbnail = vdoThumbnail;
 
-                        return (
-                            <div key={unit._id}>
-                                <Card
-                                    data={unit}
-                                    type="unit"
-                                    onClick={handleViewUnit}
-                                />
-                            </div>
-                        );
-                    })
-                ) : (
-                    <h1 className="nothingText">Sorry, we found nothing</h1>
-                )}
-            </CardGrid>
+                            return (
+                                <div key={unit._id}>
+                                    <Card
+                                        data={unit}
+                                        type="unit"
+                                        onClick={handleViewUnit}
+                                    />
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <h1 className="nothingText">Sorry, we found nothing</h1>
+                    )}
+                </CardGrid>
+            </div>
         </div>
     );
 

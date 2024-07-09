@@ -44,6 +44,7 @@ const CoursesPage = () => {
                 );
 
                 const result = await response.json();
+                console.log(result);
                 // (result);
 
                 if (response.status >= 400 && response.status < 600) {
@@ -84,30 +85,43 @@ const CoursesPage = () => {
     const loader = <Loader />;
 
     const element = (
-        <div className="px-10 md:px-pima-x py-pima-y flex flex-col gap-10 mt-8">
-            <h2
-                className="text-4xl font-extrabold underline-offset-[10px] underline leading-relaxed"
-                style={{
-                    textDecorationColor: "#ed3237",
-                }}
-            >
-                Courses
-            </h2>
-            {allCourses.length > 0 ? (
-                <CardGrid>
-                    {allCourses.map((course) => (
-                        <div key={course._id}>
-                            <Card
-                                data={course}
-                                type="course"
-                                onClick={handleViewUnits}
-                            />
-                        </div>
-                    ))}
-                </CardGrid>
-            ) : (
-                <h1 className="nothingText">Sorry, we found nothing</h1>
-            )}
+        <div className="px-10 md:px-pima-x py-pima-y flex flex-col gap-14 mt-8">
+            <div className="flex flex-col gap-6">
+                <h2
+                    className="text-4xl font-extrabold underline-offset-[10px] underline leading-relaxed"
+                    style={{
+                        textDecorationColor: "#ed3237",
+                    }}
+                >
+                    {verticalInfo.name}
+                </h2>
+                <p className="text-sm text-stone-600">{verticalInfo.desc}</p>
+            </div>
+            <div className="flex flex-col gap-4">
+                <h3
+                    className="text-2xl font-extrabold"
+                    style={{
+                        textDecorationColor: "#ed3237",
+                    }}
+                >
+                    Courses
+                </h3>
+                {allCourses.length > 0 ? (
+                    <CardGrid>
+                        {allCourses.map((course) => (
+                            <div key={course._id}>
+                                <Card
+                                    data={course}
+                                    type="course"
+                                    onClick={handleViewUnits}
+                                />
+                            </div>
+                        ))}
+                    </CardGrid>
+                ) : (
+                    <h1 className="nothingText">Sorry, we found nothing</h1>
+                )}
+            </div>
         </div>
     );
 

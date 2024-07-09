@@ -16,6 +16,7 @@ const CoursesPage = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [verticalInfo, setverticalInfo] = useState({ name: "", desc: "" });
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [allCourses, setAllCourses] = useState([]);
     const [newCourse, setNewCourse] = useState({
         name: "",
@@ -24,7 +25,14 @@ const CoursesPage = () => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [addCourseLoading, setAddCourseLoading] = useState(false);
+    const [editCourseLoading, setEditCourseLoading] = useState(false);
+    const [toEditVerticalId, setToEditVerticalId] = useState("");
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [editCourse, setEditCourse] = useState({
+        name: "",
+        desc: "",
+        courseImg: null,
+    });
     const navigate = useNavigate();
     const params = useParams();
 
@@ -76,41 +84,6 @@ const CoursesPage = () => {
         getAllCourses();
     }, []);
 
-    // const saveVInfoChanges = async () => {
-    //   setIsSaveBtnDisabled(true);
-
-    //   try {
-    //     const { verticalId } = params;
-    //     const response = await fetch(
-    //       `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/edit`,
-    //       {
-    //         method: "PATCH",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           "auth-token": localStorage.getItem("token"),
-    //         },
-    //       }
-    //     );
-
-    //     const result = await response.json();
-    //     // (result);
-
-    //     setIsSaveBtnDisabled(false);
-
-    //     if (response.status >= 400 && response.status < 600) {
-    //       if (response.status === 401) {
-    //         navigate("/admin/login"); // login or role issue
-    //       } else if (response.status === 404) {
-    //         toast.error(result.statusText);
-    //       } else if (response.status === 500) {
-    //         toast.error(result.statusText);
-    //       }
-    //     } else if (response.ok && response.status === 200) {
-    //       refreshScreen();
-    //     } else {
-    //       // for future
-    //     }
-
     const ref = useRef(null);
     const refClose = useRef(null);
 
@@ -118,15 +91,27 @@ const CoursesPage = () => {
         ref.current.click();
     }
 
-    function onChange(e) {
+    function onAddChange(e) {
         const updatedCourse = { ...newCourse, [e.target.name]: e.target.value };
         setNewCourse(updatedCourse);
 
         // (updatedCourse);
     }
 
+    function onEditChange(e) {
+        const updatedVertical = {
+            ...editCourse,
+            [e.target.name]: e.target.value,
+        };
+        setEditCourse(updatedVertical);
+    }
+
     function handleCourseImgChange(e) {
         setNewCourse((prevVal) => ({
+            ...prevVal,
+            courseImg: e.target.files[0],
+        }));
+        setEditCourse((prevVal) => ({
             ...prevVal,
             courseImg: e.target.files[0],
         }));
@@ -138,7 +123,8 @@ const CoursesPage = () => {
         let formData = new FormData();
         formData.append("name", newCourse.name);
         formData.append("desc", newCourse.desc);
-        formData.append("courseImg", newCourse.courseImg);
+        if (newCourse.courseImg !== null)
+            formData.append("courseImg", newCourse.courseImg);
 
         // todo: validate input
         setAddCourseLoading(true);
@@ -181,6 +167,59 @@ const CoursesPage = () => {
             refClose.current.click();
         } catch (err) {
             setAddCourseLoading(false);
+        }
+    }
+
+    async function handleEditCourse() {
+        const { verticalId } = params;
+        const courseId = toEditVerticalId;
+
+        // todo: validate input
+
+        let formData = new FormData();
+        formData.append("name", editCourse.name);
+        formData.append("desc", editCourse.desc);
+        if (editCourse.courseImg !== null)
+            formData.append("courseImg", editCourse.courseImg);
+
+        try {
+            setEditCourseLoading(true);
+            const adminId = process.env.REACT_APP_ADMIN_ID;
+            const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
+            const basicAuth = btoa(`${adminId}:${adminPassword}`);
+            const response = await fetch(
+                `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "auth-token": localStorage.getItem("token"),
+                        Authorization: `Basic ${basicAuth}`,
+                    },
+                    body: formData,
+                }
+            );
+
+            const result = await response.json();
+
+            if (response.status >= 400 && response.status < 600) {
+                if (response.status === 401) {
+                    navigate("/admin/login"); // login or role issue
+                } else if (response.status >= 500) {
+                    toast.error(result.statusText);
+                }
+
+                setEditCourseLoading(false);
+            } else if (response.ok && response.status === 200) {
+                toast.success("Vertical edited successfully!");
+                refreshScreen();
+                // set fields in modal to empty if not refreshing scrn
+            } else {
+                setEditCourseLoading(false);
+                // for future
+            }
+        } catch (err) {
+            // (err.message);
+            setEditCourseLoading(false);
         }
     }
 
@@ -276,6 +315,15 @@ const CoursesPage = () => {
                                 setIsDeleteModalOpen(true);
                                 setToDeleteCourseId(course._id);
                             }}
+                            onEditClick={(data) => {
+                                setIsEditModalOpen(true);
+                                setToEditVerticalId(course._id);
+                                setEditCourse({
+                                    name: data.name,
+                                    desc: data.desc,
+                                    courseImg: data.courseImg,
+                                });
+                            }}
                         />
                     ))}
                 </CardGrid>
@@ -289,6 +337,7 @@ const CoursesPage = () => {
 
     return (
         <div className="relative">
+            {/* Add Modal */}
             <AnimatePresence>
                 {isAddModalOpen && (
                     <motion.div
@@ -313,7 +362,7 @@ const CoursesPage = () => {
                                 name="name"
                                 minLength={1}
                                 maxLength={validation.verticalModal.name.maxLen}
-                                onChange={onChange}
+                                onChange={onAddChange}
                                 value={newCourse.name}
                                 autoComplete="off"
                                 className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
@@ -323,7 +372,7 @@ const CoursesPage = () => {
                                 type="text"
                                 id="desc"
                                 name="desc"
-                                onChange={onChange}
+                                onChange={onAddChange}
                                 maxLength={validation.verticalModal.desc.maxLen}
                                 value={newCourse.desc}
                                 autoComplete="off"
@@ -345,12 +394,80 @@ const CoursesPage = () => {
                                 type="button"
                                 className="px-8 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase font-semibold text-sm"
                             >
-                                Add Course
+                                {addCourseLoading
+                                    ? "Adding Course..."
+                                    : "Add Course"}
                             </button>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
+            {/* Edit Modal */}
+            <AnimatePresence>
+                {isEditModalOpen && (
+                    <motion.div
+                        className="fixed bg-white flex flex-col items-center gap-6 border p-6 px-10 m-auto left-0 right-0 top-0 bottom-0 max-w-[900px] h-fit rounded-[5px] z-[999]"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <XMarkIcon
+                            className="w-6 h-6 absolute right-4 top-4 cursor-pointer"
+                            onClick={() => setIsEditModalOpen(false)}
+                        />
+                        <h3 className="text-4xl font-bold text-center max-md:text-3xl">
+                            Edit Vertical
+                        </h3>
+
+                        <div className="flex flex-col gap-5 w-full items-center">
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                minLength={1}
+                                maxLength={validation.verticalModal.name.maxLen}
+                                onChange={onEditChange}
+                                value={editCourse.name}
+                                autoComplete="off"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] placeholder:text-sm"
+                                placeholder="Title of the Vertical"
+                            />
+                            <textarea
+                                type="text"
+                                id="desc"
+                                name="desc"
+                                onChange={onEditChange}
+                                maxLength={validation.verticalModal.desc.maxLen}
+                                value={editCourse.desc}
+                                autoComplete="off"
+                                className="w-full px-5 py-3 bg-[#efefef] rounded-[5px] placeholder:text-[#5a5a5a] resize-none placeholder:text-sm h-[200px]"
+                                placeholder="Description of the Vertical"
+                                cols={10}
+                            />
+
+                            <input
+                                className="border"
+                                onChange={handleCourseImgChange}
+                                type="file"
+                                src=""
+                                alt=""
+                                accept="image/png, image/jpeg, image/jpg, image/webp"
+                            />
+                            <button
+                                onClick={handleEditCourse}
+                                type="button"
+                                className="px-8 border-2 bg-pima-red text-center hover:bg-white hover:text-pima-red hover:border-2 border-pima-red transition-all text-white rounded-[5px] flex w-fit py-2 uppercase font-semibold text-sm"
+                            >
+                                {editCourseLoading
+                                    ? "Editing Course..."
+                                    : "Edit Course"}
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            {/* Delete Modal */}
             <AnimatePresence>
                 {isDeleteModalOpen && (
                     <motion.div
@@ -402,7 +519,7 @@ const CoursesPage = () => {
             </AnimatePresence>
             <div
                 className={`px-pima-x max-md:px-8 py-pima-y flex flex-col gap-6 transition-all duration-[250] ${
-                    isAddModalOpen || isDeleteModalOpen
+                    isAddModalOpen || isDeleteModalOpen || isEditModalOpen
                         ? "blur-lg pointer-events-none"
                         : ""
                 }`}
