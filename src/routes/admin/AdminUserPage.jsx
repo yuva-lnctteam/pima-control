@@ -24,6 +24,7 @@ const AdminUserPage = () => {
     const [verticalData, setVerticalData] = useState([]);
     const [confirmText, setConfirmText] = useState("");
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [status, setStatus] = useState("Not started yet.");
 
     async function handleDeleteUser() {
         try {
@@ -137,6 +138,30 @@ const AdminUserPage = () => {
                 } else if (response.ok && response.status === 200) {
                     setUser(result.data.user);
                     setVerticalData(result.data.allVerticalsData);
+
+                    verticalData.map((vertical, index) => {
+                        return vertical?.coursesData.map((course, idx) => {
+                            return course?.unitsData?.map((unit, ix) => {
+                                if (
+                                    unit.progress.video.watchTimeInPercent >
+                                        0.0 &&
+                                    unit.progress.quiz.scoreInPercent === -1
+                                ) {
+                                    setStatus("Started Unit.");
+                                } else if (
+                                    unit.progress.quiz.scoreInPercent >= 40.0
+                                ) {
+                                    setStatus("Passed Quiz!");
+                                } else if (
+                                    unit.progress.quiz.scoreInPercent < 40.0
+                                ) {
+                                    setStatus("Requires retaking the quiz.");
+                                }
+                                return unit;
+                            });
+                        });
+                    });
+
                     setIsLoading(false);
                 } else {
                     // for future
@@ -372,25 +397,37 @@ const AdminUserPage = () => {
                                                                 }
                                                             </h1>
                                                             <div className="ml-8">
-                                                                {course?.unitsData?.map(
-                                                                    (
-                                                                        unit,
-                                                                        index
-                                                                    ) => (
-                                                                        <div
-                                                                            key={
-                                                                                index
-                                                                            }
-                                                                        >
-                                                                            <span className="uppercase font-bold">
-                                                                                Unit:
-                                                                            </span>{" "}
-                                                                            {
-                                                                                unit.name
-                                                                            }
-                                                                        </div>
-                                                                    )
-                                                                )}
+                                                                <ul>
+                                                                    {course?.unitsData?.map(
+                                                                        (
+                                                                            unit,
+                                                                            index
+                                                                        ) => (
+                                                                            <li className="list-disc">
+                                                                                <div
+                                                                                    key={
+                                                                                        index
+                                                                                    }
+                                                                                >
+                                                                                    <span className="uppercase font-bold">
+                                                                                        Unit:
+                                                                                    </span>{" "}
+                                                                                    {
+                                                                                        unit.name
+                                                                                    }
+                                                                                    <br />
+                                                                                    &rarr;{" "}
+                                                                                    <span className="capitalize font-bold">
+                                                                                        Status:
+                                                                                    </span>{" "}
+                                                                                    {
+                                                                                        status
+                                                                                    }
+                                                                                </div>
+                                                                            </li>
+                                                                        )
+                                                                    )}
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                     )

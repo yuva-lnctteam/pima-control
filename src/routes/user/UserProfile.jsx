@@ -18,7 +18,7 @@ const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [userImg, setUserImg] = useState(null);
     const [verticalData, setVerticalData] = useState([]);
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState("Not started yet.");
 
     for (let i = 0; i < verticalData.length; i++) {
         for (let j = 0; j < verticalData[i].coursesData.length; j++) {}
@@ -111,19 +111,24 @@ const UserProfile = () => {
                     // console.log(">>>>>>>>>>>>>>", result?.data.);
 
                     verticalData.map((vertical, index) => {
-                        vertical?.coursesData.map((course, idx) => {
-                            course?.unitsData?.map((unit, ix) => {
-                                if (unit.progress.quiz.scoreInPercent > 40) {
-                                    setStatus("Passed Quiz!");
-                                } else if (
-                                    unit.progress.quiz.scoreInPercent < 40
-                                ) {
-                                    setStatus("Requires retaking the quiz.");
-                                } else if (
-                                    unit.progress.video.watchTimeInPercent > 0
+                        return vertical?.coursesData.map((course, idx) => {
+                            return course?.unitsData?.map((unit, ix) => {
+                                if (
+                                    unit.progress.video.watchTimeInPercent >
+                                        0.0 &&
+                                    unit.progress.quiz.scoreInPercent === -1
                                 ) {
                                     setStatus("Started Unit.");
+                                } else if (
+                                    unit.progress.quiz.scoreInPercent >= 40.0
+                                ) {
+                                    setStatus("Passed Quiz!");
+                                } else if (
+                                    unit.progress.quiz.scoreInPercent < 40.0
+                                ) {
+                                    setStatus("Requires retaking the quiz.");
                                 }
+                                // return status;
                             });
                         });
                     });
