@@ -59,6 +59,7 @@ const UserSingleUnit = () => {
 
                 const result = await response.json();
                 // (result);
+                console.log("result", result);
 
                 setIsLoading(false);
 

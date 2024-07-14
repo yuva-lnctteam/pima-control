@@ -139,34 +139,6 @@ const AdminUserPage = () => {
                     setUser(result.data.user);
                     setVerticalData(result.data.allVerticalsData);
 
-                    result?.data.allVerticalsData?.forEach(
-                        (vertical, index) => {
-                            vertical?.coursesData.forEach((course, idx) => {
-                                course?.unitsData?.forEach((unit, ix) => {
-                                    let status = ""; // Accumulate status in a variable
-
-                                    if (
-                                        unit.progress.video.watchTimeInPercent >
-                                            0.0 &&
-                                        unit.progress.quiz.scoreInPercent === -1
-                                    ) {
-                                        status = "Started Unit.";
-                                    } else if (
-                                        unit.progress.quiz.scoreInPercent >=
-                                        40.0
-                                    ) {
-                                        status = "Passed Quiz!";
-                                    } else if (
-                                        unit.progress.quiz.scoreInPercent < 40.0
-                                    ) {
-                                        status = "Requires retaking the quiz.";
-                                    }
-                                    setStatus(status); // Set the status outside the loops
-                                });
-                            });
-                        }
-                    );
-
                     setIsLoading(false);
                 } else {
                     // for future
@@ -423,9 +395,24 @@ const AdminUserPage = () => {
                                                                                     <span className="capitalize font-bold">
                                                                                         Status:
                                                                                     </span>{" "}
-                                                                                    {
-                                                                                        status
-                                                                                    }
+                                                                                    {unit
+                                                                                        .progress
+                                                                                        .video
+                                                                                        .watchTimeInPercent >
+                                                                                        0.0 &&
+                                                                                    unit
+                                                                                        .progress
+                                                                                        .quiz
+                                                                                        .scoreInPercent ===
+                                                                                        -1
+                                                                                        ? "Started Unit"
+                                                                                        : unit
+                                                                                              .progress
+                                                                                              .quiz
+                                                                                              .scoreInPercent >=
+                                                                                          75.0
+                                                                                        ? "Passed Quiz"
+                                                                                        : "Requires retaking the quiz"}
                                                                                 </div>
                                                                             </li>
                                                                         )

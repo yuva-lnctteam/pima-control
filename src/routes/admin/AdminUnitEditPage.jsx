@@ -4,7 +4,7 @@ import { CheckmarkIcon, toast } from "react-hot-toast";
 import ReactPlayer from "react-player/youtube";
 
 import { SERVER_ORIGIN } from "../../utilities/constants";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 // TODO: VALIDATION
 // ! check response codes
@@ -15,26 +15,22 @@ const AdminEditUnitPage = () => {
         text: "",
         activities: [],
     });
-    const [isQuizBtnDisabled, setIsQuizBtnDisabled] = useState(true);
-    const [pdf, setPdf] = useState(null);
+    // const [isQuizBtnDisabled, setIsQuizBtnDisabled] = useState(true);
+    const [oldPdf, setOldPdf] = useState(null);
+    const [newPdf, setNewPdf] = useState(null);
     // const [courseInfo, setCourseInfo] = useState(null);
     // const [userInfo, setUserInfo] = useState(null);
     // const [certId, setCertId] = useState("");
-    const [storedWatchPercentage, setStoredWatchPercentage] = useState(0);
-    const [videoWatchTimeCutoffPercentage, setVideoWatchTimeCutoffPercentage] =
-        useState(0);
+    // const [storedWatchPercentage, setStoredWatchPercentage] = useState(0);
+    // const [videoWatchTimeCutoffPercentage, setVideoWatchTimeCutoffPercentage] =
+    //     useState(0);
 
     const [isLoading, setIsLoading] = useState(false);
     const [videoInfo, setVideoInfo] = useState({});
-    const [quizAvailable, setQuizAvailable] = useState(false);
+    // const [quizAvailable, setQuizAvailable] = useState(false);
     const [isEditUnitBtnDisabled, setIsEditUnitBtnDisabled] = useState(true);
-    const [unitDet, setUnitDet] = useState({
-        title: String,
-        vdoSrc: null,
-        desc: String,
-    });
-    const [unitPdf, setUnitPdf] = useState(null);
-
+    const [currentEditingIndex, setCurrentEditingIndex] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
     const [quizArr, setQuizArr] = useState([]);
     const [question, setQuestion] = useState("");
     const [options, setOptions] = useState([
@@ -44,7 +40,6 @@ const AdminEditUnitPage = () => {
         { text: "", isChecked: false },
     ]);
     const [validQuiz, setValidQuiz] = useState(false);
-
     const navigate = useNavigate();
     const params = useParams();
 
@@ -58,7 +53,7 @@ const AdminEditUnitPage = () => {
                 const adminPassword = process.env.REACT_APP_ADMIN_PASSWORD;
                 const basicAuth = btoa(`${adminId}:${adminPassword}`);
                 const response = await fetch(
-                    `${SERVER_ORIGIN}/api/user/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}`,
+                    `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}`,
                     {
                         method: "GET",
                         headers: {
@@ -72,8 +67,6 @@ const AdminEditUnitPage = () => {
                 const result = await response.json();
                 // (result);
 
-                setIsLoading(false);
-
                 if (response.status >= 400 && response.status < 600) {
                     if (response.status === 401) {
                         navigate("/user/login"); // login or role issue
@@ -83,24 +76,25 @@ const AdminEditUnitPage = () => {
                         toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
-                    console.log("*************", result);
+                    // console.log(result);
                     setUnit(result.unit);
                     setVideoInfo(result.unit.video);
-                    setQuizAvailable(result.unit.quiz?.length > 0);
-                    setIsQuizBtnDisabled(!result.isEligibleToTakeQuiz);
-                    setStoredWatchPercentage(result.storedWatchPercentage);
-                    setVideoWatchTimeCutoffPercentage(
-                        result.videoWatchTimeCutoffPercentage
-                    );
-                    setPdf(result.unit.pdf.url);
+                    // setQuizAvailable(result.unit.quiz?.length > 0);
+                    // setIsQuizBtnDisabled(!result.isEligibleToTakeQuiz);
+                    // setStoredWatchPercentage(result.storedWatchPercentage);
+                    // setVideoWatchTimeCutoffPercentage(
+                    //     result.videoWatchTimeCutoffPercentage
+                    // );
+                    setOldPdf(result.unit.pdf);
+                    setQuizArr(result.unit.quiz);
 
                     if (
                         result.storedWatchPercentage >=
                         result.videoWatchTimeCutoffPercentage
                     ) {
-                        setIsQuizBtnDisabled((prev) => false);
+                        // setIsQuizBtnDisabled((prev) => false);
                     } else {
-                        setIsQuizBtnDisabled((prev) => true);
+                        // setIsQuizBtnDisabled((prev) => true);
                     }
                     // setCourseInfo(result.courseInfo);
                     // setUserInfo(result.userInfo);
@@ -117,13 +111,14 @@ const AdminEditUnitPage = () => {
                 // (err.message);
                 setIsLoading(false);
             }
+            setIsLoading(false);
         }
-
         getUnit();
     }, []);
 
     async function handleEditUnit() {
         setIsEditUnitBtnDisabled(true);
+        setIsLoading(true);
         const { verticalId, courseId, unitId } = params;
 
         try {
@@ -135,38 +130,42 @@ const AdminEditUnitPage = () => {
             let unit;
             let unitDetails;
 
-            if (unitDet.vdoSrc === null || unitDet.vdoSrc === "") {
+            if (videoInfo.vdoSrc === null || videoInfo.vdoSrc === "") {
                 unitDetails = {
-                    title: unitDet.title,
-                    desc: unitDet.desc,
+                    title: videoInfo.title,
+                    desc: videoInfo.desc,
                 };
             } else {
                 unitDetails = {
-                    title: unitDet.title,
-                    vdoSrc: unitDet.vdoSrc,
-                    desc: unitDet.desc,
+                    title: videoInfo.title,
+                    vdoSrc: videoInfo.vdoSrc,
+                    desc: videoInfo.desc,
                 };
             }
 
-            // console.log(unitDetails)
-            // console.log("---------------", unitPdf);
+            console.log(unitDetails);
 
-            if (unitPdf) {
+            if (newPdf) {
                 pdfResponse = await handlePdfUpload();
                 unit = {
+                    _id: unitId,
                     video: unitDetails,
                     quiz: quizArr,
                     pdf: pdfResponse?.pdf,
                 };
             } else {
                 unit = {
+                    _id: unitId,
                     video: unitDetails,
                     quiz: quizArr,
+                    pdf: oldPdf,
                 };
             }
 
             const response = await fetch(
-                `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/edit`,
+                `${SERVER_ORIGIN}/api/admin/auth/verticals/${verticalId}/courses/${courseId}/units/${unitId}/edit?pdf=${
+                    newPdf ? "true" : "false"
+                }`,
                 {
                     method: "PUT",
                     headers: {
@@ -192,13 +191,13 @@ const AdminEditUnitPage = () => {
                 }
             } else if (response.ok && response.status === 200) {
                 toast.success(result.statusText);
-                setUnitDet({
+                setVideoInfo({
                     title: "",
                     vdoSrc: null,
                     desc: "",
                 });
                 navigate(-1);
-                setUnitDet({
+                setVideoInfo({
                     title: "",
                     vdoSrc: null,
                     desc: "",
@@ -206,7 +205,7 @@ const AdminEditUnitPage = () => {
             } else {
                 // for future
             }
-
+            setIsLoading(false);
             // navigate(`/admin/verticals/${verticalId}/courses/${courseId}/units/all`);
         } catch (err) {}
     }
@@ -218,7 +217,7 @@ const AdminEditUnitPage = () => {
             const basicAuth = btoa(`${adminId}:${adminPassword}`);
 
             const formData = new FormData();
-            formData.append("file", unitPdf);
+            formData.append("file", newPdf);
 
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/admin/auth/upload-pdf`,
@@ -256,6 +255,10 @@ const AdminEditUnitPage = () => {
         } catch (err) {}
     }
 
+    function handlePdfChange(e) {
+        setNewPdf(e.target.files[0]);
+    }
+
     function handleCheck(index, option) {
         const updatedOptions = [...options];
         updatedOptions[index].isChecked = !option.isChecked;
@@ -268,17 +271,10 @@ const AdminEditUnitPage = () => {
         );
     }
 
-    function handlePdfChange(e) {
-        setUnitPdf(e.target.files[0]);
-    }
-
     function handleQuizSubmit(e) {
         e.preventDefault();
         setIsEditUnitBtnDisabled(false);
         setValidQuiz(false);
-
-        // To display only the options which have text in an orderly manner
-        // const filteredOptions = options.filter((op) => op.text.trim() !== "");
 
         const quizDet = {
             question: question,
@@ -296,13 +292,34 @@ const AdminEditUnitPage = () => {
         ]);
     }
 
+    function handleQuizEdit() {
+        setQuizArr((prevQuizArr) =>
+            prevQuizArr.map((item, idx) =>
+                idx === parseInt(currentEditingIndex)
+                    ? { ...item, question, opArr: [...options] }
+                    : item
+            )
+        );
+        setQuestion("");
+        setOptions([
+            { text: "", isChecked: false },
+            { text: "", isChecked: false },
+            { text: "", isChecked: false },
+            { text: "", isChecked: false },
+        ]);
+        setIsEditing(false);
+        setIsEditUnitBtnDisabled(false);
+    }
+
+    console.log(isEditUnitBtnDisabled);
+
     return (
         <>
             <div className="py-pima-y px-pima-x flex flex-col">
                 <h1 className="text-4xl font-bold">Edit Unit</h1>
                 <div className="flex py-pima-y w-full flex-col-reverse md:flex-row items-center gap-6 md:gap-0">
                     <form
-                        className="flex flex-col gap-6 w-full md:w-1/2 md:pr-pima-x items-center"
+                        className="flex flex-col gap-6 w-full md:w-1/2 md:pr-pima-x"
                         action=""
                         onChange={() => setIsEditUnitBtnDisabled(false)}
                     >
@@ -315,9 +332,10 @@ const AdminEditUnitPage = () => {
                                 className="border-2 px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base w-full"
                                 type="text"
                                 id="unitTitle"
+                                value={videoInfo.title}
                                 placeholder="Enter The Unit Title"
                                 onChange={(e) => {
-                                    setUnitDet((prevVal) => {
+                                    setVideoInfo((prevVal) => {
                                         return {
                                             title: e.target.value,
                                             vdoSrc: prevVal.vdoSrc,
@@ -327,7 +345,6 @@ const AdminEditUnitPage = () => {
                                 }}
                             />
                         </label>
-
                         <label
                             className="text-sm text-stone-500 w-full"
                             htmlFor="videoUrl"
@@ -336,10 +353,11 @@ const AdminEditUnitPage = () => {
                             <input
                                 className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
                                 type="url"
+                                value={videoInfo.vdoSrc}
                                 id="videoUrl"
                                 placeholder="Paste the related video URL"
                                 onChange={(e) => {
-                                    setUnitDet((prevVal) => {
+                                    setVideoInfo((prevVal) => {
                                         return {
                                             title: prevVal.title,
                                             vdoSrc: e.target.value,
@@ -358,11 +376,12 @@ const AdminEditUnitPage = () => {
                             <textarea
                                 className="border-2 w-full px-4 py-3 rounded border-none bg-[#ededed] placeholder:text-[#828282] placeholder:text-[0.8rem] mt-1 text-black text-base"
                                 type="text"
+                                value={videoInfo.desc}
                                 id="unitDescription"
                                 placeholder="Enter The Unit Description"
                                 rows="8"
                                 onChange={(e) => {
-                                    setUnitDet((prevVal) => {
+                                    setVideoInfo((prevVal) => {
                                         return {
                                             title: prevVal.title,
                                             vdoSrc: prevVal.vdoSrc,
@@ -372,30 +391,45 @@ const AdminEditUnitPage = () => {
                                 }}
                             />
                         </label>
-
-                        <label
-                            htmlFor="pdfFile"
-                            className="text-sm text-stone-500 w-full"
-                        >
-                            Import File
-                            <input
-                                onChange={handlePdfChange}
-                                className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-[5px] file:border-0 file:text-sm file:font-semibold file:bg-[#efefef] file:text-black hover:file:bg-stone-200 transition-all mt-1 cursor-pointer"
-                                type="file"
-                                name="unitImg"
-                                id="pdfFile"
-                            />
-                        </label>
+                        <div className="flex  gap-2">
+                            <label
+                                htmlFor="pdfFile"
+                                className="w-fit py-2 px-4 file:rounded-[5px] rounded-[5px] text-sm font-semibold bg-[#efefef] text-black hover:bg-stone-200 transition-all cursor-pointer"
+                            >
+                                {newPdf
+                                    ? "File Uploaded - Click to Change again"
+                                    : oldPdf && !newPdf
+                                    ? "Change File"
+                                    : "Add File"}
+                                <input
+                                    onChange={handlePdfChange}
+                                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-[5px] file:border-0 file:text-sm file:font-semibold file:bg-[#efefef] file:text-black hover:file:bg-stone-200 transition-all mt-2 cursor-pointer hidden"
+                                    type="file"
+                                    name="unitImg"
+                                    id="pdfFile"
+                                />
+                            </label>
+                            {oldPdf && !newPdf && (
+                                <a
+                                    rel="noreferrer"
+                                    href={oldPdf?.url}
+                                    className="px-4 border-2 bg-pima-gray border-pima-gray transition-all text-white rounded-[5px] flex w-fit py-2 text-sm font-medium"
+                                    target="_blank"
+                                >
+                                    View Uploaded File
+                                </a>
+                            )}
+                        </div>
                     </form>
 
                     {/* --------------------- INPUT VIDEO PREVIEW -------------------- */}
 
                     <div className="bg-pima-gray w-full min-h-[400px] h-[400px] md:w-1/2 rounded flex justify-center items-center">
-                        {unitDet.vdoSrc ? (
+                        {videoInfo.vdoSrc ? (
                             <ReactPlayer
                                 width="100%"
                                 height="100%"
-                                url={unitDet.vdoSrc}
+                                url={videoInfo.vdoSrc}
                             />
                         ) : (
                             <p className="text-center text-lg text-white">
@@ -409,13 +443,12 @@ const AdminEditUnitPage = () => {
 
                 <div className="py-pima-y flex flex-col">
                     {/* -------------------------------QUIZ QUESTION------------------------------- */}
-
                     <h1 className="text-4xl font-bold">Edit Quiz Here</h1>
                     <div className="flex py-pima-y w-full gap-8 md:flex-row flex-col">
                         <form
                             className="flex flex-col gap-6 w-full md:w-1/2"
                             action=""
-                            onSubmit={handleQuizSubmit}
+                            // onSubmit={handleQuizSubmit}
                         >
                             <label className="text-sm text-stone-500">
                                 Question
@@ -471,17 +504,37 @@ const AdminEditUnitPage = () => {
                                     </div>
                                 ))}
                             </div>
-                            <button
-                                type="submit"
-                                className={` px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center ${
-                                    validQuiz && !(question.trim() === "")
-                                        ? `cursor-pointer`
-                                        : "cursor-not-allowed bg-[#565656]"
-                                }`}
-                                disabled={!validQuiz || question.trim() === ""}
-                            >
-                                Add
-                            </button>
+                            {isEditing ? (
+                                <button
+                                    type="button"
+                                    className={` px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center ${
+                                        validQuiz && !(question.trim() === "")
+                                            ? `cursor-pointer`
+                                            : "cursor-not-allowed bg-[#565656]"
+                                    }`}
+                                    disabled={
+                                        !validQuiz || question.trim() === ""
+                                    }
+                                    onClick={handleQuizEdit}
+                                >
+                                    Edit
+                                </button>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className={` px-10 text-center py-1.5 text-sm bg-pima-gray text-white rounded font-light self-center ${
+                                        validQuiz && !(question.trim() === "")
+                                            ? `cursor-pointer`
+                                            : "cursor-not-allowed bg-[#565656]"
+                                    }`}
+                                    disabled={
+                                        !validQuiz || question.trim() === ""
+                                    }
+                                    onClick={handleQuizSubmit}
+                                >
+                                    Add
+                                </button>
+                            )}
                         </form>
 
                         {/* ------------------------- ALL QUESTIONS DISPLAY ------------------------- */}
@@ -501,22 +554,52 @@ const AdminEditUnitPage = () => {
                                                 <span className="text-lg font-normal flex-1">
                                                     {item.question}
                                                 </span>
-                                                <XMarkIcon
-                                                    className="w-6 h-6 border rounded-full px-1 border-red-500 hover:bg-red-500 hover:text-white text-red-500 hover:cursor-pointer stroke-2  transition-all duration-100"
-                                                    onClick={() => {
-                                                        setQuizArr(
-                                                            (prevVal) => {
-                                                                return prevVal.filter(
-                                                                    (_, idx) =>
-                                                                        idx !==
-                                                                        index
-                                                                );
-                                                            }
-                                                        );
-                                                    }}
-                                                    key={index}
-                                                    value={index}
-                                                />
+                                                <div className="flex items-center gap-4">
+                                                    <PencilIcon
+                                                        className="w-6 h-6 border rounded-full px-1 border-yellow-500 hover:bg-yellow-500 hover:text-white text-red-500 hover:cursor-pointer stroke-2  transition-all duration-100"
+                                                        onClick={() => {
+                                                            setQuestion(
+                                                                item.question
+                                                            );
+                                                            setIsEditing(true);
+                                                            setOptions(
+                                                                item.opArr.map(
+                                                                    (
+                                                                        option
+                                                                    ) => ({
+                                                                        ...option,
+                                                                    })
+                                                                )
+                                                            );
+                                                            setCurrentEditingIndex(
+                                                                index
+                                                            );
+                                                            setValidQuiz(true);
+                                                            setIsEditUnitBtnDisabled(
+                                                                true
+                                                            );
+                                                        }}
+                                                    />
+                                                    <XMarkIcon
+                                                        className="w-6 h-6 border rounded-full px-1 border-red-500 hover:bg-red-500 hover:text-white text-red-500 hover:cursor-pointer stroke-2  transition-all duration-100"
+                                                        onClick={() => {
+                                                            setQuizArr(
+                                                                (prevVal) => {
+                                                                    return prevVal.filter(
+                                                                        (
+                                                                            _,
+                                                                            idx
+                                                                        ) =>
+                                                                            idx !==
+                                                                            index
+                                                                    );
+                                                                }
+                                                            );
+                                                        }}
+                                                        key={index}
+                                                        value={index}
+                                                    />
+                                                </div>
                                             </div>
                                             <div className="flex flex-col gap-4 overflow-hidden">
                                                 {item.opArr.map(
@@ -568,7 +651,7 @@ const AdminEditUnitPage = () => {
                             }`}
                     disabled={isEditUnitBtnDisabled}
                 >
-                    Edit Unit
+                    {isLoading ? "Editing..." : "Edit Unit"}
                 </button>
             </div>
         </>

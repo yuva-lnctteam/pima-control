@@ -135,8 +135,8 @@ const AdminAddUnit = () => {
                     method: "POST",
                     headers: {
                         headers: {
-                            'Content-Type': 'multipart/form-data'
-                          },
+                            "Content-Type": "multipart/form-data",
+                        },
                         "auth-token": localStorage.getItem("token"),
                         Authorization: `Basic ${basicAuth}`,
                     },
@@ -477,7 +477,7 @@ const AdminAddUnit = () => {
                             }`}
                     disabled={isAddUnitBtnDisabled}
                 >
-                    Upload Unit
+                    {isAddUnitBtnDisabled ? "Uploading Unit..." : "Upload Unit"}
                 </button>
             </div>
         </>

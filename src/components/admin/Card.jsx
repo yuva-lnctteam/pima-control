@@ -38,7 +38,7 @@ function Card(props) {
                         ? props.data.video.desc
                         : props.data.desc}
                 </p>
-                <div className="flex justify-between">
+                <div className="flex justify-between max-sm:flex-col gap-4">
                     {props.type === "unit" ? null : (
                         <button
                             className="text-black text-[11px] font-semibold flex items-center gap-1 border-b-[1px] border-black uppercase group transition-all"
@@ -69,7 +69,7 @@ function Card(props) {
                             </svg>
                         </button>
                     )}
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 max-sm:justify-between">
                         <button
                             className="bg-pima-red text-white p-1.5 rounded-[5px] flex uppercase text-xs items-center px-2.5 gap-1 font-medium border-2 border-pima-red hover:bg-white hover:text-pima-red transition-all"
                             id={props.data._id}
