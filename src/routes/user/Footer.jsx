@@ -13,7 +13,7 @@ const Footer = () => {
             <div className="px-pima-x py-pima-y flex flex-col items-center">
                 <ul className="flex gap-4">
                     {navLinks.map((link) => (
-                        <li>
+                        <li key={link.name}>
                             <Link to={link.path} className="">
                                 {link.name}
                             </Link>

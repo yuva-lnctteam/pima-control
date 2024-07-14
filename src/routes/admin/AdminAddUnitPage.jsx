@@ -208,7 +208,7 @@ const AdminAddUnit = () => {
     return (
         <>
             <div className="py-pima-y px-pima-x flex flex-col">
-                <h1 className="text-4xl font-bold">Add Unit Here</h1>
+                <h1 className="text-4xl font-bold">Add Unit</h1>
                 <div className="flex py-pima-y w-full flex-col-reverse md:flex-row items-center gap-6 md:gap-0">
                     <form
                         className="flex flex-col gap-6 w-full md:w-1/2 md:pr-pima-x items-center"

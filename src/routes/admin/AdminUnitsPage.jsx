@@ -180,6 +180,11 @@ const UnitsPage = () => {
                                 key={unit._id}
                                 type="unit"
                                 onDeleteClick={openDeleteModal}
+                                onEditClick={() => {
+                                    navigate(
+                                        `/admin/content/verticals/${verticalId}/courses/${courseId}/units/${unit._id}/edit`
+                                    );
+                                }}
                             />
                         );
                     })}

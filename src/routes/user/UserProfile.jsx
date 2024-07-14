@@ -110,28 +110,33 @@ const UserProfile = () => {
                     );
                     // console.log(">>>>>>>>>>>>>>", result?.data.);
 
-                    verticalData.map((vertical, index) => {
-                        return vertical?.coursesData.map((course, idx) => {
-                            return course?.unitsData?.map((unit, ix) => {
-                                if (
-                                    unit.progress.video.watchTimeInPercent >
-                                        0.0 &&
-                                    unit.progress.quiz.scoreInPercent === -1
-                                ) {
-                                    setStatus("Started Unit.");
-                                } else if (
-                                    unit.progress.quiz.scoreInPercent >= 40.0
-                                ) {
-                                    setStatus("Passed Quiz!");
-                                } else if (
-                                    unit.progress.quiz.scoreInPercent < 40.0
-                                ) {
-                                    setStatus("Requires retaking the quiz.");
-                                }
-                                // return status;
+                    result?.data.allVerticalsData?.forEach(
+                        (vertical, index) => {
+                            vertical?.coursesData.forEach((course, idx) => {
+                                course?.unitsData?.forEach((unit, ix) => {
+                                    let status = ""; // Accumulate status in a variable
+
+                                    if (
+                                        unit.progress.video.watchTimeInPercent >
+                                            0.0 &&
+                                        unit.progress.quiz.scoreInPercent === -1
+                                    ) {
+                                        status = "Started Unit.";
+                                    } else if (
+                                        unit.progress.quiz.scoreInPercent >=
+                                        40.0
+                                    ) {
+                                        status = "Passed Quiz!";
+                                    } else if (
+                                        unit.progress.quiz.scoreInPercent < 40.0
+                                    ) {
+                                        status = "Requires retaking the quiz.";
+                                    }
+                                    setStatus(status); // Set the status outside the loops
+                                });
                             });
-                        });
-                    });
+                        }
+                    );
 
                     setIsLoading(false);
                 } else {
@@ -284,7 +289,12 @@ const UserProfile = () => {
                                                                         unit,
                                                                         index
                                                                     ) => (
-                                                                        <li className="list-disc">
+                                                                        <li
+                                                                            className="list-disc"
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                        >
                                                                             <div
                                                                                 key={
                                                                                     index

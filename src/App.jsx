@@ -24,8 +24,9 @@ import AdminLogin from "./routes/admin/LoginPage";
 import AdminVerticals from "./routes/admin/AdminVerticalsPage.jsx";
 import AdminCourses from "./routes/admin/AdminCoursesPage.jsx";
 import AdminUnits from "./routes/admin/AdminUnitsPage.jsx";
-import AdminAddUnit from "./routes/admin/AddUnitPage";
+import AdminAddUnit from "./routes/admin/AdminAddUnitPage";
 import AdminUsers from "./routes/admin/AdminUsers.jsx";
+import AdminEditUnitPage from "./routes/admin/AdminUnitEditPage.jsx";
 
 // Common Pages
 import NotFound from "./routes/common/NotFound";
@@ -215,6 +216,15 @@ function App() {
                             <>
                                 <AdminNavbar />
                                 <AdminAddUnit />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/admin/content/verticals/:verticalId/courses/:courseId/units/:unitId/edit"
+                        element={
+                            <>
+                                <AdminNavbar />
+                                <AdminEditUnitPage />
                             </>
                         }
                     />
