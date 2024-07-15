@@ -3,7 +3,7 @@ import React from "react";
 function Card(props) {
     return (
         <div className="cardDiv flex rounded-[5px] h-[200px] card-shadow min-w-[200px] max-sm:flex-col max-sm:h-fit transition-all duration-150 border-[1px]">
-            <div className="bg-pima-red text-white flex flex-col rounded-l-[5px] w-[220px] gap-4 max-sm:w-full max-sm:h-[140px] grad relative">
+            <div className="bg-pima-red text-white flex flex-col sm:rounded-l-[5px] max-md:rounded-t-[5px] w-[220px] gap-4 max-sm:w-full max-sm:h-[140px] grad-user relative">
                 <span className="absolute uppercase text-[10px] underline underline-offset-[3px] font-semibold mt-2 ml-2 z-[900]">
                     {props.type}
                 </span>
@@ -15,11 +15,11 @@ function Card(props) {
                             props?.data?.image?.src || props?.data?.vdoThumbnail
                         }
                         alt=""
-                        className="w-full h-full object-cover rounded-t-[5px]"
+                        className="w-full h-full object-cover sm:rounded-l-[5px] max-md:rounded-t-[5px]"
                     />
                 )}
             </div>
-            <div className="flex flex-col p-4 rounded-r-[5px] flex-1 items-end justify-between max-sm:gap-4 bg-[#fcfcfc]">
+            <div className="flex flex-col p-4 rounded-[5px] flex-1 items-end justify-between max-sm:gap-4 bg-[#fcfcfc]">
                 <span className="text-[10px] uppercase font-medium">
                     {props.type === "vertical"
                         ? props.data?.courseCount + " Courses"

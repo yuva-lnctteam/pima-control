@@ -1,11 +1,11 @@
 function Card(props) {
     return (
-        <div className="admin-card rounded-[5px] border flex flex-col relative">
-            <div className="flex flex-col gap-5 bg-pima-red text-white rounded-t-[5px] h-[200px]">
-                <span className="absolute uppercase text-[10px] underline underline-offset-[3px] font-semibold top-3 left-3">
+        <div className="cardDiv rounded-[5px] border flex flex-col relative transition-all duration-150">
+            <div className="bg-pima-red text-white flex flex-col rounded-t-[5px] h-[220px] gap-4 max-sm:w-full grad relative">
+                <span className="absolute uppercase text-[10px] underline underline-offset-[3px] font-semibold top-3 left-3 z-[999]">
                     {props.type}
                 </span>
-                <p className="absolute uppercase text-[10px] underline underline-offset-[3px] font-semibold text-right top-3 right-3">
+                <p className="absolute uppercase text-[10px] underline underline-offset-[3px] font-semibold text-right top-3 right-3 z-[999]">
                     {props.type === "vertical"
                         ? props.data.courseCount + " Courses"
                         : props.type === "course"
