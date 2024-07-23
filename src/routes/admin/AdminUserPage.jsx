@@ -344,7 +344,123 @@ const AdminUserPage = () => {
                                     <h1 className="text-2xl font-bold text-center mb-4">
                                         Vertical Details
                                     </h1>
-                                    {verticalData.map((vertical, index) => (
+                                    <div className="flex flex-col gap-8 overflow-x-scroll">
+                                        <table>
+                                            <thead className="bg-pima-gray">
+                                                <tr className="text-base">
+                                                    <th>Sr no.</th>
+                                                    <th>Vertical</th>
+                                                    <th>Courses</th>
+                                                    <th>Units</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {verticalData.map(
+                                                    (vertical, index) => (
+                                                        <tr>
+                                                            <td>{index + 1}</td>
+
+                                                            <td>
+                                                                {
+                                                                    vertical
+                                                                        ?.verticalData
+                                                                        ?.name
+                                                                }
+                                                            </td>
+
+                                                            <td>
+                                                                <ul>
+                                                                    <li className="list-disc">
+                                                                        {vertical?.coursesData?.map(
+                                                                            (
+                                                                                course,
+                                                                                idx
+                                                                            ) => (
+                                                                                <div>
+                                                                                    {
+                                                                                        course
+                                                                                            ?.courseData
+                                                                                            ?.name
+                                                                                    }
+                                                                                </div>
+                                                                            )
+                                                                        )}
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+
+                                                            <td>
+                                                                {vertical?.coursesData?.map(
+                                                                    (
+                                                                        course,
+                                                                        idx
+                                                                    ) => (
+                                                                        <div>
+                                                                            {course?.unitsData.map(
+                                                                                (
+                                                                                    unit,
+                                                                                    id
+                                                                                ) => (
+                                                                                    <div>
+                                                                                        &rarr;
+                                                                                        {
+                                                                                            unit.name
+                                                                                        }
+                                                                                    </div>
+                                                                                )
+                                                                            )}
+                                                                        </div>
+                                                                    )
+                                                                )}
+                                                            </td>
+
+                                                            <td>
+                                                                {vertical?.coursesData?.map(
+                                                                    (
+                                                                        course,
+                                                                        idx
+                                                                    ) => (
+                                                                        <div>
+                                                                            {course?.unitsData.map(
+                                                                                (
+                                                                                    unit,
+                                                                                    id
+                                                                                ) => (
+                                                                                    <div>
+                                                                                        {unit
+                                                                                            .progress
+                                                                                            .video
+                                                                                            .watchTimeInPercent >
+                                                                                            0.0 &&
+                                                                                        unit
+                                                                                            .progress
+                                                                                            .quiz
+                                                                                            .scoreInPercent ===
+                                                                                            -1
+                                                                                            ? "Started Unit"
+                                                                                            : unit
+                                                                                                  .progress
+                                                                                                  .quiz
+                                                                                                  .scoreInPercent >=
+                                                                                              75.0
+                                                                                            ? "Passed Quiz"
+                                                                                            : "Requires retaking the quiz"}
+                                                                                    </div>
+                                                                                )
+                                                                            )}
+                                                                        </div>
+                                                                    )
+                                                                )}
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {/* {verticalData.map((vertical, index) => (
                                         <div
                                             className="flex flex-col"
                                             key={index}
@@ -424,7 +540,7 @@ const AdminUserPage = () => {
                                                 )}
                                             </div>
                                         </div>
-                                    ))}
+                                    ))} */}
                                 </div>
                             </div>
                         </div>
