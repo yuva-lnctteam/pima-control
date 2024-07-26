@@ -136,6 +136,7 @@ const AdminUserPage = () => {
                         toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
+                    console.log("---------", result);
                     setUser(result.data.user);
                     setVerticalData(result.data.allVerticalsData);
 
@@ -362,6 +363,8 @@ const AdminUserPage = () => {
                                                         <tr>
                                                             <td>{index + 1}</td>
 
+                                                            {/* ----------------VERTICAL-------------- */}
+
                                                             <td>
                                                                 {
                                                                     vertical
@@ -370,26 +373,29 @@ const AdminUserPage = () => {
                                                                 }
                                                             </td>
 
+                                                            {/* ------------------COURSES----------------- */}
+
                                                             <td>
-                                                                <ul>
-                                                                    <li className="list-disc">
-                                                                        {vertical?.coursesData?.map(
-                                                                            (
-                                                                                course,
-                                                                                idx
-                                                                            ) => (
-                                                                                <div>
-                                                                                    {
-                                                                                        course
-                                                                                            ?.courseData
-                                                                                            ?.name
-                                                                                    }
-                                                                                </div>
-                                                                            )
-                                                                        )}
-                                                                    </li>
-                                                                </ul>
+                                                                {vertical?.coursesData?.map(
+                                                                    (
+                                                                        course,
+                                                                        idx
+                                                                    ) => (
+                                                                        <div>
+                                                                            <td className="p-2 border-separate">
+                                                                                &bull;{" "}
+                                                                                {
+                                                                                    course
+                                                                                        ?.courseData
+                                                                                        ?.name
+                                                                                }
+                                                                            </td>
+                                                                        </div>
+                                                                    )
+                                                                )}
                                                             </td>
+
+                                                            {/* ----------------------UNITS------------------------ */}
 
                                                             <td>
                                                                 {vertical?.coursesData?.map(
@@ -403,18 +409,22 @@ const AdminUserPage = () => {
                                                                                     unit,
                                                                                     id
                                                                                 ) => (
-                                                                                    <div>
-                                                                                        &rarr;
-                                                                                        {
-                                                                                            unit.name
-                                                                                        }
-                                                                                    </div>
+                                                                                    <td className="p-2">
+                                                                                        <div>
+                                                                                            &rarr;{" "}
+                                                                                            {
+                                                                                                unit.name
+                                                                                            }
+                                                                                        </div>
+                                                                                    </td>
                                                                                 )
                                                                             )}
                                                                         </div>
                                                                     )
                                                                 )}
                                                             </td>
+
+                                                            {/* ----------------UNIT STATUS------------------ */}
 
                                                             <td>
                                                                 {vertical?.coursesData?.map(
@@ -428,32 +438,36 @@ const AdminUserPage = () => {
                                                                                     unit,
                                                                                     id
                                                                                 ) => (
-                                                                                    <div>
-                                                                                        {unit
-                                                                                            .progress
-                                                                                            .video
-                                                                                            .watchTimeInPercent >
-                                                                                            0.0 &&
-                                                                                        unit
-                                                                                            .progress
-                                                                                            .quiz
-                                                                                            .scoreInPercent ===
-                                                                                            -1
-                                                                                            ? "Started Unit"
-                                                                                            : unit
-                                                                                                  .progress
-                                                                                                  .quiz
-                                                                                                  .scoreInPercent >=
-                                                                                              75.0
-                                                                                            ? "Passed Quiz"
-                                                                                            : "Requires retaking the quiz"}
-                                                                                    </div>
+                                                                                    <td className="p-2">
+                                                                                        <div>
+                                                                                            {unit
+                                                                                                .progress
+                                                                                                .video
+                                                                                                .watchTimeInPercent >
+                                                                                                0.0 &&
+                                                                                            unit
+                                                                                                .progress
+                                                                                                .quiz
+                                                                                                .scoreInPercent ===
+                                                                                                -1
+                                                                                                ? "Started Unit"
+                                                                                                : unit
+                                                                                                      .progress
+                                                                                                      .quiz
+                                                                                                      .scoreInPercent >=
+                                                                                                  75.0
+                                                                                                ? "Passed Quiz"
+                                                                                                : "Requires retaking the quiz"}
+                                                                                            {/* <hr className=" border-1 border-pima-light-gray opacity-40" /> */}
+                                                                                        </div>
+                                                                                    </td>
                                                                                 )
                                                                             )}
                                                                         </div>
                                                                     )
                                                                 )}
                                                             </td>
+                                                            <hr />
                                                         </tr>
                                                     )
                                                 )}
