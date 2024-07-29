@@ -234,8 +234,6 @@ const UserProfile = () => {
                                                 <th>Sr no.</th>
                                                 <th>Vertical</th>
                                                 <th>Courses</th>
-                                                <th>Units</th>
-                                                <th>Status</th>
                                             </tr>
                                         </thead>
 
@@ -256,98 +254,71 @@ const UserProfile = () => {
                                                         </td>
 
                                                         {/* ------------------COURSES----------------- */}
-
                                                         <td>
-                                                            {vertical?.coursesData?.map(
-                                                                (
-                                                                    course,
-                                                                    idx
-                                                                ) => (
-                                                                    <div>
-                                                                        <td className="p-2 border-separate">
-                                                                            &bull;{" "}
-                                                                            {
-                                                                                course
-                                                                                    ?.courseData
-                                                                                    ?.name
-                                                                            }
-                                                                        </td>
-                                                                    </div>
-                                                                )
-                                                            )}
-                                                        </td>
-
-                                                        {/* ----------------------UNITS------------------------ */}
-
-                                                        <td>
-                                                            {vertical?.coursesData?.map(
-                                                                (
-                                                                    course,
-                                                                    idx
-                                                                ) => (
-                                                                    <div>
-                                                                        {course?.unitsData.map(
-                                                                            (
-                                                                                unit,
-                                                                                id
-                                                                            ) => (
-                                                                                <td className="p-2">
-                                                                                    <div>
-                                                                                        &rarr;{" "}
-                                                                                        {
-                                                                                            unit.name
-                                                                                        }
-                                                                                    </div>
-                                                                                </td>
-                                                                            )
-                                                                        )}
-                                                                    </div>
-                                                                )
-                                                            )}
-                                                        </td>
-
-                                                        {/* ----------------UNIT STATUS------------------ */}
-
-                                                        <td>
-                                                            {vertical?.coursesData?.map(
-                                                                (
-                                                                    course,
-                                                                    idx
-                                                                ) => (
-                                                                    <div>
-                                                                        {course?.unitsData.map(
-                                                                            (
-                                                                                unit,
-                                                                                id
-                                                                            ) => (
-                                                                                <td className="p-2">
-                                                                                    <div>
-                                                                                        {unit
-                                                                                            .progress
-                                                                                            .video
-                                                                                            .watchTimeInPercent >
-                                                                                            0.0 &&
-                                                                                        unit
-                                                                                            .progress
-                                                                                            .quiz
-                                                                                            .scoreInPercent ===
-                                                                                            -1
-                                                                                            ? "Started Unit 🚀"
-                                                                                            : unit
-                                                                                                  .progress
-                                                                                                  .quiz
-                                                                                                  .scoreInPercent >=
-                                                                                              75.0
-                                                                                            ? "Passed Quiz ✅"
-                                                                                            : "Requires retaking the quiz ❌"}
-                                                                                        {/* <hr className=" border-1 border-pima-light-gray opacity-40" /> */}
-                                                                                    </div>
-                                                                                </td>
-                                                                            )
-                                                                        )}
-                                                                    </div>
-                                                                )
-                                                            )}
+                                                            <table>
+                                                                {vertical?.coursesData?.map(
+                                                                    (
+                                                                        course,
+                                                                        idx
+                                                                    ) => (
+                                                                        <tr className=" text-center">
+                                                                            <td className="p-2 border-separate w-[250px]">
+                                                                                &bull;
+                                                                                {
+                                                                                    course
+                                                                                        ?.courseData
+                                                                                        ?.name
+                                                                                }
+                                                                            </td>
+                                                                            <td className="">
+                                                                                {course.unitsData.map(
+                                                                                    (
+                                                                                        unit,
+                                                                                        uid
+                                                                                    ) => (
+                                                                                        <div className=" py-1 w-[400px]">
+                                                                                            &rarr;{" "}
+                                                                                            {
+                                                                                                unit.name
+                                                                                            }
+                                                                                        </div>
+                                                                                    )
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {course.unitsData.map(
+                                                                                    (
+                                                                                        unit,
+                                                                                        id
+                                                                                    ) => (
+                                                                                        <div className=" py-1 w-[100px]">
+                                                                                            {unit
+                                                                                                .progress
+                                                                                                .video
+                                                                                                .watchTimeInPercent >
+                                                                                                0.0 &&
+                                                                                            unit
+                                                                                                .progress
+                                                                                                .quiz
+                                                                                                .scoreInPercent ===
+                                                                                                -1
+                                                                                                ? "Started Unit"
+                                                                                                : unit
+                                                                                                      .progress
+                                                                                                      .quiz
+                                                                                                      .scoreInPercent >=
+                                                                                                  75.0
+                                                                                                ? "Passed Quiz"
+                                                                                                : "Requires retaking the quiz"}
+                                                                                            {/* <hr className=" border-1 border-pima-light-gray opacity-40" /> */}
+                                                                                        </div>
+                                                                                    )
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                    )
+                                                                )}
+                                                            </table>
                                                         </td>
                                                         <hr />
                                                     </tr>
