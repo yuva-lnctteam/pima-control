@@ -233,7 +233,7 @@ const UserProfile = () => {
                                             <tr className="text-base">
                                                 <th>Sr no.</th>
                                                 <th>Vertical</th>
-                                                <th>Courses</th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                         </thead>
 
@@ -256,6 +256,17 @@ const UserProfile = () => {
                                                         {/* ------------------COURSES----------------- */}
                                                         <td>
                                                             <table>
+                                                                <tr>
+                                                                    <th>
+                                                                        Courses
+                                                                    </th>
+                                                                    <th>
+                                                                        Units
+                                                                    </th>
+                                                                    <th>
+                                                                        Status
+                                                                    </th>
+                                                                </tr>
                                                                 {vertical?.coursesData?.map(
                                                                     (
                                                                         course,
@@ -263,7 +274,7 @@ const UserProfile = () => {
                                                                     ) => (
                                                                         <tr className=" text-center">
                                                                             <td className="p-2 border-separate w-[250px]">
-                                                                                &bull;
+                                                                                &bull;{" "}
                                                                                 {
                                                                                     course
                                                                                         ?.courseData
@@ -276,11 +287,15 @@ const UserProfile = () => {
                                                                                         unit,
                                                                                         uid
                                                                                     ) => (
-                                                                                        <div className=" py-1 w-[400px]">
-                                                                                            &rarr;{" "}
-                                                                                            {
-                                                                                                unit.name
-                                                                                            }
+                                                                                        <div className=" py-1 w-[400px] flex gap-1">
+                                                                                            <p>
+                                                                                                &rarr;{" "}
+                                                                                            </p>
+                                                                                            <p>
+                                                                                                {
+                                                                                                    unit.name
+                                                                                                }
+                                                                                            </p>
                                                                                         </div>
                                                                                     )
                                                                                 )}
@@ -302,14 +317,14 @@ const UserProfile = () => {
                                                                                                 .quiz
                                                                                                 .scoreInPercent ===
                                                                                                 -1
-                                                                                                ? "Started Unit"
+                                                                                                ? "🚀"
                                                                                                 : unit
                                                                                                       .progress
                                                                                                       .quiz
                                                                                                       .scoreInPercent >=
                                                                                                   75.0
-                                                                                                ? "Passed Quiz"
-                                                                                                : "Requires retaking the quiz"}
+                                                                                                ? "✅"
+                                                                                                : "❌"}
                                                                                             {/* <hr className=" border-1 border-pima-light-gray opacity-40" /> */}
                                                                                         </div>
                                                                                     )
@@ -330,6 +345,10 @@ const UserProfile = () => {
                             </div>
                         </div>
                     </div>
+                    <p className=" bg-gray-200 py-2 px-6 text-sm">
+                        🚀 - Started Unit &nbsp; | &nbsp; ✅ - Passed Quiz
+                        &nbsp; | &nbsp; ❌ - Requires Retaking the Quiz
+                    </p>
                 </div>
             )}
         </>

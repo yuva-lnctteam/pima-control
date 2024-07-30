@@ -351,7 +351,7 @@ const AdminUserPage = () => {
                                                 <tr className="text-base">
                                                     <th>Sr no.</th>
                                                     <th>Vertical</th>
-                                                    <th>Courses</th>
+                                                    <th>&nbsp;</th>
                                                 </tr>
                                             </thead>
 
@@ -374,6 +374,17 @@ const AdminUserPage = () => {
                                                             {/* ------------------COURSES----------------- */}
                                                             <td>
                                                                 <table>
+                                                                    <tr>
+                                                                        <th>
+                                                                            Courses
+                                                                        </th>
+                                                                        <th>
+                                                                            Units
+                                                                        </th>
+                                                                        <th>
+                                                                            Status
+                                                                        </th>
+                                                                    </tr>
                                                                     {vertical?.coursesData?.map(
                                                                         (
                                                                             course,
@@ -381,7 +392,7 @@ const AdminUserPage = () => {
                                                                         ) => (
                                                                             <tr className=" text-center">
                                                                                 <td className="p-2 border-separate w-[250px]">
-                                                                                    &bull;
+                                                                                    &bull;{" "}
                                                                                     {
                                                                                         course
                                                                                             ?.courseData
@@ -394,11 +405,15 @@ const AdminUserPage = () => {
                                                                                             unit,
                                                                                             uid
                                                                                         ) => (
-                                                                                            <div className=" py-1 w-[400px]">
-                                                                                                &rarr;{" "}
-                                                                                                {
-                                                                                                    unit.name
-                                                                                                }
+                                                                                            <div className=" py-1 w-[400px] flex gap-1">
+                                                                                                <p>
+                                                                                                    &rarr;{" "}
+                                                                                                </p>
+                                                                                                <p>
+                                                                                                    {
+                                                                                                        unit.name
+                                                                                                    }
+                                                                                                </p>
                                                                                             </div>
                                                                                         )
                                                                                     )}
@@ -445,88 +460,12 @@ const AdminUserPage = () => {
                                             </tbody>
                                         </table>
                                     </div>
-                                    {/* {verticalData.map((vertical, index) => (
-                                        <div
-                                            className="flex flex-col"
-                                            key={index}
-                                        >
-                                            <h1>
-                                                <span className="uppercase font-bold">
-                                                    Vertical:
-                                                </span>{" "}
-                                                {vertical?.verticalData?.name}
-                                            </h1>
-
-                                            <div className="ml-8">
-                                                {vertical?.coursesData.map(
-                                                    (course, index) => (
-                                                        <div key={index}>
-                                                            <h1>
-                                                                {" "}
-                                                                <span className="uppercase font-bold">
-                                                                    Course:
-                                                                </span>{" "}
-                                                                {
-                                                                    course
-                                                                        ?.courseData
-                                                                        ?.name
-                                                                }
-                                                            </h1>
-                                                            <div className="ml-8">
-                                                                <ul>
-                                                                    {course?.unitsData?.map(
-                                                                        (
-                                                                            unit,
-                                                                            index
-                                                                        ) => (
-                                                                            <li className="list-disc">
-                                                                                <div
-                                                                                    key={
-                                                                                        index
-                                                                                    }
-                                                                                >
-                                                                                    <span className="uppercase font-bold">
-                                                                                        Unit:
-                                                                                    </span>{" "}
-                                                                                    {
-                                                                                        unit.name
-                                                                                    }
-                                                                                    <br />
-                                                                                    &rarr;{" "}
-                                                                                    <span className="capitalize font-bold">
-                                                                                        Status:
-                                                                                    </span>{" "}
-                                                                                    {unit
-                                                                                        .progress
-                                                                                        .video
-                                                                                        .watchTimeInPercent >
-                                                                                        0.0 &&
-                                                                                    unit
-                                                                                        .progress
-                                                                                        .quiz
-                                                                                        .scoreInPercent ===
-                                                                                        -1
-                                                                                        ? "Started Unit"
-                                                                                        : unit
-                                                                                              .progress
-                                                                                              .quiz
-                                                                                              .scoreInPercent >=
-                                                                                          75.0
-                                                                                        ? "Passed Quiz"
-                                                                                        : "Requires retaking the quiz"}
-                                                                                </div>
-                                                                            </li>
-                                                                        )
-                                                                    )}
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                )}
-                                            </div>
-                                        </div>
-                                    ))} */}
                                 </div>
+                                <p className=" bg-gray-200 py-2 px-6 text-sm">
+                                    🚀 - Started Unit &nbsp; | &nbsp; ✅ -
+                                    Passed Quiz &nbsp; | &nbsp; ❌ - Requires
+                                    Retaking the Quiz
+                                </p>
                             </div>
                         </div>
                         {/* Buttons */}
