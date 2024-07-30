@@ -26,7 +26,7 @@ body {
 table {
     border-spacing: 1;
     border-collapse: collapse;
-    background: white;
+    background: rgb(247, 247, 247);
     border-radius: 5px;
     border: 2px solid var(--pima-red);
     overflow: hidden;
@@ -42,13 +42,9 @@ td {
     text-align: left;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
 tbody tr:hover {
     cursor: pointer;
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(233, 232, 232);
 }
 
 thead tr {

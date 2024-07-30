@@ -226,7 +226,11 @@ const UserProfile = () => {
                                 <h1 className="text-2xl font-bold text-center mb-4">
                                     User Progress
                                 </h1>
-
+                                <span className=" bg-gray-100 rounded-lg py-2 px-6 text-sm inline w-fit self-end">
+                                    🚀 - Started Unit &nbsp; | &nbsp; ✅ -
+                                    Passed Quiz &nbsp; | &nbsp; ❌ - Requires
+                                    Retaking the Quiz
+                                </span>
                                 <div className="flex flex-col gap-8 overflow-x-scroll">
                                     <table>
                                         <thead className="bg-pima-gray">
@@ -256,7 +260,7 @@ const UserProfile = () => {
                                                         {/* ------------------COURSES----------------- */}
                                                         <td>
                                                             <table>
-                                                                <tr>
+                                                                <thead>
                                                                     <th>
                                                                         Courses
                                                                     </th>
@@ -266,7 +270,7 @@ const UserProfile = () => {
                                                                     <th>
                                                                         Status
                                                                     </th>
-                                                                </tr>
+                                                                </thead>
                                                                 {vertical?.coursesData?.map(
                                                                     (
                                                                         course,
@@ -345,10 +349,6 @@ const UserProfile = () => {
                             </div>
                         </div>
                     </div>
-                    <p className=" bg-gray-200 py-2 px-6 text-sm">
-                        🚀 - Started Unit &nbsp; | &nbsp; ✅ - Passed Quiz
-                        &nbsp; | &nbsp; ❌ - Requires Retaking the Quiz
-                    </p>
                 </div>
             )}
         </>

@@ -343,8 +343,13 @@ const AdminUserPage = () => {
                                 </div>
                                 <div className="flex flex-col gap-3 border p-6 rounded-[5px]">
                                     <h1 className="text-2xl font-bold text-center mb-4">
-                                        Vertical Details
+                                        User Progress
                                     </h1>
+                                    <span className=" bg-gray-100 rounded-lg py-2 px-6 text-sm inline w-fit self-end">
+                                        🚀 - Started Unit &nbsp; | &nbsp; ✅ -
+                                        Passed Quiz &nbsp; | &nbsp; ❌ -
+                                        Requires Retaking the Quiz
+                                    </span>
                                     <div className="flex flex-col gap-8 overflow-x-scroll">
                                         <table>
                                             <thead className="bg-pima-gray">
@@ -374,7 +379,7 @@ const AdminUserPage = () => {
                                                             {/* ------------------COURSES----------------- */}
                                                             <td>
                                                                 <table>
-                                                                    <tr>
+                                                                    <thead>
                                                                         <th>
                                                                             Courses
                                                                         </th>
@@ -384,7 +389,7 @@ const AdminUserPage = () => {
                                                                         <th>
                                                                             Status
                                                                         </th>
-                                                                    </tr>
+                                                                    </thead>
                                                                     {vertical?.coursesData?.map(
                                                                         (
                                                                             course,
@@ -435,14 +440,14 @@ const AdminUserPage = () => {
                                                                                                     .quiz
                                                                                                     .scoreInPercent ===
                                                                                                     -1
-                                                                                                    ? "Started Unit"
+                                                                                                    ? "🚀"
                                                                                                     : unit
                                                                                                           .progress
                                                                                                           .quiz
                                                                                                           .scoreInPercent >=
                                                                                                       75.0
-                                                                                                    ? "Passed Quiz"
-                                                                                                    : "Requires retaking the quiz"}
+                                                                                                    ? "✅"
+                                                                                                    : "❌"}
                                                                                                 {/* <hr className=" border-1 border-pima-light-gray opacity-40" /> */}
                                                                                             </div>
                                                                                         )
@@ -461,11 +466,6 @@ const AdminUserPage = () => {
                                         </table>
                                     </div>
                                 </div>
-                                <p className=" bg-gray-200 py-2 px-6 text-sm">
-                                    🚀 - Started Unit &nbsp; | &nbsp; ✅ -
-                                    Passed Quiz &nbsp; | &nbsp; ❌ - Requires
-                                    Retaking the Quiz
-                                </p>
                             </div>
                         </div>
                         {/* Buttons */}
