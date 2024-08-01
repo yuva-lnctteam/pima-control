@@ -10,6 +10,7 @@ function capitalizeFirstLetter(str) {
 }
 
 const UserProfile = () => {
+    let index = 1;
     const navigate = useNavigate();
     useState(false);
     const params = useParams();
@@ -18,7 +19,6 @@ const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [userImg, setUserImg] = useState(null);
     const [verticalData, setVerticalData] = useState([]);
-    const [status, setStatus] = useState("Not started yet.");
 
     for (let i = 0; i < verticalData.length; i++) {
         for (let j = 0; j < verticalData[i].coursesData.length; j++) {}
@@ -229,7 +229,7 @@ const UserProfile = () => {
                                 <span className=" bg-gray-100 rounded-lg py-2 px-6 text-sm inline w-fit self-end">
                                     🚀 - Started Unit &nbsp; | &nbsp; ✅ -
                                     Passed Quiz &nbsp; | &nbsp; ❌ - Requires
-                                    Retaking the Quiz
+                                    retaking the Quiz
                                 </span>
                                 <div className="flex flex-col gap-8 overflow-x-scroll">
                                     <table>
@@ -237,112 +237,71 @@ const UserProfile = () => {
                                             <tr className="text-base">
                                                 <th>Sr no.</th>
                                                 <th>Vertical</th>
-                                                <th>&nbsp;</th>
+                                                <th>Course</th>
+                                                <th>Unit</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
-
                                         <tbody>
-                                            {verticalData.map(
-                                                (vertical, index) => (
-                                                    <tr>
-                                                        <td>{index + 1}</td>
+                                            {verticalData
+                                                .reverse()
+                                                .map((vertical, idx) => {
+                                                    return vertical?.coursesData
+                                                        .reverse()
+                                                        .map((course) => {
+                                                            return course?.unitsData
+                                                                .reverse()
+                                                                .map((unit) => (
+                                                                    <tr>
+                                                                        <td>
+                                                                            {
+                                                                                index++
+                                                                            }
+                                                                        </td>
+                                                                        <td>
+                                                                            {
+                                                                                vertical
+                                                                                    .verticalData
+                                                                                    .name
+                                                                            }
+                                                                        </td>
+                                                                        <td>
+                                                                            {
+                                                                                course
+                                                                                    .courseData
+                                                                                    .name
+                                                                            }
+                                                                        </td>
+                                                                        <td>
+                                                                            {
+                                                                                unit.name
+                                                                            }
+                                                                        </td>
 
-                                                        {/* ----------------VERTICAL-------------- */}
-
-                                                        <td>
-                                                            {
-                                                                vertical
-                                                                    ?.verticalData
-                                                                    ?.name
-                                                            }
-                                                        </td>
-
-                                                        {/* ------------------COURSES----------------- */}
-                                                        <td>
-                                                            <table>
-                                                                <thead>
-                                                                    <th>
-                                                                        Courses
-                                                                    </th>
-                                                                    <th>
-                                                                        Units
-                                                                    </th>
-                                                                    <th>
-                                                                        Status
-                                                                    </th>
-                                                                </thead>
-                                                                {vertical?.coursesData?.map(
-                                                                    (
-                                                                        course,
-                                                                        idx
-                                                                    ) => (
-                                                                        <tr className=" text-center">
-                                                                            <td className="p-2 border-separate w-[250px]">
-                                                                                &bull;{" "}
-                                                                                {
-                                                                                    course
-                                                                                        ?.courseData
-                                                                                        ?.name
-                                                                                }
-                                                                            </td>
-                                                                            <td className="">
-                                                                                {course.unitsData.map(
-                                                                                    (
-                                                                                        unit,
-                                                                                        uid
-                                                                                    ) => (
-                                                                                        <div className=" py-1 w-[400px] flex gap-1">
-                                                                                            <p>
-                                                                                                &rarr;{" "}
-                                                                                            </p>
-                                                                                            <p>
-                                                                                                {
-                                                                                                    unit.name
-                                                                                                }
-                                                                                            </p>
-                                                                                        </div>
-                                                                                    )
-                                                                                )}
-                                                                            </td>
-                                                                            <td>
-                                                                                {course.unitsData.map(
-                                                                                    (
-                                                                                        unit,
-                                                                                        id
-                                                                                    ) => (
-                                                                                        <div className=" py-1 w-[100px]">
-                                                                                            {unit
-                                                                                                .progress
-                                                                                                .video
-                                                                                                .watchTimeInPercent >
-                                                                                                0.0 &&
-                                                                                            unit
-                                                                                                .progress
-                                                                                                .quiz
-                                                                                                .scoreInPercent ===
-                                                                                                -1
-                                                                                                ? "🚀"
-                                                                                                : unit
-                                                                                                      .progress
-                                                                                                      .quiz
-                                                                                                      .scoreInPercent >=
-                                                                                                  75.0
-                                                                                                ? "✅"
-                                                                                                : "❌"}
-                                                                                            {/* <hr className=" border-1 border-pima-light-gray opacity-40" /> */}
-                                                                                        </div>
-                                                                                    )
-                                                                                )}
-                                                                            </td>
-                                                                        </tr>
-                                                                    )
-                                                                )}
-                                                            </table>
-                                                        </td>
-                                                        <hr />
-                                                    </tr>
-                                                )
-                                            )}
+                                                                        <td>
+                                                                            {unit
+                                                                                .progress
+                                                                                .video
+                                                                                .watchTimeInPercent >
+                                                                                0.0 &&
+                                                                            unit
+                                                                                .progress
+                                                                                .quiz
+                                                                                .scoreInPercent ===
+                                                                                -1
+                                                                                ? "🚀"
+                                                                                : unit
+                                                                                      .progress
+                                                                                      .quiz
+                                                                                      .scoreInPercent >=
+                                                                                  75.0
+                                                                                ? "✅"
+                                                                                : "❌"}
+                                                                        </td>
+                                                                    </tr>
+                                                                ));
+                                                        });
+                                                })}
                                         </tbody>
                                     </table>
                                 </div>

@@ -1,0 +1,113 @@
+ <table>
+                                        <thead className="bg-pima-gray">
+                                            <tr className="text-base">
+                                                <th>Sr no.</th>
+                                                <th>Vertical</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {verticalData.map(
+                                                (vertical, index) => (
+                                                    <tr>
+                                                        <td>{index + 1}</td>
+
+                                                        {/* ----------------VERTICAL-------------- */}
+
+                                                        <td>
+                                                            {
+                                                                vertical
+                                                                    ?.verticalData
+                                                                    ?.name
+                                                            }
+                                                        </td>
+
+                                                        {/* ------------------COURSES----------------- */}
+                                                        <td>
+                                                            <table>
+                                                                <thead>
+                                                                    <th>
+                                                                        Courses
+                                                                    </th>
+                                                                    <th>
+                                                                        Units
+                                                                    </th>
+                                                                    <th>
+                                                                        Status
+                                                                    </th>
+                                                                </thead>
+                                                                {vertical?.coursesData?.map(
+                                                                    (
+                                                                        course,
+                                                                        idx
+                                                                    ) => (
+                                                                        <tr className=" text-center">
+                                                                            <td className="p-2 border-separate w-[250px]">
+                                                                                &bull;{" "}
+                                                                                {
+                                                                                    course
+                                                                                        ?.courseData
+                                                                                        ?.name
+                                                                                }
+                                                                            </td>
+                                                                            <td className="">
+                                                                                {course.unitsData.map(
+                                                                                    (
+                                                                                        unit,
+                                                                                        uid
+                                                                                    ) => (
+                                                                                        <div className=" py-1 w-[400px] flex gap-1">
+                                                                                            <p>
+                                                                                                &rarr;{" "}
+                                                                                            </p>
+                                                                                            <p>
+                                                                                                {
+                                                                                                    unit.name
+                                                                                                }
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    )
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {course.unitsData.map(
+                                                                                    (
+                                                                                        unit,
+                                                                                        id
+                                                                                    ) => (
+                                                                                        <div className=" py-1 w-[100px]">
+                                                                                            {unit
+                                                                                                .progress
+                                                                                                .video
+                                                                                                .watchTimeInPercent >
+                                                                                                0.0 &&
+                                                                                            unit
+                                                                                                .progress
+                                                                                                .quiz
+                                                                                                .scoreInPercent ===
+                                                                                                -1
+                                                                                                ? "🚀"
+                                                                                                : unit
+                                                                                                      .progress
+                                                                                                      .quiz
+                                                                                                      .scoreInPercent >=
+                                                                                                  75.0
+                                                                                                ? "✅"
+                                                                                                : "❌"}
+                                                                                            {/* <hr className=" border-1 border-pima-light-gray opacity-40" /> */}
+                                                                                        </div>
+                                                                                    )
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                    )
+                                                                )}
+                                                            </table>
+                                                        </td>
+                                                        <hr />
+                                                    </tr>
+                                                )
+                                            )}
+                                        </tbody>
+                                    </table>
