@@ -4,6 +4,7 @@ import Loader from "../../components/common/Loader";
 import { SERVER_ORIGIN, validation } from "../../utilities/constants";
 import toast from "react-hot-toast";
 import { PencilIcon } from "@heroicons/react/24/solid";
+import { v4 } from "uuid";
 
 function capitalizeFirstLetter(str) {
     return str?.charAt(0).toUpperCase() + str?.substr(1);
@@ -239,6 +240,9 @@ const UserProfile = () => {
                                                 <th>Vertical</th>
                                                 <th>Course</th>
                                                 <th>Unit</th>
+                                                <th>
+                                                    Last Attempted / Finish Date
+                                                </th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -252,7 +256,9 @@ const UserProfile = () => {
                                                             return course?.unitsData
                                                                 .reverse()
                                                                 .map((unit) => (
-                                                                    <tr>
+                                                                    <tr
+                                                                        key={v4()}
+                                                                    >
                                                                         <td>
                                                                             {
                                                                                 index++
@@ -277,7 +283,15 @@ const UserProfile = () => {
                                                                                 unit.name
                                                                             }
                                                                         </td>
-
+                                                                        <td>
+                                                                            {unit
+                                                                                .progress
+                                                                                ?.lastVisited
+                                                                                ? new Date(
+                                                                                      unit.progress?.lastVisited
+                                                                                  ).toDateString()
+                                                                                : "N/A"}
+                                                                        </td>
                                                                         <td>
                                                                             {unit
                                                                                 .progress
