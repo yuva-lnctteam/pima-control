@@ -21,10 +21,6 @@ const UserProfile = () => {
     const [userImg, setUserImg] = useState(null);
     const [verticalData, setVerticalData] = useState([]);
 
-    for (let i = 0; i < verticalData.length; i++) {
-        for (let j = 0; j < verticalData[i].coursesData.length; j++) {}
-    }
-
     function handleUserImgChange(e) {
         setUserImg(URL.createObjectURL(e.target.files[0]));
         setUser((prevState) => ({
@@ -103,9 +99,8 @@ const UserProfile = () => {
                         toast.error(result.statusText);
                     }
                 } else if (response.ok && response.status === 200) {
-                    console.log(result);
                     setUser(result?.data?.user);
-                    setVerticalData(result?.data.allVerticalsData);
+                    setVerticalData(result?.data.allUnitsData);
 
                     setIsLoading(false);
                 } else {
@@ -247,75 +242,46 @@ const UserProfile = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {verticalData
-                                                .reverse()
-                                                .map((vertical, idx) => {
-                                                    return vertical?.coursesData
-                                                        .reverse()
-                                                        .map((course) => {
-                                                            return course?.unitsData
-                                                                .reverse()
-                                                                .map((unit) => (
-                                                                    <tr
-                                                                        key={v4()}
-                                                                    >
-                                                                        <td>
-                                                                            {
-                                                                                index++
-                                                                            }
-                                                                        </td>
-                                                                        <td>
-                                                                            {
-                                                                                vertical
-                                                                                    .verticalData
-                                                                                    .name
-                                                                            }
-                                                                        </td>
-                                                                        <td>
-                                                                            {
-                                                                                course
-                                                                                    .courseData
-                                                                                    .name
-                                                                            }
-                                                                        </td>
-                                                                        <td>
-                                                                            {
-                                                                                unit.name
-                                                                            }
-                                                                        </td>
-                                                                        <td>
-                                                                            {unit
-                                                                                .progress
-                                                                                ?.lastVisited
-                                                                                ? new Date(
-                                                                                      unit.progress?.lastVisited
-                                                                                  ).toDateString()
-                                                                                : "N/A"}
-                                                                        </td>
-                                                                        <td>
-                                                                            {unit
-                                                                                .progress
-                                                                                .video
-                                                                                .watchTimeInPercent >
-                                                                                0.0 &&
-                                                                            unit
-                                                                                .progress
-                                                                                .quiz
-                                                                                .scoreInPercent ===
-                                                                                -1
-                                                                                ? "🚀"
-                                                                                : unit
-                                                                                      .progress
-                                                                                      .quiz
-                                                                                      .scoreInPercent >=
-                                                                                  75.0
-                                                                                ? "✅"
-                                                                                : "❌"}
-                                                                        </td>
-                                                                    </tr>
-                                                                ));
-                                                        });
-                                                })}
+                                            {verticalData.map((data) => (
+                                                <tr key={v4()}>
+                                                    <td>{index++}</td>
+                                                    <td>
+                                                        {
+                                                            data?.verticalData
+                                                                ?.name
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {data?.courseData?.name}
+                                                    </td>
+                                                    <td>
+                                                        {data?.unitData?.name}
+                                                    </td>
+                                                    <td>
+                                                        {new Date(
+                                                            data?.unitData?.progress?.lastVisited
+                                                        ).toDateString()}
+                                                    </td>
+                                                    <td>
+                                                        {data?.unitData
+                                                            ?.progress?.quiz
+                                                            ?.scoreInPercent >
+                                                            0.0 &&
+                                                        data?.unitData?.progress
+                                                            ?.quiz
+                                                            ?.scoreInPercent ===
+                                                            -1
+                                                            ? "🚀"
+                                                            : data?.unitData
+                                                                  ?.progress
+                                                                  ?.quiz
+                                                                  ?.scoreInPercent >=
+                                                              75.0
+                                                            ? "✅"
+                                                            : "❌"}
+                                                    </td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>

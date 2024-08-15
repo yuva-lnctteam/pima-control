@@ -78,8 +78,6 @@ const UpdateUser = () => {
             formData.append("fName", user.fullName.split(" ")[0]);
             formData.append("lName", user.fullName.split(" ")?.[1] || "");
 
-            console.log(modifiedUser);
-
             const response = await fetch(
                 `${SERVER_ORIGIN}/api/user/auth/update-user`,
                 {
@@ -142,7 +140,6 @@ const UpdateUser = () => {
                     }
                 } else if (response.ok && response.status === 200) {
                     setEntryLoading(false);
-                    console.log(result.data.user);
                     setUser({
                         fullName:
                             result?.data?.user?.fName +

@@ -143,8 +143,6 @@ const AdminEditUnitPage = () => {
                 };
             }
 
-            console.log(unitDetails);
-
             if (newPdf) {
                 pdfResponse = await handlePdfUpload();
                 unit = {
@@ -310,8 +308,6 @@ const AdminEditUnitPage = () => {
         setIsEditing(false);
         setIsEditUnitBtnDisabled(false);
     }
-
-    console.log(isEditUnitBtnDisabled);
 
     return (
         <>
